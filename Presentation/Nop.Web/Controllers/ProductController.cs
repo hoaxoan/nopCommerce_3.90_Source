@@ -32,7 +32,9 @@ namespace Nop.Web.Controllers
     {
         #region Fields
 
+        private readonly ICatalogModelFactory _catalogModelFactory;
         private readonly IProductModelFactory _productModelFactory;
+        private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly IWorkContext _workContext;
         private readonly IStoreContext _storeContext;
@@ -58,7 +60,9 @@ namespace Nop.Web.Controllers
 
         #region Constructors
 
-        public ProductController(IProductModelFactory productModelFactory,
+        public ProductController(ICatalogModelFactory catalogModelFactory,
+            IProductModelFactory productModelFactory,
+            ICategoryService categoryService,
             IProductService productService,
             IWorkContext workContext,
             IStoreContext storeContext,
@@ -80,7 +84,9 @@ namespace Nop.Web.Controllers
             CaptchaSettings captchaSettings,
             ICacheManager cacheManager)
         {
+            this._catalogModelFactory = catalogModelFactory;
             this._productModelFactory = productModelFactory;
+            this._categoryService = categoryService;
             this._productService = productService;
             this._workContext = workContext;
             this._storeContext = storeContext;
@@ -418,6 +424,34 @@ namespace Nop.Web.Controllers
 
             var model = _productModelFactory.PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
             return PartialView(model);
+        }
+
+        [ChildActionOnly]
+        public virtual ActionResult HomepageCatalogProducts(int? productThumbPictureSize)
+        {
+            var categories = _categoryService.GetAllCategoriesDisplayedOnHomePage();
+            var categoryModels = new List<CategoryModel>();
+            foreach (var category in categories)
+            {
+                //model
+                var categoryModel = _catalogModelFactory.PrepareHomepageCategoryModel(category);
+                if(categoryModel.Products.Count > 0)
+                {
+                    categoryModels.Add(categoryModel);
+                }
+            }
+
+            //var products = _productService.GetAllProductsDisplayedOnHomePage();
+            ////ACL and store mapping
+            //products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
+            ////availability dates
+            //products = products.Where(p => p.IsAvailable()).ToList();
+
+            //if (!products.Any())
+            //    return Content("");
+
+            //var model = _productModelFactory.PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+            return PartialView(categoryModels);
         }
 
         #endregion

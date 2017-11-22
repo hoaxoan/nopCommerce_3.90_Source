@@ -103,12 +103,53 @@
 }
 /* Control nav styles (e.g. 1,2,3...) */
 .nivo-controlNav {
-	text-align:center;
-	padding: 15px 0;
+    text-align: center;
+    padding: 15px 0
 }
+
 .nivo-controlNav a {
-	cursor:pointer;
+    cursor: pointer
 }
+
 .nivo-controlNav a.active {
-	font-weight:bold;
+    font-weight: bold
+}
+
+.nivo-controlNav {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 7;
+    padding: 0;
+}
+
+.nivo-controlNav a {
+    display: inline-block;
+    position: relative;
+    width: 15px;
+    height: 15px;
+    font-size: 0;
+    border: 1px solid #aeafb5;
+    margin: 0 7px;
+    cursor:pointer;
+}
+
+.nivo-controlNav a:before {
+    content: '';
+    display: block;
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+
+.nivo-controlNav a:hover:before,
+.nivo-controlNav a.active:before {
+    background: #e56363;
 }

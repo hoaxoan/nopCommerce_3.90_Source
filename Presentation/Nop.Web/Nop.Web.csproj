@@ -1030,6 +1030,7 @@
     <Content Include="Views\Vendor\Info.cshtml" />
     <Content Include="Views\Common\Logo.cshtml" />
     <Content Include="Views\Customer\EmailRevalidation.cshtml" />
+    <Content Include="Views\Product\HomepageCatalogProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

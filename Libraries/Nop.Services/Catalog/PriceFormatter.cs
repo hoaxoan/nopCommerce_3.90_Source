@@ -78,7 +78,10 @@ namespace Nop.Services.Catalog
                 if (!String.IsNullOrEmpty(targetCurrency.DisplayLocale))
                 {
                     //default behavior
-                    result = amount.ToString("C", new CultureInfo(targetCurrency.DisplayLocale));
+                    NumberFormatInfo nfi = new CultureInfo(targetCurrency.DisplayLocale).NumberFormat;
+                    nfi.CurrencyDecimalDigits = 0;
+                    nfi.CurrencySymbol = targetCurrency.CurrencyCode;
+                    result = amount.ToString("C", nfi);
                 }
                 else
                 {
@@ -91,7 +94,7 @@ namespace Nop.Services.Catalog
 
             //display currency code?
             if (showCurrency && _currencySettings.DisplayCurrencyLabel)
-                result = String.Format("{0} ({1})", result, targetCurrency.CurrencyCode);
+                result = String.Format("{0} {1}", result, targetCurrency.CurrencyCode);
             return result;
         }
 

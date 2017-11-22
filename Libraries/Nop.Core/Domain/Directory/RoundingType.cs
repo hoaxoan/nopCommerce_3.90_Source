@@ -3,7 +3,7 @@
     public enum RoundingType
     {
         /// <summary>
-        /// Default rounding (Match.Round(num, 2))
+        /// Default rounding (Match.Round(num, 0))
         /// </summary>
         Rounding001 = 0,
         /// <summary>

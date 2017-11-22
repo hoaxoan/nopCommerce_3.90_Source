@@ -1573,18 +1573,26 @@ label, label + * {
 
 .product-grid,
 .product-list {
-	margin: 0 0 50px;
+	margin: 0 0 10px;
 }
 .product-grid .title {
-	margin: 0 0 30px;
+	margin: 0 0 10px;
 	border-bottom: 1px solid #ddd;
-	padding: 0 0 15px;
+	padding: 0 0 0px;
 	font-size: 30px;
 	font-weight: normal;
 	color: #444;
 }
 .product-grid .title strong {
 	font-weight: normal;
+}
+
+.product-grid .title strong:after {
+    border-bottom: 2px solid #cc444d;
+    border-top: none;
+    border-right: none;
+    width: 100%;
+    top: 2px;
 }
 
 .manufacturer-grid .title {
@@ -6279,8 +6287,10 @@ pre {
 	color: #555;
 	cursor: pointer;
 }
+
 .header-menu > ul > li > a:hover {
 	color: #4ab2f1;
+	z-index: 100
 }
 .header-menu .sublist {
 	display: none;

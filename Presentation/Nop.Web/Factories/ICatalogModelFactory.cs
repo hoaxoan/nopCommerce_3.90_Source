@@ -42,6 +42,13 @@ namespace Nop.Web.Factories
         /// Prepare category model
         /// </summary>
         /// <param name="category">Category</param>
+        /// <returns>Category model</returns>
+        CategoryModel PrepareHomepageCategoryModel(Category category);
+
+        /// <summary>
+        /// Prepare category model
+        /// </summary>
+        /// <param name="category">Category</param>
         /// <param name="command">Catalog paging filtering command</param>
         /// <returns>Category model</returns>
         CategoryModel PrepareCategoryModel(Category category, CatalogPagingFilteringModel command);

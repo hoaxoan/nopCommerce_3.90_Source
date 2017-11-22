@@ -45,7 +45,7 @@ namespace Nop.Services.Catalog
         public static decimal Round(this decimal value, RoundingType roundingType)
         {
             //default round (Rounding001)
-            var rez = Math.Round(value, 2);
+            var rez = Math.Round(value, 0);
             decimal t;
 
             //Cash rounding (details: https://en.wikipedia.org/wiki/Cash_rounding)
