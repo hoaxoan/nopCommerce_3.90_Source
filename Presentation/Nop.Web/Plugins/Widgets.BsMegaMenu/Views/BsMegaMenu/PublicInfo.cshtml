@@ -81,7 +81,7 @@ foreach (var item in colCategoryList)
                                         }
                                     }
                         </div>
-                        <div class="row view-top-category">
+                        <div class="row view-top-category" style="display: none;">
                             <div class="col-xs-ten">
                                 <h2 class="category-title">@category.Name</h2>
                             </div>
@@ -91,7 +91,7 @@ foreach (var item in colCategoryList)
                                 </a>
                             </div>
                         </div>
-                        <div class="row category-items">
+                        <div class="row category-items" style="display: none;">
                             <div class="col-xs-twelve">
                                 <ul class="category-list">
                                     @for (var i = 0; i < @category.SubCategories.Count;)
