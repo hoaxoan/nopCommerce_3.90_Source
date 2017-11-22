@@ -1,0 +1,9 @@
+Group: Widgets
+FriendlyName: BsMegaMenu
+SystemName: Widgets.BsMegaMenu
+Version: 1.00
+SupportedVersions: 3.90
+Author: NopStation
+DisplayOrder: 10
+FileName: Nop.Plugin.Widgets.BsMegaMenu.dll
+Description: 
