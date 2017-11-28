@@ -1438,6 +1438,10 @@ label, label + * {
 	transition: all 0.3s ease;
 	-webkit-transform: translateZ(0) scale(1.0, 1.0);
 }
+.item-box:hover {
+	box-shadow: 0 1px 8px 2px rgba(0,0,0,.12);
+}
+
 .item-box:hover .picture a img {
 	opacity: 0.85;
 }
@@ -6456,6 +6460,7 @@ pre {
 .shopping-cart-page .product-grid .item-box {
 	width: 24%;
 	margin: 0 0.5% 50px;
+    padding: 15px;
 }
 .home-page .product-grid .item-box:nth-child(3n+1),
 .product-details-page .product-grid .item-box:nth-child(3n+1),
