@@ -1031,6 +1031,8 @@
     <Content Include="Views\Common\Logo.cshtml" />
     <Content Include="Views\Customer\EmailRevalidation.cshtml" />
     <Content Include="Views\Product\HomepageCatalogProducts.cshtml" />
+    <Content Include="Views\Shared\_HomePage.cshtml" />
+    <Content Include="Views\Shared\_HomePageRoot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

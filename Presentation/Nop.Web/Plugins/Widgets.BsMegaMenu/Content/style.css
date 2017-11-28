@@ -735,6 +735,10 @@
 
 .header-menu {
     padding: 0;
+}
+
+.home-page-menu {
+    padding: 0;
     z-index: 100;
     clear: none;
     box-shadow: 0 4px 6px rgba(150,150,150,.13);
