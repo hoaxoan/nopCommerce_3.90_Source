@@ -1411,10 +1411,11 @@ label, label + * {
 	text-align: left;
 }
 .item-box .picture {
+	position: relative;
 	z-index: 1;
 	overflow: hidden;
 	background-color: #fff;
-    margin: 0 0 20px;
+	margin: 0 0 20px;	
 }
 .item-box .picture a {
 	display: block;
@@ -1438,6 +1439,18 @@ label, label + * {
 	transition: all 0.3s ease;
 	-webkit-transform: translateZ(0) scale(1.0, 1.0);
 }
+
+.item-box .picture img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: auto;
+    -webkit-transform: translateZ(0) scale(1, 1)
+}
+
 .item-box:hover {
 	box-shadow: 0 1px 8px 2px rgba(0,0,0,.12);
 }
@@ -1553,7 +1566,70 @@ label, label + * {
 .vendor-grid {
 	margin: 0 0 20px;
 }
-.home-page-category-grid .title,
+
+.home-page-category-grid .item-box,
+.sub-category-grid .item-box {
+    max-width: none
+}
+
+.home-page-category-grid .item-box {
+    margin-bottom: 2px
+}
+
+.home-page-category-grid .category-item {
+    position: relative
+}
+
+.home-page-category-grid .picture {
+    margin: 0
+}
+
+.home-page-category-grid .item-box .title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    font-size: 18px;
+    line-height: 60px;
+    text-align: center;
+    color: #444
+}
+
+.home-page-category-grid .title a {
+    display: block;
+    height: 100%
+}
+
+.home-page-category-grid .title a span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 190px;
+    height: 60px;
+    margin: auto;
+    background-color: rgba(255, 255, 255, .8)
+}
+
+.home-page-category-grid .picture a:before,
+.sub-category-grid .picture a:before {
+    padding-top: 73%
+}
+
+.home-page-category-grid .hover-effect-2 .title a span {
+    top: auto;
+    width: 100%;
+    margin: 0;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease
+}
+
 .sub-category-grid .title {
 	text-align: center;
 	font-size: 22px;
@@ -1561,19 +1637,17 @@ label, label + * {
     -webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-.home-page-category-grid .title a,
 .sub-category-grid .title a {
 	display: block;
 	padding: 0 0 15px;
 }
-.home-page-category-grid .picture,
 .sub-category-grid .picture {
 	margin: 0;
 }
-.home-page-category-grid .picture a:before,
+
 .sub-category-grid .picture a:before {
 	padding-top: 65%;
-}
+} 
 
 .product-grid,
 .product-list {

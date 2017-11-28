@@ -8,10 +8,10 @@
             @foreach (var item in Model)
             {
                 <div class="item-box">
-                    <div class="category-item">
+                    <div class="category-item hover-effect-2">
                         <h2 class="title">
                             <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
-                                @item.Name
+                                <span>@item.Name</span>
                             </a>
                         </h2>
                         <div class="picture">
