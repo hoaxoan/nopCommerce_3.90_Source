@@ -1521,8 +1521,14 @@ namespace Nop.Web.Controllers
                 }
 
                 //Check whether payment workflow is required
+                // Payment method CashOnDelivery
+                bool isPaymentCashOnDelivery = false;
+                if(paymentmethod == "Payments.CashOnDelivery")
+                {
+                    isPaymentCashOnDelivery = true;
+                }
                 bool isPaymentWorkflowRequired = _orderProcessingService.IsPaymentWorkflowRequired(cart);
-                if (!isPaymentWorkflowRequired)
+                if (!isPaymentWorkflowRequired || isPaymentCashOnDelivery)
                 {
                     //payment is not required
                     _genericAttributeService.SaveAttribute<string>(_workContext.CurrentCustomer,

@@ -10,6 +10,15 @@
                 <strong>@T("Footer.Information")</strong>
             </div>
             <ul class="list">
+                <li class="address">
+                    <span><a>5th Avenue. London. 03SL40F</a></span>
+                </li>
+                <li class="email">
+                    <span><a>pavilion-store@gmail.com</a></span>
+                </li>
+                <li class="phone">
+                    <span>(028) 33 333 333</span>
+                </li>
                 @if (Model.SitemapEnabled)
                 {
                     <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
@@ -27,7 +36,7 @@
             </div>
             <ul class="list">
                 <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
-                @if (Model.NewsEnabled)
+                @*@if (Model.NewsEnabled)
                 {
                     <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
                 }
@@ -38,19 +47,19 @@
                 @if (Model.ForumEnabled)
                 {
                     <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
-                }
+                }*@
                 @if (Model.RecentlyViewedProductsEnabled)
                 {
                     <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
                 }
-                @if (Model.CompareProductsEnabled)
+                @*@if (Model.CompareProductsEnabled)
                 {
                     <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>
                 }
                 @if (Model.NewProductsEnabled)
                 {
                     <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
-                }
+                }*@
                 @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
                 {
                     <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
@@ -73,10 +82,10 @@
                 {
                     <li><a href="@Url.RouteUrl("Wishlist")">@T("Wishlist")</a></li>
                 }
-                @if (Model.AllowCustomersToApplyForVendorAccount)
+                @*@if (Model.AllowCustomersToApplyForVendorAccount)
                 {
                     <li><a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a></li>
-                }
+                }*@
                 @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
                 {
                     <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>

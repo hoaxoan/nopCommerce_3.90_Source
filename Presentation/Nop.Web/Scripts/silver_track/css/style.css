@@ -6,7 +6,8 @@
 }
 
 .view-port, .track .inner {
-  width: 946px;
+  /*width: 946px;*/
+  width: 100%;
 }
 
 .axis-y .view-port,
@@ -25,8 +26,8 @@
   position: relative;
 
   margin: auto;
-  margin-bottom: 30px;
-  padding: 10px;
+  /*margin-bottom: 30px;
+  padding: 10px;*/
 
   /*background: #F1F1F1;*/
   border-radius: 4px;
@@ -44,15 +45,25 @@
   color: #6A3;
 }
 
-.track a.prev,
+.track a.prev {
+  display: block;
+  position: absolute;
+  top: 50%;
+  margin-top: -32px;
+  width: 26px;
+  height: 53px;
+  background: url("../img/prev-horizontal-new.png");
+  background-repeat: no-repeat;
+}
+
 .track a.next {
   display: block;
   position: absolute;
   top: 50%;
   margin-top: -32px;
-  width: 64px;
-  height: 64px;
-  background: url("../img/arrows.png");
+  width: 26px;
+  height: 53px;
+  background: url("../img/next-horizontal-new.png");
   background-repeat: no-repeat;
 }
 
@@ -63,36 +74,35 @@
 
 .track a.prev {
   left: 0;
-  background-position: 0 0;
+  z-index: 1000;
 }
 
 .track a.prev:hover {
-  background-position: 0 -66px;
+  background-color: rgba(255,255,255,.8);
 }
 
 .track a.prev:active {
-  background-position: 0 -132px;
+  background-color: rgba(255,255,255,.8);
 }
 
 .track a.next {
   right: 0;
-  background-position: -64px 0;
+  z-index: 1000;
 }
 
 .track a.next:hover {
-  background-position: -64px -132px;
+  background-color: rgba(255,255,255,.8);
 }
 
 .track a.next:active {
-  background-position: -64px -198px;
+  background-color: rgba(255,255,255,.8);
 }
 
 .slider-container {
   position: relative;
   margin: 0;
   padding: 0;
-
-  height: 500px;
+  height: 424px;
 }
 
 .slider-container.big {

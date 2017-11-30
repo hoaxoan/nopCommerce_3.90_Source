@@ -10,4 +10,3 @@ E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Tax.FixedOrByCountryStat
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Tax.FixedOrByCountryStateZip\obj\Debug\Nop.Plugin.Tax.FixedOrByCountryStateZip.csproj.App.config
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Tax.FixedOrByCountryStateZip\obj\Debug\Nop.Plugin.Tax.FixedOrByCountryStateZip.dll
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Tax.FixedOrByCountryStateZip\obj\Debug\Nop.Plugin.Tax.FixedOrByCountryStateZip.pdb
-E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Tax.FixedOrByCountryStateZip\obj\Debug\Nop.Plugin.Tax.FixedOrByCountryStateZip.csprojResolveAssemblyReference.cache

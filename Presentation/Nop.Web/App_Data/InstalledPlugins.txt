@@ -19,3 +19,4 @@ Tax.FixedOrByCountryStateZip
 Widgets.GoogleAnalytics
 Widgets.NivoSlider
 Widgets.BsMegaMenu
+Payments.CashOnDelivery

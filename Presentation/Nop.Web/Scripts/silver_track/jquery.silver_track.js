@@ -77,12 +77,12 @@
       var duration = opts.animate ? this.options.duration : 0;
       var useCover = this.options.cover && (page === 1);
       var direction = page > this.currentPage ? "next" : "prev";
-      if (page == this.totalPages) {
-          direction = "next";
-      }
-      if (page == 1) {
-          direction = "prev";
-      }
+      //if (page == this.totalPages) {
+      //    direction = "next";
+      //}
+      //if (page == 1) {
+      //    direction = "prev";
+      //}
       var items = useCover ? this._getCover() : this._calculateItemsForPagination(page);
 
       if (!this._canPaginate(page)) {

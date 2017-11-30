@@ -27,3 +27,4 @@ E:\nopCommerce_3.90_Source\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Depl
 E:\nopCommerce_3.90_Source\Libraries\Nop.Core\bin\Debug\System.Web.WebPages.Razor.xml
 E:\nopCommerce_3.90_Source\Libraries\Nop.Core\obj\Debug\Nop.Core.dll
 E:\nopCommerce_3.90_Source\Libraries\Nop.Core\obj\Debug\Nop.Core.pdb
+E:\nopCommerce_3.90_Source\Libraries\Nop.Core\obj\Debug\Nop.Core.csprojResolveAssemblyReference.cache
