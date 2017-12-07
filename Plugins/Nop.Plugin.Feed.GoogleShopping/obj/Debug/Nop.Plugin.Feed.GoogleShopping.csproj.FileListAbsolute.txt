@@ -9,4 +9,3 @@ E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\Nop.
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.csproj.App.config
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.dll
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.pdb
-E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.csprojResolveAssemblyReference.cache

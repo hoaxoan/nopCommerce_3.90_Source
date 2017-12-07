@@ -7,6 +7,6 @@ E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Payments.CashOnDelivery\
 E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Payments.CashOnDelivery\Nop.Plugin.Payments.CashOnDelivery.dll
 E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Payments.CashOnDelivery\Nop.Plugin.Payments.CashOnDelivery.pdb
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PurchaseAfter\obj\Debug\Nop.Plugin.Payments.CashOnDelivery.csproj.App.config
-E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PurchaseAfter\obj\Debug\Nop.Plugin.Payments.CashOnDelivery.csprojResolveAssemblyReference.cache
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PurchaseAfter\obj\Debug\Nop.Plugin.Payments.CashOnDelivery.dll
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PurchaseAfter\obj\Debug\Nop.Plugin.Payments.CashOnDelivery.pdb
+E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PurchaseAfter\obj\Debug\Nop.Plugin.Payments.CashOnDelivery.csprojResolveAssemblyReference.cache

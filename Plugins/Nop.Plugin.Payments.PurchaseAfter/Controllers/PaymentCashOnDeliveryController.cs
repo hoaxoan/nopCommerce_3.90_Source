@@ -34,19 +34,19 @@ namespace Nop.Plugin.Payments.CashOnDelivery.Controllers
         {
             //load settings for a chosen store scope
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
-            var purchaseAfterPaymentSettings = _settingService.LoadSetting<CashOnDeliveryPaymentSettings>(storeScope);
+            var cashOnDeliveryPaymentSettings = _settingService.LoadSetting<CashOnDeliveryPaymentSettings>(storeScope);
 
             var model = new ConfigurationModel();
-            model.AdditionalFee = purchaseAfterPaymentSettings.AdditionalFee;
-            model.AdditionalFeePercentage = purchaseAfterPaymentSettings.AdditionalFeePercentage;
-            model.ShippableProductRequired = purchaseAfterPaymentSettings.ShippableProductRequired;
+            model.AdditionalFee = cashOnDeliveryPaymentSettings.AdditionalFee;
+            model.AdditionalFeePercentage = cashOnDeliveryPaymentSettings.AdditionalFeePercentage;
+            model.ShippableProductRequired = cashOnDeliveryPaymentSettings.ShippableProductRequired;
 
             model.ActiveStoreScopeConfiguration = storeScope;
             if (storeScope > 0)
             {
-                model.AdditionalFee_OverrideForStore = _settingService.SettingExists(purchaseAfterPaymentSettings, x => x.AdditionalFee, storeScope);
-                model.AdditionalFeePercentage_OverrideForStore = _settingService.SettingExists(purchaseAfterPaymentSettings, x => x.AdditionalFeePercentage, storeScope);
-                model.ShippableProductRequired_OverrideForStore = _settingService.SettingExists(purchaseAfterPaymentSettings, x => x.ShippableProductRequired, storeScope);
+                model.AdditionalFee_OverrideForStore = _settingService.SettingExists(cashOnDeliveryPaymentSettings, x => x.AdditionalFee, storeScope);
+                model.AdditionalFeePercentage_OverrideForStore = _settingService.SettingExists(cashOnDeliveryPaymentSettings, x => x.AdditionalFeePercentage, storeScope);
+                model.ShippableProductRequired_OverrideForStore = _settingService.SettingExists(cashOnDeliveryPaymentSettings, x => x.ShippableProductRequired, storeScope);
             }
 
             return View("~/Plugins/Payments.PurchaseAfter/Views/Configure.cshtml", model);
@@ -62,19 +62,19 @@ namespace Nop.Plugin.Payments.CashOnDelivery.Controllers
 
             //load settings for a chosen store scope
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
-            var purchaseAfterPaymentSettings = _settingService.LoadSetting<CashOnDeliveryPaymentSettings>(storeScope);
+            var cashOnDeliveryPaymentSettings = _settingService.LoadSetting<CashOnDeliveryPaymentSettings>(storeScope);
 
             //save settings
-            purchaseAfterPaymentSettings.AdditionalFee = model.AdditionalFee;
-            purchaseAfterPaymentSettings.AdditionalFeePercentage = model.AdditionalFeePercentage;
-            purchaseAfterPaymentSettings.ShippableProductRequired = model.ShippableProductRequired;
+            cashOnDeliveryPaymentSettings.AdditionalFee = model.AdditionalFee;
+            cashOnDeliveryPaymentSettings.AdditionalFeePercentage = model.AdditionalFeePercentage;
+            cashOnDeliveryPaymentSettings.ShippableProductRequired = model.ShippableProductRequired;
 
             /* We do not clear cache after each setting update.
              * This behavior can increase performance because cached settings will not be cleared 
              * and loaded from database after each update */
-            _settingService.SaveSettingOverridablePerStore(purchaseAfterPaymentSettings, x => x.AdditionalFee, model.AdditionalFee_OverrideForStore , storeScope, false);
-            _settingService.SaveSettingOverridablePerStore(purchaseAfterPaymentSettings, x => x.AdditionalFeePercentage, model.AdditionalFeePercentage_OverrideForStore , storeScope, false);
-            _settingService.SaveSettingOverridablePerStore(purchaseAfterPaymentSettings, x => x.ShippableProductRequired, model.ShippableProductRequired_OverrideForStore, storeScope, false);
+            _settingService.SaveSettingOverridablePerStore(cashOnDeliveryPaymentSettings, x => x.AdditionalFee, model.AdditionalFee_OverrideForStore , storeScope, false);
+            _settingService.SaveSettingOverridablePerStore(cashOnDeliveryPaymentSettings, x => x.AdditionalFeePercentage, model.AdditionalFeePercentage_OverrideForStore , storeScope, false);
+            _settingService.SaveSettingOverridablePerStore(cashOnDeliveryPaymentSettings, x => x.ShippableProductRequired, model.ShippableProductRequired_OverrideForStore, storeScope, false);
             
             //now clear settings cache
             _settingService.ClearCache();
@@ -91,7 +91,6 @@ namespace Nop.Plugin.Payments.CashOnDelivery.Controllers
             
             //set postback values
             var form = this.Request.Form;
-            model.PurchaseOrderNumber = form["PurchaseOrderNumber"];
 
             return View("~/Plugins/Payments.CashOnDelivery/Views/PaymentInfo.cshtml", model);
         }
@@ -107,7 +106,6 @@ namespace Nop.Plugin.Payments.CashOnDelivery.Controllers
         public override ProcessPaymentRequest GetPaymentInfo(FormCollection form)
         {
             var paymentInfo = new ProcessPaymentRequest();
-            paymentInfo.CustomValues.Add(_localizationService.GetResource("Plugins.Payment.CashOnDelivery.PurchaseOrderNumber"), form["PurchaseOrderNumber"]);
             return paymentInfo;
         }
     }

@@ -13,3 +13,4 @@ E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Shipping.FixedOrByWeight
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Shipping.FixedOrByWeight\obj\Debug\Nop.Plugin.Shipping.FixedOrByWeight.csproj.App.config
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Shipping.FixedOrByWeight\obj\Debug\Nop.Plugin.Shipping.FixedOrByWeight.dll
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Shipping.FixedOrByWeight\obj\Debug\Nop.Plugin.Shipping.FixedOrByWeight.pdb
+E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Shipping.FixedOrByWeight\obj\Debug\Nop.Plugin.Shipping.FixedOrByWeight.csprojResolveAssemblyReference.cache

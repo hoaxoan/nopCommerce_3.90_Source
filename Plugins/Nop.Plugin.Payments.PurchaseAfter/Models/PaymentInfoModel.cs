@@ -6,8 +6,5 @@ namespace Nop.Plugin.Payments.CashOnDelivery.Models
 {
     public class PaymentInfoModel : BaseNopModel
     {
-        [NopResourceDisplayName("Plugins.Payment.CashOnDelivery.PurchaseOrderNumber")]
-        [AllowHtml]
-        public string PurchaseOrderNumber { get; set; }
     }
 }
