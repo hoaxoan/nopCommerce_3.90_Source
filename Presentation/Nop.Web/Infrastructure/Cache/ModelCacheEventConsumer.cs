@@ -680,6 +680,28 @@ namespace Nop.Web.Infrastructure.Cache
         public const string STATEPROVINCES_PATTERN_KEY = "Nop.pres.stateprovinces";
 
         /// <summary>
+        /// Key for districts by state/province id
+        /// </summary>
+        /// <remarks>
+        /// {0} : stateprovince ID
+        /// {1} : "empty" or "select" item
+        /// {2} : language ID
+        /// </remarks>
+        public const string DISTRICTS_BY_STATEPROVICE_MODEL_KEY = "Nop.pres.districts.bystateprovince-{0}-{1}-{2}";
+        public const string DISTRICTS_PATTERN_KEY = "Nop.pres.districts";
+
+        /// <summary>
+        /// Key for wards by district id
+        /// </summary>
+        /// <remarks>
+        /// {0} : district ID
+        /// {1} : "empty" or "select" item
+        /// {2} : language ID
+        /// </remarks>
+        public const string WARDS_BY_DISTRICT_MODEL_KEY = "Nop.pres.wards.bycountry-{0}-{1}-{2}";
+        public const string WARDS_PATTERN_KEY = "Nop.pres.wards";
+
+        /// <summary>
         /// Key for return request reasons
         /// </summary>
         /// <remarks>

@@ -45,35 +45,45 @@
                             @Model.BillingAddress.Address2
                         </li>
                     }
-                    @if (Model.BillingAddress.CityEnabled ||
-                         Model.BillingAddress.StateProvinceEnabled ||
-                         Model.BillingAddress.ZipPostalCodeEnabled)
+                    @if (Model.BillingAddress.StateProvinceEnabled ||
+                        Model.BillingAddress.DistrictEnabled ||
+                        Model.BillingAddress.WardEnabled)
                     {
+                        var cityStateZip = "";
+                        if (Model.BillingAddress.WardEnabled)
+                        {
+                            if (!String.IsNullOrEmpty(cityStateZip))
+                            {
+                                cityStateZip += ", ";
+                            }
+                            cityStateZip += Model.BillingAddress.WardName;
+                        }
+                        if (Model.BillingAddress.DistrictEnabled)
+                        {
+                            if (!String.IsNullOrEmpty(cityStateZip))
+                            {
+                                cityStateZip += ", ";
+                            }
+                            cityStateZip += Model.BillingAddress.DistrictName;
+                        }
+                        if (Model.BillingAddress.StateProvinceEnabled)
+                        {
+                            if (!String.IsNullOrEmpty(cityStateZip))
+                            {
+                                cityStateZip += ", ";
+                            }
+                            cityStateZip += Model.BillingAddress.StateProvinceName;
+                        }
                         <li class="city-state-zip">
-                            @if (Model.BillingAddress.CityEnabled)
-                            {
-                                @Model.BillingAddress.City
-                            }
-                            @if (Model.BillingAddress.CityEnabled && (Model.BillingAddress.StateProvinceEnabled || Model.BillingAddress.ZipPostalCodeEnabled))
-                            {
-                                <text>,</text>
-                            }
-                            @if (Model.BillingAddress.StateProvinceEnabled)
-                            {
-                                @Model.BillingAddress.StateProvinceName
-                            }
-                            @if (Model.BillingAddress.ZipPostalCodeEnabled)
-                            {
-                                @Model.BillingAddress.ZipPostalCode
-                            }
+                            @cityStateZip
                         </li>
                     }
-                    @if (Model.BillingAddress.CountryEnabled && !String.IsNullOrEmpty(Model.BillingAddress.CountryName))
+                    @*@if (Model.BillingAddress.CountryEnabled && !String.IsNullOrEmpty(Model.BillingAddress.CountryName))
                     {
                         <li class="country">
                             @Model.BillingAddress.CountryName
                         </li>
-                    }
+                    }*@
                     @if (!String.IsNullOrEmpty(Model.BillingAddress.FormattedCustomAddressAttributes))
                     {
                         <li class="custom-attributes-view">
@@ -162,35 +172,45 @@
                                     @Model.ShippingAddress.Address2
                                 </li>
                             }
-                            if (Model.ShippingAddress.CityEnabled ||
-                                Model.ShippingAddress.StateProvinceEnabled ||
-                                Model.ShippingAddress.ZipPostalCodeEnabled)
+                            if (Model.ShippingAddress.StateProvinceEnabled ||
+                                Model.ShippingAddress.DistrictEnabled ||
+                                Model.ShippingAddress.WardEnabled)
                             {
+                                var cityStateZip = "";
+                                if (Model.ShippingAddress.WardEnabled)
+                                {
+                                    if (!String.IsNullOrEmpty(cityStateZip))
+                                    {
+                                        cityStateZip += ", ";
+                                    }
+                                    cityStateZip += Model.ShippingAddress.WardName;
+                                }
+                                if (Model.ShippingAddress.DistrictEnabled)
+                                {
+                                    if (!String.IsNullOrEmpty(cityStateZip))
+                                    {
+                                        cityStateZip += ", ";
+                                    }
+                                    cityStateZip += Model.ShippingAddress.DistrictName;
+                                }
+                                if (Model.ShippingAddress.StateProvinceEnabled)
+                                {
+                                    if (!String.IsNullOrEmpty(cityStateZip))
+                                    {
+                                        cityStateZip += ", ";
+                                    }
+                                    cityStateZip += Model.ShippingAddress.StateProvinceName;
+                                }
                                 <li class="city-state-zip">
-                                    @if (Model.ShippingAddress.CityEnabled)
-                                    {
-                                        @Model.ShippingAddress.City
-                                    }
-                                    @if (Model.ShippingAddress.CityEnabled && (Model.ShippingAddress.StateProvinceEnabled || Model.ShippingAddress.ZipPostalCodeEnabled))
-                                    {
-                                        <text>,</text>
-                                    }
-                                    @if (Model.ShippingAddress.StateProvinceEnabled)
-                                    {
-                                        @Model.ShippingAddress.StateProvinceName
-                                    }
-                                    @if (Model.ShippingAddress.ZipPostalCodeEnabled)
-                                    {
-                                        @Model.ShippingAddress.ZipPostalCode
-                                    }
+                                    @cityStateZip
                                 </li>
                             }
-                            if (Model.ShippingAddress.CountryEnabled && !String.IsNullOrEmpty(Model.ShippingAddress.CountryName))
+                            @*if (Model.ShippingAddress.CountryEnabled && !String.IsNullOrEmpty(Model.ShippingAddress.CountryName))
                             {
                                 <li class="country">
                                     @Model.ShippingAddress.CountryName
                                 </li>
-                            }
+                            }*@
                             if (!String.IsNullOrEmpty(Model.ShippingAddress.FormattedCustomAddressAttributes))
                             {
                                 <li class="custom-attributes-view">

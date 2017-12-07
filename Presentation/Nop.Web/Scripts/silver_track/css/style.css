@@ -34,11 +34,11 @@
 }
 
 .track .inner h2 {
-  font-weight: 200;
-  font-family: Helvetica,Arial,Verdana,sans-serif;
+  font-weight: 500;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
-  color: #999;
+  color: #4ab2f1;
 }
 
 .track .inner h2:hover {

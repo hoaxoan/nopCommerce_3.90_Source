@@ -26,6 +26,8 @@ namespace Nop.Web.Factories
         private readonly IAddressAttributeParser _addressAttributeParser;
         private readonly ILocalizationService _localizationService;
         private readonly IStateProvinceService _stateProvinceService;
+        private readonly IDistrictService _districtService;
+        private readonly IWardService _wardService;
         private readonly IAddressAttributeFormatter _addressAttributeFormatter;
 
         #endregion
@@ -36,12 +38,16 @@ namespace Nop.Web.Factories
             IAddressAttributeParser addressAttributeParser,
             ILocalizationService localizationService,
             IStateProvinceService stateProvinceService,
+            IDistrictService districtService,
+            IWardService wardService,
             IAddressAttributeFormatter addressAttributeFormatter)
         {
             this._addressAttributeService = addressAttributeService;
             this._addressAttributeParser = addressAttributeParser;
             this._localizationService = localizationService;
             this._stateProvinceService = stateProvinceService;
+            this._districtService = districtService;
+            this._wardService = wardService;
             this._addressAttributeFormatter = addressAttributeFormatter;
         }
 
@@ -183,6 +189,14 @@ namespace Nop.Web.Factories
                 model.StateProvinceName = address.StateProvince != null
                     ? address.StateProvince.GetLocalized(x => x.Name)
                     : null;
+                model.DistrictId = address.DistrictId;
+                model.DistrictName = address.District != null
+                    ? address.District.GetLocalized(x => x.Name)
+                    : null;
+                model.WardId = address.WardId;
+                model.WardName = address.Ward != null
+                    ? address.Ward.GetLocalized(x => x.Name)
+                    : null;
                 model.City = address.City;
                 model.Address1 = address.Address1;
                 model.Address2 = address.Address2;
@@ -232,7 +246,7 @@ namespace Nop.Web.Factories
                         .ToList();
                     if (states.Any())
                     {
-                        model.AvailableStates.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectState"), Value = "0" });
+                        //model.AvailableStates.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectState"), Value = "0" });
 
                         foreach (var s in states)
                         {
@@ -247,11 +261,75 @@ namespace Nop.Web.Factories
                     else
                     {
                         bool anyCountrySelected = model.AvailableCountries.Any(x => x.Selected);
-                        model.AvailableStates.Add(new SelectListItem
+                        //model.AvailableStates.Add(new SelectListItem
+                        //{
+                        //    Text = _localizationService.GetResource(anyCountrySelected ? "Address.OtherNonUS" : "Address.SelectState"),
+                        //    Value = "0"
+                        //});
+                    }
+                }
+
+                // Districts
+                if (addressSettings.StateProvinceEnabled)
+                {
+                    var languageId = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Id;
+                    var districts = _districtService
+                        .GetDistrictsByStateProvinceId(model.StateProvinceId.HasValue ? model.StateProvinceId.Value : 0, languageId)
+                        .ToList();
+                    if (districts.Any())
+                    {
+                        model.AvailableDistricts.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectState"), Value = "0" });
+
+                        foreach (var s in districts)
                         {
-                            Text = _localizationService.GetResource(anyCountrySelected ? "Address.OtherNonUS" : "Address.SelectState"),
-                            Value = "0"
-                        });
+                            model.AvailableDistricts.Add(new SelectListItem
+                            {
+                                Text = s.GetLocalized(x => x.Name),
+                                Value = s.Id.ToString(),
+                                Selected = (s.Id == model.StateProvinceId)
+                            });
+                        }
+                    }
+                    else
+                    {
+                        bool anyStateSelected = model.AvailableStates.Any(x => x.Selected);
+                        //model.AvailableDistricts.Add(new SelectListItem
+                        //{
+                        //    Text = _localizationService.GetResource(anyStateSelected ? "Address.OtherNonUS" : "Address.SelectState"),
+                        //    Value = "0"
+                        //});
+                    }
+                }
+
+                // Wards
+                if (addressSettings.StateProvinceEnabled)
+                {
+                    var languageId = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Id;
+                    var wards = _wardService
+                        .GetWardsByDistrictId(model.DistrictId.HasValue ? model.DistrictId.Value : 0, languageId)
+                        .ToList();
+                    if (wards.Any())
+                    {
+                        model.AvailableWards.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectState"), Value = "0" });
+
+                        foreach (var s in wards)
+                        {
+                            model.AvailableWards.Add(new SelectListItem
+                            {
+                                Text = s.GetLocalized(x => x.Name),
+                                Value = s.Id.ToString(),
+                                Selected = (s.Id == model.DistrictId)
+                            });
+                        }
+                    }
+                    else
+                    {
+                        bool anyDistrictSelected = model.AvailableDistricts.Any(x => x.Selected);
+                        //model.AvailableWards.Add(new SelectListItem
+                        //{
+                        //    Text = _localizationService.GetResource(anyDistrictSelected ? "Address.OtherNonUS" : "Address.SelectState"),
+                        //    Value = "0"
+                        //});
                     }
                 }
             }
@@ -269,6 +347,8 @@ namespace Nop.Web.Factories
             model.CityRequired = addressSettings.CityRequired;
             model.CountryEnabled = addressSettings.CountryEnabled;
             model.StateProvinceEnabled = addressSettings.StateProvinceEnabled;
+            model.DistrictEnabled = addressSettings.StateProvinceEnabled;
+            model.WardEnabled = addressSettings.StateProvinceEnabled;
             model.PhoneEnabled = addressSettings.PhoneEnabled;
             model.PhoneRequired = addressSettings.PhoneRequired;
             model.FaxEnabled = addressSettings.FaxEnabled;

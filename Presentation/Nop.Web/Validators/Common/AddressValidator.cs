@@ -13,14 +13,16 @@ namespace Nop.Web.Validators.Common
     {
         public AddressValidator(ILocalizationService localizationService,
             IStateProvinceService stateProvinceService,
+            IDistrictService districtService,
+            IWardService wardService,
             AddressSettings addressSettings)
         {
             RuleFor(x => x.FirstName)
                 .NotEmpty()
                 .WithMessage(localizationService.GetResource("Address.Fields.FirstName.Required"));
-            RuleFor(x => x.LastName)
-                .NotEmpty()
-                .WithMessage(localizationService.GetResource("Address.Fields.LastName.Required"));
+            //RuleFor(x => x.LastName)
+            //    .NotEmpty()
+            //    .WithMessage(localizationService.GetResource("Address.Fields.LastName.Required"));
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .WithMessage(localizationService.GetResource("Address.Fields.Email.Required"));
@@ -50,6 +52,44 @@ namespace Nop.Web.Validators.Common
                         if (!x.StateProvinceId.HasValue || x.StateProvinceId.Value == 0)
                         {
                             return new ValidationFailure("StateProvinceId", localizationService.GetResource("Address.Fields.StateProvince.Required"));
+                        }
+                    }
+                    return null;
+                });
+            }
+            if (addressSettings.StateProvinceEnabled && addressSettings.StateProvinceEnabled)
+            {
+                Custom(x =>
+                {
+                    //does selected state has districts?
+                    var stateProvinceId = x.StateProvinceId.HasValue ? x.StateProvinceId.Value : 0;
+                    var hasDistricts = districtService.GetDistrictsByStateProvinceId(stateProvinceId).Any();
+
+                    if (hasDistricts)
+                    {
+                        //if yes, then ensure that district is selected
+                        if (!x.DistrictId.HasValue || x.DistrictId.Value == 0)
+                        {
+                            return new ValidationFailure("DistrictId", localizationService.GetResource("Address.Fields.District.Required"));
+                        }
+                    }
+                    return null;
+                });
+            }
+            if (addressSettings.StateProvinceEnabled && addressSettings.StateProvinceEnabled)
+            {
+                Custom(x =>
+                {
+                    //does selected district has wards?
+                    var districtId = x.DistrictId.HasValue ? x.DistrictId.Value : 0;
+                    var hasWards = wardService.GetWardsByDistrictId(districtId).Any();
+
+                    if (hasWards)
+                    {
+                        //if yes, then ensure that ward is selected
+                        if (!x.WardId.HasValue || x.WardId.Value == 0)
+                        {
+                            return new ValidationFailure("WardId", localizationService.GetResource("Address.Fields.Ward.Required"));
                         }
                     }
                     return null;

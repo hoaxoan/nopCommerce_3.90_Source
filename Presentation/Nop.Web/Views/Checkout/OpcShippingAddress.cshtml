@@ -203,6 +203,14 @@
                                 {
                                     addressLine += ", " + address.City;
                                 }
+                                if (address.WardEnabled && !String.IsNullOrEmpty(address.WardName))
+                                {
+                                    addressLine += ", " + address.WardName;
+                                }
+                                if (address.DistrictEnabled && !String.IsNullOrEmpty(address.DistrictName))
+                                {
+                                    addressLine += ", " + address.DistrictName;
+                                }
                                 if (address.StateProvinceEnabled && !String.IsNullOrEmpty(address.StateProvinceName))
                                 {
                                     addressLine += ", " + address.StateProvinceName;

@@ -212,6 +212,8 @@ namespace Nop.Web.Framework
             builder.RegisterType<CurrencyService>().As<ICurrencyService>().InstancePerLifetimeScope();
             builder.RegisterType<MeasureService>().As<IMeasureService>().InstancePerLifetimeScope();
             builder.RegisterType<StateProvinceService>().As<IStateProvinceService>().InstancePerLifetimeScope();
+            builder.RegisterType<DistrictService>().As<IDistrictService>().InstancePerLifetimeScope();
+            builder.RegisterType<WardService>().As<IWardService>().InstancePerLifetimeScope();
 
             builder.RegisterType<StoreService>().As<IStoreService>().InstancePerLifetimeScope();
             //use static cache (between HTTP requests)

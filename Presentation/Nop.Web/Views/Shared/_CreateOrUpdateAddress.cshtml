@@ -4,6 +4,8 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
+
+            // Country change
             $("#@Html.FieldIdFor(model => model.CountryId)").change(function () {
                 var selectedItem = $(this).val();
                 var ddlStates = $("#@Html.FieldIdFor(model => model.StateProvinceId)");
@@ -14,6 +16,56 @@
                     type: "GET",
                     url: "@(Url.RouteUrl("GetStatesByCountryId"))",
                     data: { "countryId": selectedItem, "addSelectStateItem": "true" },
+                    success: function (data) {
+                        ddlStates.html('');
+                        $.each(data, function (id, option) {
+                            ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                        });
+                        statesProgress.hide();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve states.');
+                        statesProgress.hide();
+                    }
+                });
+            });
+
+            // State/province change
+            $("#@Html.FieldIdFor(model => model.StateProvinceId)").change(function () {
+                var selectedItem = $(this).val();
+                var ddlStates = $("#@Html.FieldIdFor(model => model.DistrictId)");
+                var statesProgress = $("#states-loading-progress");
+                statesProgress.show();
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.Action("GetDistrictsByStateProvinceId", "Country"))",
+                    data: { "stateProvinceId": selectedItem, "addSelectStateItem": "true" },
+                    success: function (data) {
+                        ddlStates.html('');
+                        $.each(data, function (id, option) {
+                            ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                        });
+                        statesProgress.hide();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve states.');
+                        statesProgress.hide();
+                    }
+                });
+            });
+
+            // Districts change
+            $("#@Html.FieldIdFor(model => model.DistrictId)").change(function () {
+                var selectedItem = $(this).val();
+                var ddlStates = $("#@Html.FieldIdFor(model => model.WardId)");
+                var statesProgress = $("#states-loading-progress");
+                statesProgress.show();
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.Action("GetWardsByDistrictId", "Country"))",
+                    data: { "districtId": selectedItem, "addSelectStateItem": "true" },
                     success: function (data) {
                         ddlStates.html('');
                         $.each(data, function (id, option) {
@@ -38,20 +90,19 @@
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.FirstName)
     </div>
-    <div class="inputs">
+    @*<div class="inputs">
         @Html.LabelFor(model => model.LastName, new { }, ":")
             @Html.EditorFor(model => model.LastName)
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.LastName)
-
-    </div>
+    </div>*@
     <div class="inputs">
         @Html.LabelFor(model => model.Email, new { }, ":")
             @Html.EditorFor(model => model.Email)
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.Email)
     </div>
-    @if (Model.CompanyEnabled)
+    @*@if (Model.CompanyEnabled)
     {
         <div class="inputs">
             @Html.LabelFor(model => model.Company, new { }, ":")
@@ -62,7 +113,7 @@
             }
             @Html.ValidationMessageFor(model => model.Company)
         </div>
-    }
+    }*@
     @if (Model.CountryEnabled)
     {
         <div class="inputs">
@@ -79,10 +130,34 @@
             @Html.LabelFor(model => model.StateProvinceId, new { }, ":")
                 @Html.DropDownListFor(model => model.StateProvinceId, Model.AvailableStates)
             <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
+            @Html.RequiredHint()
             @Html.ValidationMessageFor(model => model.StateProvinceId)
         </div>
     }
-    @if (Model.CityEnabled)
+
+    @if (Model.StateProvinceEnabled && Model.DistrictEnabled)
+    {
+        <div class="inputs">
+            @Html.LabelFor(model => model.DistrictId, new { }, ":")
+            @Html.DropDownListFor(model => model.DistrictId, Model.AvailableDistricts)
+            <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
+            @Html.RequiredHint()
+            @Html.ValidationMessageFor(model => model.DistrictId)
+        </div>
+    }
+
+    @if (Model.DistrictEnabled && Model.WardEnabled)
+    {
+        <div class="inputs">
+            @Html.LabelFor(model => model.WardId, new { }, ":")
+            @Html.DropDownListFor(model => model.WardId, Model.AvailableWards)
+            <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
+            @Html.RequiredHint()
+            @Html.ValidationMessageFor(model => model.WardId)
+        </div>
+    }
+
+    @*@if (Model.CityEnabled)
     {
         <div class="inputs">
             @Html.LabelFor(model => model.City, new { }, ":")
@@ -94,7 +169,7 @@
             }
             @Html.ValidationMessageFor(model => model.City)
         </div>
-    }
+    }*@
     @if (Model.StreetAddressEnabled)
     {
         <div class="inputs">
@@ -107,7 +182,7 @@
             @Html.ValidationMessageFor(model => model.Address1)
         </div>
     }
-    @if (Model.StreetAddress2Enabled)
+    @*@if (Model.StreetAddress2Enabled)
     {
         <div class="inputs">
             @Html.LabelFor(model => model.Address2, new { }, ":")
@@ -118,8 +193,8 @@
             }
             @Html.ValidationMessageFor(model => model.Address2)
         </div>
-    }
-    @if (Model.ZipPostalCodeEnabled)
+    }*@
+    @*@if (Model.ZipPostalCodeEnabled)
     {
         <div class="inputs">
             @Html.LabelFor(model => model.ZipPostalCode, new { }, ":")
@@ -130,7 +205,7 @@
             }
             @Html.ValidationMessageFor(model => model.ZipPostalCode)
         </div>
-    }
+    }*@
     @if (Model.PhoneEnabled)
     {
         <div class="inputs">
@@ -143,7 +218,7 @@
             @Html.ValidationMessageFor(model => model.PhoneNumber)
         </div>
     }
-    @if (Model.FaxEnabled)
+    @*@if (Model.FaxEnabled)
     {
         <div class="inputs">
             @Html.LabelFor(model => model.FaxNumber, new { }, ":")
@@ -154,7 +229,7 @@
             }
             @Html.ValidationMessageFor(model => model.FaxNumber)
         </div>
-    }
+    }*@
     @if (Model.CustomAddressAttributes.Count > 0)
     {
         @Html.Partial("_AddressAttributes", Model.CustomAddressAttributes)

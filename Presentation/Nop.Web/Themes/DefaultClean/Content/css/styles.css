@@ -65,8 +65,9 @@ body {
     max-width: 100%;
 	overflow-x: hidden;
 	background-color: #fff;
-	font: normal 14px Arial, Helvetica, sans-serif;
-    color: #777;
+	font: normal 14px Roboto,Helvetica,Arial,sans-serif;
+    font-family: Roboto,Helvetica,sans-serif;
+    color: #263238;
 }
 h1,h2,h3,h4,h5,h6 {
 	color: #444;
@@ -92,7 +93,7 @@ textarea, select {
 }
 input, textarea, select {
 	font-size: 14px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Roboto,Arial,Helvetica,sans-serif;
 	color: #777;
 }
 textarea {
@@ -1537,7 +1538,7 @@ label, label + * {
 .item-box .product-title {
 	margin: 0 0 10px;
 	overflow: hidden;
-	font-size: 17px;
+	font-size: 16px;
     line-height: 1.2;
 	font-weight: normal;
 	color: #4ab2f1;
@@ -1583,8 +1584,8 @@ label, label + * {
 }
 .item-box .actual-price {
 	margin: 0 5px 0 0;
-	font-size: 16px;
-	color: #666;
+	font-size: 17px;
+	color: #d21f30;
 }
 .item-box .tax-shipping-info a {
 	color: #4ab2f1;
@@ -1617,7 +1618,7 @@ label, label + * {
 .item-box .add-to-wishlist-button {
 	width: 20%;
 	border-left: 1px solid #fff !important;
-	background-color: #eaeaea;
+	background-color: #ececec;
 	background-position: center;
 	background-repeat: no-repeat;
 	font-size: 0;
@@ -5094,7 +5095,7 @@ label, label + * {
 	/*override jQuery UI styles, do not delete doubled properties*/
 	line-height: normal;
 	font-size: 14px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Roboto, Arial, Helvetica, sans-serif;
 	color: #777;
 }
 .profile-info-box .user-details {
@@ -5116,7 +5117,7 @@ label, label + * {
 	/*override jQuery UI styles, do not delete doubled properties*/
 	line-height: normal;
 	font-size: 14px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Roboto, Arial, Helvetica, sans-serif;
 	color: #777;
 }
 .latest-posts .topic {
@@ -6624,18 +6625,24 @@ pre {
 	clear: both;
 }
 
-.product-grid .item-box:hover,
-.manufacturer-grid .item-box:hover,
-.vendor-grid .item-box:hover {
-	box-shadow: 0 1px 8px 2px rgba(0, 0, 0, .12)
-}
-
 .product-grid .item-box,
 .manufacturer-grid .item-box,
 .vendor-grid .item-box {
 	width: 33.33333%;
 	margin: 0 0 25px;
 	padding: 15px
+}
+
+.sub-category-grid .item-box:hover,
+.manufacturer-grid .item-box:hover {
+	opacity: .9
+}
+
+
+.product-grid .item-box:hover,
+.manufacturer-grid .item-box:hover,
+.vendor-grid .item-box:hover {
+	box-shadow: 0 1px 8px 2px rgba(0, 0, 0, .12)
 }
 
 /*** PRODUCT PAGE ***/
@@ -7068,4 +7075,130 @@ pre {
     max-width: 100%;
 }
 
+}
+
+
+
+.ribbon-wrapper {
+    position: relative
+}
+
+@media all and (min-width:769px) {
+    .product-list .ribbon-wrapper {
+        float: left
+    }
+}
+
+.ribbon-position {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    z-index: 1;
+    -webkit-transition: all .15s ease-in-out;
+    -moz-transition: all .15s ease-in-out;
+    -o-transition: all .15s ease-in-out;
+    transition: all .15s ease-in-out
+}
+
+.ribbon-position.top-left {
+    top: 0;
+    left: 0
+}
+
+.ribbon-position.top-right {
+    top: 0;
+    right: 0
+}
+
+.ribbon-position.bottom-left {
+    bottom: 0;
+    left: 0
+}
+
+.ribbon-position.bottom-right {
+    bottom: 0;
+    right: 0
+}
+
+.ribbon-position.top-middle {
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center
+}
+
+.ribbon-position.right-middle,
+.ribbon-position.left-middle {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: right
+}
+
+.ribbon-position.bottom-middle {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center
+}
+
+.ribbon-position.left-middle {
+    text-align: left
+}
+
+.ribbon-position.center {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center
+}
+
+.ribbon-position.right-middle:before,
+.ribbon-position.left-middle:before,
+.ribbon-position.center:before {
+    content: " ";
+    display: inline-block;
+    height: 100%;
+    width: 0;
+    vertical-align: middle
+}
+
+.product-ribbon {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative
+}
+
+.ribbon-text {
+    font-size: 12px;
+    line-height: normal
+}
+
+.ribbon-image-text {
+    font-size: 12px;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+@media all and (max-width:768px) {
+    .product-list .item-box .ribbon-wrapper {
+        float: none
+    }
+}
+
+@media all and (min-width:769px) {
+    .product-list .item-box .ribbon-wrapper {
+        width: 200px
+    }
+    .product-list .item-box .ribbon-wrapper .picture {
+        float: none;
+        width: auto
+    }
+    .product-list .item-box .ribbon-wrapper+.details {
+        margin: 0 0 0 220px
+    }
 }

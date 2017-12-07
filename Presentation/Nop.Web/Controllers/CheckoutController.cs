@@ -349,6 +349,7 @@ namespace Nop.Web.Controllers
                     model.NewAddress.Email, model.NewAddress.FaxNumber, model.NewAddress.Company,
                     model.NewAddress.Address1, model.NewAddress.Address2, model.NewAddress.City,
                     model.NewAddress.StateProvinceId, model.NewAddress.ZipPostalCode,
+                    model.NewAddress.DistrictId, model.NewAddress.WardId,
                     model.NewAddress.CountryId, customAttributes);
                 if (address == null)
                 {
@@ -511,6 +512,7 @@ namespace Nop.Web.Controllers
                     model.NewAddress.Email, model.NewAddress.FaxNumber, model.NewAddress.Company,
                     model.NewAddress.Address1, model.NewAddress.Address2, model.NewAddress.City,
                     model.NewAddress.StateProvinceId, model.NewAddress.ZipPostalCode,
+                    model.NewAddress.DistrictId, model.NewAddress.WardId,
                     model.NewAddress.CountryId, customAttributes);
                 if (address == null)
                 {
@@ -1200,6 +1202,7 @@ namespace Nop.Web.Controllers
                         model.NewAddress.Email, model.NewAddress.FaxNumber, model.NewAddress.Company,
                         model.NewAddress.Address1, model.NewAddress.Address2, model.NewAddress.City,
                         model.NewAddress.StateProvinceId, model.NewAddress.ZipPostalCode,
+                        model.NewAddress.DistrictId, model.NewAddress.WardId,
                         model.NewAddress.CountryId, customAttributes);
                     if (address == null)
                     {
@@ -1383,6 +1386,7 @@ namespace Nop.Web.Controllers
                         model.NewAddress.Email, model.NewAddress.FaxNumber, model.NewAddress.Company,
                         model.NewAddress.Address1, model.NewAddress.Address2, model.NewAddress.City,
                         model.NewAddress.StateProvinceId, model.NewAddress.ZipPostalCode,
+                        model.NewAddress.DistrictId, model.NewAddress.WardId,
                         model.NewAddress.CountryId, customAttributes);
                     if (address == null)
                     {

@@ -33,5 +33,31 @@ namespace Nop.Web.Controllers
         }
 
         #endregion
+
+        #region Districts
+
+        //available even when navigation is not allowed
+        [PublicStoreAllowNavigation(true)]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public virtual ActionResult GetDistrictsByStateProvinceId(string stateProvinceId, bool addSelectStateItem)
+        {
+            var model = _countryModelFactory.GetDistrictsByStateProvinceId(stateProvinceId, addSelectStateItem);
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Districts
+
+        //available even when navigation is not allowed
+        [PublicStoreAllowNavigation(true)]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public virtual ActionResult GetWardsByDistrictId(string districtId, bool addSelectStateItem)
+        {
+            var model = _countryModelFactory.GetWardsByDistrictId(districtId, addSelectStateItem);
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }

@@ -55,9 +55,9 @@
             }
             @Html.Partial("_ExternalAuthentication.AssociateMessage")
             <div class="fieldset">
-                <div class="title">
+                @*<div class="title">
                     <strong>@T("Account.YourPersonalDetails")</strong>
-                </div>
+                </div>*@
                 <div class="form-fields">
                     @if (Model.GenderEnabled)
                     {
@@ -76,17 +76,23 @@
                         </div>
                     }
                     <div class="inputs">
+                        @Html.LabelFor(model => model.Email, new { }, ":")
+                        @Html.EditorFor(model => model.Email)
+                        @Html.RequiredHint()
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                    <div class="inputs">
                         @Html.LabelFor(model => model.FirstName, new { }, ":")
                         @Html.EditorFor(model => model.FirstName)
                         @Html.RequiredHint()
                         @Html.ValidationMessageFor(model => model.FirstName)
                     </div>
-                    <div class="inputs">
+                    @*<div class="inputs">
                         @Html.LabelFor(model => model.LastName, new { }, ":")
                         @Html.EditorFor(model => model.LastName)
                         @Html.RequiredHint()
                         @Html.ValidationMessageFor(model => model.LastName)
-                    </div>
+                    </div>*@
                     @if (Model.DateOfBirthEnabled)
                     {
                         <div class="inputs date-of-birth">
@@ -108,12 +114,7 @@
                             @Html.ValidationMessageFor(model => model.DateOfBirthYear)
                         </div>
                     }
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.Email, new { }, ":")
-                        @Html.EditorFor(model => model.Email)
-                        @Html.RequiredHint()
-                        @Html.ValidationMessageFor(model => model.Email)
-                    </div>
+                   
                     @if (Model.EnteringEmailTwice)
                     {
                         <div class="inputs">
@@ -137,6 +138,30 @@
                         </div>
 
                     }
+
+                    <div class="inputs">
+                        @Html.LabelFor(model => model.Password, new { }, ":")
+                        @Html.EditorFor(model => model.Password)
+                        @Html.RequiredHint()
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                    <div class="inputs">
+                        @Html.LabelFor(model => model.ConfirmPassword, new { }, ":")
+                        @Html.EditorFor(model => model.ConfirmPassword)
+                        @Html.RequiredHint()
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                    </div>
+                    @if (Model.DisplayCaptcha)
+                    {
+                        <div class="captcha-box">
+                            @Html.Raw(Html.GenerateCaptcha())
+                        </div>
+                    }
+                    @if (Model.HoneypotEnabled)
+                    {
+                        @Html.Raw(Html.GenerateHoneypotInput())
+                    }
+
                 </div>
             </div>
             @if (Model.CompanyEnabled || Model.DisplayVatNumber)
@@ -327,35 +352,7 @@
                     </div>
                 </div>
             }
-            <div class="fieldset">
-                <div class="title">
-                    <strong>@T("Account.YourPassword")</strong>
-                </div>
-                <div class="form-fields">
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.Password, new { }, ":")
-                        @Html.EditorFor(model => model.Password)
-                        @Html.RequiredHint()
-                        @Html.ValidationMessageFor(model => model.Password)
-                    </div>
-                    <div class="inputs">
-                        @Html.LabelFor(model => model.ConfirmPassword, new { }, ":")
-                        @Html.EditorFor(model => model.ConfirmPassword)
-                        @Html.RequiredHint()
-                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
-                    </div>
-                    @if (Model.DisplayCaptcha)
-                    {
-                        <div class="captcha-box">
-                            @Html.Raw(Html.GenerateCaptcha())
-                        </div>
-                    }
-                    @if (Model.HoneypotEnabled)
-                    {
-                        @Html.Raw(Html.GenerateHoneypotInput())
-                    }
-                </div>
-            </div>
+           
             @if (Model.AcceptPrivacyPolicyEnabled)
             {
                 <script type="text/javascript">

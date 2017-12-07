@@ -700,6 +700,7 @@
     <Content Include="Themes\DefaultClean\Content\images\edit_.png" />
     <Content Include="Themes\DefaultClean\Content\images\email-button.png" />
     <Content Include="Themes\DefaultClean\Content\images\first.png" />
+    <Content Include="Themes\DefaultClean\Content\images\footer-sprite.png" />
     <Content Include="Themes\DefaultClean\Content\images\header-social-hover.png" />
     <Content Include="Themes\DefaultClean\Content\images\header-social.png" />
     <Content Include="Themes\DefaultClean\Content\images\ic-fb.svg" />
