@@ -5,16 +5,16 @@ using System.Collections.Generic;
 namespace Nop.Core.Domain.Directory
 {
     /// <summary>
-    /// Represents a state/province
+    /// Represents a district
     /// </summary>
-    public partial class StateProvince : BaseEntity, ILocalizedEntity
+    public partial class District : BaseEntity, ILocalizedEntity
     {
-        private ICollection<District> _districts;
-
+        private ICollection<Ward> _wards;
+    
         /// <summary>
-        /// Gets or sets the country identifier
+        /// Gets or sets the state/province identifier
         /// </summary>
-        public int CountryId { get; set; }
+        public int StateProvinceId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -37,17 +37,17 @@ namespace Nop.Core.Domain.Directory
         public int DisplayOrder { get; set; }
 
         /// <summary>
-        /// Gets or sets the country
+        /// Gets or sets the state/province
         /// </summary>
-        public virtual Country Country { get; set; }
+        public virtual StateProvince StateProvince { get; set; }
 
         /// <summary>
-        /// Gets or sets the districts
+        /// Gets or sets the wards
         /// </summary>
-        public virtual ICollection<District> Districts
+        public virtual ICollection<Ward> Wards
         {
-            get { return _districts ?? (_districts = new List<District>()); }
-            protected set { _districts = value; }
+            get { return _wards ?? (_wards = new List<Ward>()); }
+            protected set { _wards = value; }
         }
     }
 

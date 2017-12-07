@@ -68,6 +68,8 @@ namespace Nop.Services.Installation
         private readonly IRepository<Forum> _forumRepository;
         private readonly IRepository<Country> _countryRepository;
         private readonly IRepository<StateProvince> _stateProvinceRepository;
+        private readonly IRepository<District> _districtRepository;
+        private readonly IRepository<Ward> _wardRepository;
         private readonly IRepository<Discount> _discountRepository;
         private readonly IRepository<BlogPost> _blogPostRepository;
         private readonly IRepository<Topic> _topicRepository;
@@ -128,6 +130,8 @@ namespace Nop.Services.Installation
             IRepository<Forum> forumRepository,
             IRepository<Country> countryRepository,
             IRepository<StateProvince> stateProvinceRepository,
+            IRepository<District> districtRepository,
+            IRepository<Ward> wardRepository,
             IRepository<Discount> discountRepository,
             IRepository<BlogPost> blogPostRepository,
             IRepository<Topic> topicRepository,
@@ -184,6 +188,8 @@ namespace Nop.Services.Installation
             this._forumRepository = forumRepository;
             this._countryRepository = countryRepository;
             this._stateProvinceRepository = stateProvinceRepository;
+            this._districtRepository = districtRepository;
+            this._wardRepository = wardRepository;
             this._discountRepository = discountRepository;
             this._blogPostRepository = blogPostRepository;
             this._topicRepository = topicRepository;

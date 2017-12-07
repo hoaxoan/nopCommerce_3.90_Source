@@ -211,6 +211,10 @@
     <Compile Include="Customers\Cache\CustomerCacheEventConsumer.cs" />
     <Compile Include="Customers\CustomerAttributeFormatter.cs" />
     <Compile Include="Customers\ICustomerAttributeFormatter.cs" />
+    <Compile Include="Directory\IDistrictService.cs" />
+    <Compile Include="Directory\IWardService.cs" />
+    <Compile Include="Directory\DistrictService.cs" />
+    <Compile Include="Directory\WardService.cs" />
     <Compile Include="Discounts\DiscountForCaching.cs" />
     <Compile Include="ExportImport\Extensions.cs" />
     <Compile Include="Extensions.cs" />

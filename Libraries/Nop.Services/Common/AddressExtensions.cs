@@ -29,7 +29,7 @@ namespace Nop.Services.Common
             string firstName, string lastName, string phoneNumber,
             string email, string faxNumber, string company, string address1,
             string address2, string city, int? stateProvinceId,
-            string zipPostalCode, int? countryId, string customAttributes)
+            string zipPostalCode, int? districtId, int? wardId, int? countryId, string customAttributes)
         {
             return source.Find(a => ((String.IsNullOrEmpty(a.FirstName) && String.IsNullOrEmpty(firstName)) || a.FirstName == firstName) &&
                 ((String.IsNullOrEmpty(a.LastName) && String.IsNullOrEmpty(lastName)) || a.LastName == lastName) &&
@@ -42,6 +42,8 @@ namespace Nop.Services.Common
                 ((String.IsNullOrEmpty(a.City) && String.IsNullOrEmpty(city)) || a.City == city) &&
                 ((a.StateProvinceId.IsNullOrDefault() && stateProvinceId.IsNullOrDefault()) || a.StateProvinceId == stateProvinceId) &&
                 ((String.IsNullOrEmpty(a.ZipPostalCode) && String.IsNullOrEmpty(zipPostalCode)) || a.ZipPostalCode == zipPostalCode) &&
+                ((a.DistrictId.IsNullOrDefault() && districtId.IsNullOrDefault()) || a.DistrictId == districtId) &&
+                ((a.WardId.IsNullOrDefault() && wardId.IsNullOrDefault()) || a.WardId == wardId) &&
                 ((a.CountryId.IsNullOrDefault() && countryId.IsNullOrDefault()) || a.CountryId == countryId) &&
                 //actually we should parse custom address attibutes (in case if "Display order" is changed) and then compare
                 //bu we simplify this process and simply compare their values in XML

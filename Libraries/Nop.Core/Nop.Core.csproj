@@ -126,6 +126,8 @@
     <Compile Include="Domain\Customers\CustomerLoginResults.cs" />
     <Compile Include="Domain\Customers\Events.cs" />
     <Compile Include="Domain\Customers\RewardPointsActivatingDelayPeriod.cs" />
+    <Compile Include="Domain\Directory\Ward.cs" />
+    <Compile Include="Domain\Directory\District.cs" />
     <Compile Include="Domain\Discounts\RequirementGroupInteractionType.cs" />
     <Compile Include="Domain\Directory\RoundingType.cs" />
     <Compile Include="Domain\Forums\ForumPostVote.cs" />
