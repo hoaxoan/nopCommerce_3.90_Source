@@ -1,0 +1,16 @@
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Description.txt
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Views\Clients\ClientSettings.cshtml
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Views\Clients\Create.cshtml
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Views\Clients\CreateOrUpdate.cshtml
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Views\Clients\Edit.cshtml
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Views\Clients\List.cshtml
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Views\Settings.cshtml
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\web.config
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\logo.jpg
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Nop.Plugin.Api.dll.config
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Nop.Plugin.Api.XML
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Nop.Plugin.Api.dll
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Nop.Plugin.Api\Nop.Plugin.Api.pdb
+E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Api\obj\Debug\Nop.Plugin.Api.csprojResolveAssemblyReference.cache
+E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Api\obj\Debug\Nop.Plugin.Api.dll
+E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Api\obj\Debug\Nop.Plugin.Api.pdb
