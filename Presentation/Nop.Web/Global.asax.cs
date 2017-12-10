@@ -29,11 +29,33 @@ namespace Nop.Web
         {
             routes.IgnoreRoute("favicon.ico");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
+
+            routes.MapRoute(
+               name: "OAuth",
+               url: "oauth",
+               defaults: new { controller = "Authorization", action = "OAuth" },
+               namespaces: new string[] { "Nop.Web.Controllers" }
+            );
+
+            routes.MapRoute(
+               name: "GetAccessToken",
+               url: "token",
+               defaults: new { controller = "Authorization", action = "GetAccessToken" },
+               namespaces: new string[] { "Nop.Web.Controllers" }
+            );
+
+            routes.MapRoute(
+               name: "RefreshAccessToken",
+               url: "refresh_token",
+               defaults: new { controller = "Authorization", action = "RefreshAccessToken" },
+               namespaces: new string[] { "Nop.Web.Controllers" }
+            );
+
+
             //register custom routes (plugins, etc)
             var routePublisher = EngineContext.Current.Resolve<IRoutePublisher>();
             routePublisher.RegisterRoutes(routes);
-            
+
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
@@ -68,7 +90,7 @@ namespace Nop.Web
             //Registering some regular mvc stuff
             AreaRegistration.RegisterAllAreas();
             RegisterRoutes(RouteTable.Routes);
-            
+
             //fluent validation
             DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
             ModelValidatorProviders.Providers.Add(new FluentValidationModelValidatorProvider(new NopValidatorFactory()));
@@ -101,6 +123,15 @@ namespace Nop.Web
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
+            if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
+            {
+                HttpContext.Current.Response.AddHeader("Cache-Control", "no-cache");
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST");
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+                HttpContext.Current.Response.AddHeader("Access-Control-Max-Age", "1728000");
+                HttpContext.Current.Response.End();
+            }
+
             //ignore static resources
             var webHelper = EngineContext.Current.Resolve<IWebHelper>();
             if (webHelper.IsStaticResource(this.Request))
@@ -145,7 +176,7 @@ namespace Nop.Web
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
-        { 
+        {
             //we don't do it in Application_BeginRequest because a user is not authenticated yet
             SetWorkingCulture();
         }
@@ -179,7 +210,7 @@ namespace Nop.Web
                 }
             }
         }
-        
+
         protected void SetWorkingCulture()
         {
             if (!DataSettingsHelper.DatabaseIsInstalled())
@@ -222,7 +253,7 @@ namespace Nop.Web
         {
             if (exc == null)
                 return;
-            
+
             if (!DataSettingsHelper.DatabaseIsInstalled())
                 return;
 

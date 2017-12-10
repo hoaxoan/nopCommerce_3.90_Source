@@ -20,3 +20,4 @@ Widgets.GoogleAnalytics
 Widgets.NivoSlider
 Widgets.BsMegaMenu
 Payments.CashOnDelivery
+Nop.Plugin.Api

@@ -1534,10 +1534,25 @@ namespace Nop.Web.Controllers
                 bool isPaymentWorkflowRequired = _orderProcessingService.IsPaymentWorkflowRequired(cart);
                 if (!isPaymentWorkflowRequired || isPaymentCashOnDelivery)
                 {
-                    //payment is not required
-                    _genericAttributeService.SaveAttribute<string>(_workContext.CurrentCustomer,
-                        SystemCustomerAttributeNames.SelectedPaymentMethod, null, _storeContext.CurrentStore.Id);
+                    if (isPaymentCashOnDelivery)
+                    {
+                        var paymentMethodCashInst = _paymentService.LoadPaymentMethodBySystemName(paymentmethod);
+                        if (paymentMethodCashInst == null ||
+                            !paymentMethodCashInst.IsPaymentMethodActive(_paymentSettings) ||
+                            !_pluginFinder.AuthenticateStore(paymentMethodCashInst.PluginDescriptor, _storeContext.CurrentStore.Id) ||
+                            !_pluginFinder.AuthorizedForUser(paymentMethodCashInst.PluginDescriptor, _workContext.CurrentCustomer))
+                            throw new Exception("Selected payment method can't be parsed");
 
+                        //save
+                        _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+                            SystemCustomerAttributeNames.SelectedPaymentMethod, paymentmethod, _storeContext.CurrentStore.Id);
+                    } else
+                    {
+                        //payment is not required
+                        _genericAttributeService.SaveAttribute<string>(_workContext.CurrentCustomer,
+                            SystemCustomerAttributeNames.SelectedPaymentMethod, null, _storeContext.CurrentStore.Id);
+                    }
+                    
                     var confirmOrderModel = _checkoutModelFactory.PrepareConfirmOrderModel(cart);
                     return Json(new
                     {
@@ -1669,11 +1684,11 @@ namespace Nop.Web.Controllers
                 if (processPaymentRequest == null)
                 {
                     //Check whether payment workflow is required
-                    if (_orderProcessingService.IsPaymentWorkflowRequired(cart))
-                    {
-                        throw new Exception("Payment information is not entered");
-                    }
-                    else
+                    //if (_orderProcessingService.IsPaymentWorkflowRequired(cart))
+                    //{
+                    //    throw new Exception("Payment information is not entered");
+                    //}
+                    //else
                         processPaymentRequest = new ProcessPaymentRequest();
                 }
 
