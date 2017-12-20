@@ -245,6 +245,30 @@
             <response code="200">OK</response>
             <response code="401">Unauthorized</response>
         </member>
+        <member name="M:Nop.Plugin.Api.Controllers.OrdersController.GetOrderStatus">
+            <summary>
+            Receive a list of all OrderStatus
+            </summary>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:Nop.Plugin.Api.Controllers.OrdersController.GetDashboardOrdersLoadAll(System.Int32,System.String)">
+            <summary>
+            Receive a list of all OrderStatus
+            </summary>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:Nop.Plugin.Api.Controllers.OrdersController.GetDashboardOrdersLoadStatus">
+            <summary>
+            Receive a list of all OrderStatus
+            </summary>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+        </member>
         <member name="M:Nop.Plugin.Api.Controllers.ProductsController.GetProducts(Nop.Plugin.Api.Models.ProductsParameters.ProductsParametersModel)">
             <summary>
             Receive a list of all products
@@ -478,6 +502,271 @@
         <member name="P:Nop.Plugin.Api.DTOs.OrderItems.OrderItemDto.Product">
             <summary>
             Gets the product
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderStatusCountDto.OrderStatusId">
+            <summary>
+            Gets or sets a value indicating the id
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderStatusCountDto.OrderStatusName">
+            <summary>
+            Gets or sets a value indicating the id
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderStatusCountDto.OrderCount">
+            <summary>
+            Gets or sets a value indicating the name
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderStatusDto.Id">
+            <summary>
+            Gets or sets a value indicating the id
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderStatusDto.Name">
+            <summary>
+            Gets or sets a value indicating the name
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.Id">
+            <summary>
+            Gets or sets a value indicating the order id
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PickUpInStore">
+            <summary>
+            Gets or sets a value indicating whether a customer chose "pick up in store" shipping option
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentMethodSystemName">
+            <summary>
+            Gets or sets the payment method system name
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerCurrencyCode">
+            <summary>
+            Gets or sets the customer currency code (at the moment of order placing)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CurrencyRate">
+            <summary>
+            Gets or sets the currency rate
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerTaxDisplayTypeId">
+            <summary>
+            Gets or sets the customer tax display type identifier
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.VatNumber">
+            <summary>
+            Gets or sets the VAT number (the European Union Value Added Tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderSubtotalInclTax">
+            <summary>
+            Gets or sets the order subtotal (incl tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderSubtotalExclTax">
+            <summary>
+            Gets or sets the order subtotal (excl tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderSubTotalDiscountInclTax">
+            <summary>
+            Gets or sets the order subtotal discount (incl tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderSubTotalDiscountExclTax">
+            <summary>
+            Gets or sets the order subtotal discount (excl tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderShippingInclTax">
+            <summary>
+            Gets or sets the order shipping (incl tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderShippingExclTax">
+            <summary>
+            Gets or sets the order shipping (excl tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentMethodAdditionalFeeInclTax">
+            <summary>
+            Gets or sets the payment method additional fee (incl tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentMethodAdditionalFeeExclTax">
+            <summary>
+            Gets or sets the payment method additional fee (excl tax)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.TaxRates">
+            <summary>
+            Gets or sets the tax rates
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderTax">
+            <summary>
+            Gets or sets the order tax
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderDiscount">
+            <summary>
+            Gets or sets the order discount (applied to order total)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderTotal">
+            <summary>
+            Gets or sets the order total
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.RefundedAmount">
+            <summary>
+            Gets or sets the refunded amount
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.RewardPointsWereAdded">
+            <summary>
+            Gets or sets the value indicating whether reward points were earned for this order
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CheckoutAttributeDescription">
+            <summary>
+            Gets or sets the checkout attribute description
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerLanguageId">
+            <summary>
+            Gets or sets the customer language identifier
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.AffiliateId">
+            <summary>
+            Gets or sets the affiliate identifier
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerIp">
+            <summary>
+            Gets or sets the customer IP address
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.AuthorizationTransactionId">
+            <summary>
+            Gets or sets the authorization transaction identifier
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.AuthorizationTransactionCode">
+            <summary>
+            Gets or sets the authorization transaction code
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.AuthorizationTransactionResult">
+            <summary>
+            Gets or sets the authorization transaction result
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CaptureTransactionId">
+            <summary>
+            Gets or sets the capture transaction identifier
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CaptureTransactionResult">
+            <summary>
+            Gets or sets the capture transaction result
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.SubscriptionTransactionId">
+            <summary>
+            Gets or sets the subscription transaction identifier
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaidDateUtc">
+            <summary>
+            Gets or sets the paid date and time
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingMethod">
+            <summary>
+            Gets or sets the shipping method
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingRateComputationMethodSystemName">
+            <summary>
+            Gets or sets the shipping rate computation method identifier
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomValuesXml">
+            <summary>
+            Gets or sets the serialized CustomValues (values from ProcessPaymentRequest)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.Deleted">
+            <summary>
+            Gets or sets a value indicating whether the entity has been deleted
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CreatedOnUtc">
+            <summary>
+            Gets or sets the date and time of order creation
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.Customer">
+            <summary>
+            Gets or sets the customer
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.BillingAddress">
+            <summary>
+            Gets or sets the billing address
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingAddress">
+            <summary>
+            Gets or sets the shipping address
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderItemDtos">
+            <summary>
+            Gets or sets order items
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderStatusId">
+            <summary>
+            Gets or sets the order status
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderStatusName">
+            <summary>
+            Gets or sets the order status
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentStatusId">
+            <summary>
+            Gets or sets the payment status
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentStatusName">
+            <summary>
+            Gets or sets the payment status
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingStatusId">
+            <summary>
+            Gets or sets the shipping status
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingStatusName">
+            <summary>
+            Gets or sets the shipping status
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerTaxDisplayType">
+            <summary>
+            Gets or sets the customer tax display type
             </summary>
         </member>
         <member name="P:Nop.Plugin.Api.DTOs.ProductAttributes.ProductAttributeDto.Id">
@@ -1425,231 +1714,6 @@
             Gets or sets the display order
             </summary>
         </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.Id">
-            <summary>
-            Gets or sets a value indicating the order id
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PickUpInStore">
-            <summary>
-            Gets or sets a value indicating whether a customer chose "pick up in store" shipping option
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentMethodSystemName">
-            <summary>
-            Gets or sets the payment method system name
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerCurrencyCode">
-            <summary>
-            Gets or sets the customer currency code (at the moment of order placing)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CurrencyRate">
-            <summary>
-            Gets or sets the currency rate
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerTaxDisplayTypeId">
-            <summary>
-            Gets or sets the customer tax display type identifier
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.VatNumber">
-            <summary>
-            Gets or sets the VAT number (the European Union Value Added Tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderSubtotalInclTax">
-            <summary>
-            Gets or sets the order subtotal (incl tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderSubtotalExclTax">
-            <summary>
-            Gets or sets the order subtotal (excl tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderSubTotalDiscountInclTax">
-            <summary>
-            Gets or sets the order subtotal discount (incl tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderSubTotalDiscountExclTax">
-            <summary>
-            Gets or sets the order subtotal discount (excl tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderShippingInclTax">
-            <summary>
-            Gets or sets the order shipping (incl tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderShippingExclTax">
-            <summary>
-            Gets or sets the order shipping (excl tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentMethodAdditionalFeeInclTax">
-            <summary>
-            Gets or sets the payment method additional fee (incl tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentMethodAdditionalFeeExclTax">
-            <summary>
-            Gets or sets the payment method additional fee (excl tax)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.TaxRates">
-            <summary>
-            Gets or sets the tax rates
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderTax">
-            <summary>
-            Gets or sets the order tax
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderDiscount">
-            <summary>
-            Gets or sets the order discount (applied to order total)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderTotal">
-            <summary>
-            Gets or sets the order total
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.RefundedAmount">
-            <summary>
-            Gets or sets the refunded amount
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.RewardPointsWereAdded">
-            <summary>
-            Gets or sets the value indicating whether reward points were earned for this order
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CheckoutAttributeDescription">
-            <summary>
-            Gets or sets the checkout attribute description
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerLanguageId">
-            <summary>
-            Gets or sets the customer language identifier
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.AffiliateId">
-            <summary>
-            Gets or sets the affiliate identifier
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerIp">
-            <summary>
-            Gets or sets the customer IP address
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.AuthorizationTransactionId">
-            <summary>
-            Gets or sets the authorization transaction identifier
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.AuthorizationTransactionCode">
-            <summary>
-            Gets or sets the authorization transaction code
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.AuthorizationTransactionResult">
-            <summary>
-            Gets or sets the authorization transaction result
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CaptureTransactionId">
-            <summary>
-            Gets or sets the capture transaction identifier
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CaptureTransactionResult">
-            <summary>
-            Gets or sets the capture transaction result
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.SubscriptionTransactionId">
-            <summary>
-            Gets or sets the subscription transaction identifier
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaidDateUtc">
-            <summary>
-            Gets or sets the paid date and time
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingMethod">
-            <summary>
-            Gets or sets the shipping method
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingRateComputationMethodSystemName">
-            <summary>
-            Gets or sets the shipping rate computation method identifier
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomValuesXml">
-            <summary>
-            Gets or sets the serialized CustomValues (values from ProcessPaymentRequest)
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.Deleted">
-            <summary>
-            Gets or sets a value indicating whether the entity has been deleted
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CreatedOnUtc">
-            <summary>
-            Gets or sets the date and time of order creation
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.Customer">
-            <summary>
-            Gets or sets the customer
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.BillingAddress">
-            <summary>
-            Gets or sets the billing address
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingAddress">
-            <summary>
-            Gets or sets the shipping address
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderItemDtos">
-            <summary>
-            Gets or sets order items
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.OrderStatus">
-            <summary>
-            Gets or sets the order status
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.PaymentStatus">
-            <summary>
-            Gets or sets the payment status
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippingStatus">
-            <summary>
-            Gets or sets the shipping status
-            </summary>
-        </member>
-        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomerTaxDisplayType">
-            <summary>
-            Gets or sets the customer tax display type
-            </summary>
-        </member>
         <member name="P:Nop.Plugin.Api.DTOs.ShoppingCarts.ShoppingCartItemDto.Id">
             <summary>
             Gets or sets the id
@@ -1703,6 +1767,11 @@
         <member name="P:Nop.Plugin.Api.DTOs.ShoppingCarts.ShoppingCartItemDto.CustomerDto">
             <summary>
             Gets or sets the customer
+            </summary>
+        </member>
+        <member name="T:Nop.Plugin.Api.MappingExtensions.Extensions">
+            <summary>
+            Extensions
             </summary>
         </member>
         <member name="P:Nop.Plugin.Api.Models.ProductAttributes.ProductAttributesParametersModel.Ids">

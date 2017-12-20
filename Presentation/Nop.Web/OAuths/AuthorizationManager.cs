@@ -4,8 +4,8 @@ namespace Nop.Web.OAuths
 {
     public class AuthorizationManager
     {
-        private readonly ApiAuthorizer _apiAuthorizer; 
-
+        private readonly ApiAuthorizer _apiAuthorizer;
+        
         public AuthorizationManager(string clientId, string clientSecret, string serverUrl)
         {
             _apiAuthorizer = new ApiAuthorizer(clientId, clientSecret, serverUrl);

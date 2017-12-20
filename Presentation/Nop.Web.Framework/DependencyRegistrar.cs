@@ -193,6 +193,7 @@ namespace Nop.Web.Framework
             builder.RegisterType<CustomerService>().As<ICustomerService>().InstancePerLifetimeScope();
             builder.RegisterType<CustomerRegistrationService>().As<ICustomerRegistrationService>().InstancePerLifetimeScope();
             builder.RegisterType<CustomerReportService>().As<ICustomerReportService>().InstancePerLifetimeScope();
+            builder.RegisterType<APIClientsService>().As<IAPIClientsService>().InstancePerLifetimeScope();
 
             //use static cache (between HTTP requests)
             builder.RegisterType<PermissionService>().As<IPermissionService>()
