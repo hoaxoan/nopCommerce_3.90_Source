@@ -167,6 +167,7 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Linq.Dynamic">
       <HintPath>..\..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
@@ -253,6 +254,7 @@
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\OrderItemsController.cs" />
     <Compile Include="Controllers\ProductAttributesController.cs" />
+    <Compile Include="Domain\OrderStatusCount.cs" />
     <Compile Include="DTOs\CustomerRoles\CustomerRoleDto.cs" />
     <Compile Include="DTOs\CustomerRoles\CustomerRolesRootObject.cs" />
     <Compile Include="DTOs\Images\ImageMappingDto.cs" />
@@ -266,6 +268,10 @@
     <Compile Include="DTOs\Languages\LocalizedNameDto.cs" />
     <Compile Include="DTOs\OrderItems\OrderItemsCountRootObject.cs" />
     <Compile Include="DTOs\OrderItems\OrderItemsRootObject.cs" />
+    <Compile Include="DTOs\Orders\OrderStatusCountDto.cs" />
+    <Compile Include="DTOs\Orders\OrderStatusCountRootObject.cs" />
+    <Compile Include="DTOs\Orders\OrderStatusRootObject.cs" />
+    <Compile Include="DTOs\Orders\OrderStatusDto.cs" />
     <Compile Include="DTOs\ProductItemAttributeDto.cs" />
     <Compile Include="DTOs\ProductAttributes\ProductAttributeDto.cs" />
     <Compile Include="DTOs\ProductAttributes\ProductAttributesCountRootObject.cs" />
@@ -292,6 +298,7 @@
     <Compile Include="JSON\ActionResults\ErrorActionResult.cs" />
     <Compile Include="JSON\ActionResults\RawJsonActionResult.cs" />
     <Compile Include="MappingExtensions\CustomerRoleDtoMappings.cs" />
+    <Compile Include="MappingExtensions\Extensions.cs" />
     <Compile Include="MappingExtensions\LanguageDtoMappings.cs" />
     <Compile Include="MappingExtensions\ProductAttributeDtoMappings.cs" />
     <Compile Include="MappingExtensions\StoreDtoMappings.cs" />

@@ -10,5 +10,6 @@ namespace Nop.Plugin.Api.Domain
         public string CallbackUrl { get; set; }
         public bool IsActive { get; set; }
         public string AuthenticationCode { get; set; }
+        public string ServerUrl { get; set; }
     }
 }

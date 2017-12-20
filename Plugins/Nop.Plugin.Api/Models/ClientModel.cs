@@ -18,5 +18,7 @@ namespace Nop.Plugin.Api.Models
         public string CallbackUrl { get; set; }
         [NopResourceDisplayName("Plugins.Api.Admin.Client.IsActive")]
         public bool IsActive { get; set; }
+        [NopResourceDisplayName("Plugins.Api.Admin.Client.ServerUrl")]
+        public string ServerUrl { get; set; }
     }
 }

@@ -27,6 +27,7 @@ using Nop.Plugin.Api.DTOs.Stores;
 using Nop.Services.Directory;
 using Nop.Services.Localization;
 using Nop.Plugin.Api.DTOs.ProductAttributes;
+using Nop.Plugin.Api.Domain;
 
 namespace Nop.Plugin.Api.Helpers
 {
@@ -44,6 +45,8 @@ namespace Nop.Plugin.Api.Helpers
         private readonly IStoreService _storeService;
         private ICustomerApiService _customerApiService;
         private IProductAttributeConverter _productAttributeConverter;
+        private IWorkContext _workContext;
+        private ILocalizationService _localizationService;
 
         public DTOHelper(IStoreContext storeContext,
             IProductService productService,
@@ -56,7 +59,9 @@ namespace Nop.Plugin.Api.Helpers
             ILanguageService languageService,
             ICurrencyService currencyService,
             CurrencySettings currencySettings,
-            IStoreService storeService)
+            IStoreService storeService,
+            IWorkContext workContext,
+            ILocalizationService localizationService)
         {
             _productService = productService;
             _aclService = aclService;
@@ -70,6 +75,8 @@ namespace Nop.Plugin.Api.Helpers
             _currencySettings = currencySettings;
             _storeService = storeService;
             _storeContext = storeContext;
+            _workContext = workContext;
+            _localizationService = localizationService;
         }
 
         public ProductDto PrepareProductDTO(Product product)
@@ -147,6 +154,14 @@ namespace Nop.Plugin.Api.Helpers
         public OrderDto PrepareOrderDTO(Order order)
         {
             OrderDto orderDto = order.ToDto();
+            orderDto.OrderStatusId = order.OrderStatusId;
+            orderDto.PaymentStatusId = order.PaymentStatusId;
+            orderDto.ShippingStatusId = order.ShippingStatusId;
+
+            orderDto.OrderStatusName = order.OrderStatus.GetLocalizedEnum(_localizationService, _workContext);
+            orderDto.PaymentStatusName = order.PaymentStatus.GetLocalizedEnum(_localizationService, _workContext);
+            orderDto.ShippingStatusName = order.ShippingStatus.GetLocalizedEnum(_localizationService, _workContext);
+
             foreach (var orderItemDto in orderDto.OrderItemDtos)
             {
                 var orderItem = order.OrderItems.FirstOrDefault(x => x.ProductId == orderItemDto.ProductId);
@@ -318,6 +333,12 @@ namespace Nop.Plugin.Api.Helpers
         public ProductAttributeDto PrepareProductAttributeDTO(ProductAttribute productAttribute)
         {
             return productAttribute.ToDto();
+        }
+
+        public OrderStatusCountDto PrepareOrderStatusCountDTO(OrderStatusCount orderStatusCount)
+        {
+            OrderStatusCountDto orderStatusCountDto = orderStatusCount.ToDto();
+            return orderStatusCountDto;
         }
     }
 }

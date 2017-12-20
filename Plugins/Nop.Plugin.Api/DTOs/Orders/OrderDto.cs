@@ -273,20 +273,38 @@ namespace Nop.Plugin.Api.DTOs.Orders
         /// <summary>
         /// Gets or sets the order status
         /// </summary>
-        [JsonProperty("order_status")]
-        public string OrderStatus { get; set; }
+        [JsonProperty("order_status_id")]
+        public int OrderStatusId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the order status
+        /// </summary>
+        [JsonProperty("order_status_name")]
+        public string OrderStatusName { get; set; }
 
         /// <summary>
         /// Gets or sets the payment status
         /// </summary>
-        [JsonProperty("payment_status")]
-        public string PaymentStatus { get; set; }
+        [JsonProperty("payment_status_id")]
+        public int PaymentStatusId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the payment status
+        /// </summary>
+        [JsonProperty("payment_status_name")]
+        public string PaymentStatusName { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping status
         /// </summary>
-        [JsonProperty("shipping_status")]
-        public string ShippingStatus { get; set; }
+        [JsonProperty("shipping_status_id")]
+        public int ShippingStatusId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shipping status
+        /// </summary>
+        [JsonProperty("shipping_status_name")]
+        public string ShippingStatusName { get; set; }
         /// <summary>
         /// Gets or sets the customer tax display type
         /// </summary>

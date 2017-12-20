@@ -39,6 +39,7 @@ using Nop.Services.Payments;
 using Nop.Services.Security;
 using Nop.Services.Shipping;
 using Nop.Services.Stores;
+using Nop.Plugin.Api.Domain;
 
 namespace Nop.Plugin.Api.Controllers
 {
@@ -93,7 +94,7 @@ namespace Nop.Plugin.Api.Controllers
             IPictureService pictureService,
             IDTOHelper dtoHelper)
             : base(jsonFieldsSerializer, aclService, customerService, storeMappingService,
-                 storeService, discountService, customerActivityService, localizationService,pictureService)
+                 storeService, discountService, customerActivityService, localizationService, pictureService)
         {
             _orderApiService = orderApiService;
             _factory = factory;
@@ -129,12 +130,38 @@ namespace Nop.Plugin.Api.Controllers
             }
 
             var storeId = _storeContext.CurrentStore.Id;
+            
+            IList<int> status = new List<int>();
+            IList<int> paymentStatus = new List<int>();
+            if (parameters.Status == 1)
+            {
+                status.Add((int)OrderStatus.Pending);
+            }
+            else if (parameters.Status == 2)
+            {
+                status.Add((int)OrderStatus.Pending);
+                status.Add((int)OrderStatus.Processing);
+                status.Add((int)OrderStatus.Complete);
+                status.Add((int)OrderStatus.Cancelled);
+            }
+            else if (parameters.Status == 3)
+            {
+                status.Add((int)OrderStatus.Pending);
+                status.Add((int)OrderStatus.Processing);
+            }
+            else
+            {
+                status.Add((int)OrderStatus.Pending);
+                status.Add((int)OrderStatus.Processing);
+                status.Add((int)OrderStatus.Complete);
+                status.Add((int)OrderStatus.Cancelled);
+            }
 
             IList<Order> orders = _orderApiService.GetOrders(parameters.Ids, parameters.CreatedAtMin,
-                parameters.CreatedAtMax,
-                parameters.Limit, parameters.Page, parameters.SinceId,
-                parameters.Status, parameters.PaymentStatus, parameters.ShippingStatus,
-                parameters.CustomerId, storeId);
+            parameters.CreatedAtMax,
+            parameters.Limit, parameters.Page, parameters.SinceId,
+            status, paymentStatus, parameters.ShippingStatus,
+            parameters.CustomerId, storeId);
 
             IList<OrderDto> ordersAsDtos = orders.Select(x => _dtoHelper.PrepareOrderDTO(x)).ToList();
 
@@ -239,7 +266,7 @@ namespace Nop.Plugin.Api.Controllers
 
             // We doesn't have to check for value because this is done by the order validator.
             Customer customer = _customerService.GetCustomerById(orderDelta.Dto.CustomerId.Value);
-            
+
             if (customer == null)
             {
                 return Error(HttpStatusCode.NotFound, "customer", "not found");
@@ -273,9 +300,9 @@ namespace Nop.Plugin.Api.Controllers
                 isValid &= SetShippingOption(orderDelta.Dto.ShippingRateComputationMethodSystemName,
                                             orderDelta.Dto.ShippingMethod,
                                             orderDelta.Dto.StoreId ?? _storeContext.CurrentStore.Id,
-                                            customer, 
-                                            BuildShoppingCartItemsFromOrderItemDtos(orderDelta.Dto.OrderItemDtos.ToList(), 
-                                                                                    customer.Id, 
+                                            customer,
+                                            BuildShoppingCartItemsFromOrderItemDtos(orderDelta.Dto.OrderItemDtos.ToList(),
+                                                                                    customer.Id,
                                                                                     orderDelta.Dto.StoreId ?? _storeContext.CurrentStore.Id));
 
                 isValid &= ValidateAddress(orderDelta.Dto.ShippingAddress, "shipping_address");
@@ -309,7 +336,7 @@ namespace Nop.Plugin.Api.Controllers
             {
                 newOrder.StoreId = _storeContext.CurrentStore.Id;
             }
-            
+
             PlaceOrderResult placeOrderResult = PlaceOrder(newOrder, customer);
 
             if (!placeOrderResult.Success)
@@ -344,7 +371,7 @@ namespace Nop.Plugin.Api.Controllers
             {
                 return Error(HttpStatusCode.BadRequest, "id", "invalid id");
             }
-            
+
             Order orderToDelete = _orderApiService.GetOrderById(id);
 
             if (orderToDelete == null)
@@ -379,7 +406,7 @@ namespace Nop.Plugin.Api.Controllers
 
             Customer customer = currentOrder.Customer;
 
-            bool shippingRequired = currentOrder.OrderItems.Any(item => !item.Product.IsFreeShipping);
+            bool shippingRequired = false; //currentOrder.OrderItems.Any(item => !item.Product.IsFreeShipping);
 
             if (shippingRequired)
             {
@@ -391,7 +418,7 @@ namespace Nop.Plugin.Api.Controllers
                     var storeId = orderDelta.Dto.StoreId ?? _storeContext.CurrentStore.Id;
 
                     isValid &= SetShippingOption(orderDelta.Dto.ShippingRateComputationMethodSystemName ?? currentOrder.ShippingRateComputationMethodSystemName,
-                        orderDelta.Dto.ShippingMethod, 
+                        orderDelta.Dto.ShippingMethod,
                         storeId,
                         customer, BuildShoppingCartItemsFromOrderItems(currentOrder.OrderItems.ToList(), customer.Id, storeId));
                 }
@@ -422,7 +449,7 @@ namespace Nop.Plugin.Api.Controllers
             }
 
             orderDelta.Merge(currentOrder);
-            
+
             customer.BillingAddress = currentOrder.BillingAddress;
             customer.ShippingAddress = currentOrder.ShippingAddress;
 
@@ -473,7 +500,7 @@ namespace Nop.Plugin.Api.Controllers
 
                     ShippingOption shippingOption = shippingOptions
                         .Find(so => !string.IsNullOrEmpty(so.Name) && so.Name.Equals(shippingOptionName, StringComparison.InvariantCultureIgnoreCase));
-                    
+
                     _genericAttributeService.SaveAttribute(customer,
                         SystemCustomerAttributeNames.SelectedShippingOption,
                         shippingOption, storeId);
@@ -622,7 +649,7 @@ namespace Nop.Plugin.Api.Controllers
 
             return shouldReturnError;
         }
-        
+
         private bool ValidateAddress(AddressDto address, string addressKind)
         {
             bool addressValid = true;
@@ -646,6 +673,80 @@ namespace Nop.Plugin.Api.Controllers
             }
 
             return addressValid;
+        }
+
+        /// <summary>
+        /// Receive a list of all OrderStatus
+        /// </summary>
+        /// <response code="200">OK</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        [HttpGet]
+        [ResponseType(typeof(OrderStatusRootObject))]
+        [GetRequestsErrorInterceptorActionFilter]
+        public IHttpActionResult GetOrderStatus()
+        {
+            IList<OrderStatusDto> orderStatusAsDtos = OrderStatus.Pending.ToSelectList(false).ToList();
+
+            var orderStatusRootObject = new OrderStatusRootObject()
+            {
+                OrderStatus = orderStatusAsDtos
+            };
+
+            var json = _jsonFieldsSerializer.Serialize(orderStatusRootObject, null);
+
+            return new RawJsonActionResult(json);
+        }
+
+        /// <summary>
+        /// Receive a list of all OrderStatus
+        /// </summary>
+        /// <response code="200">OK</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        [HttpGet]
+        [ResponseType(typeof(OrderStatusCountRootObject))]
+        [GetRequestsErrorInterceptorActionFilter]
+        public IHttpActionResult GetDashboardOrdersLoadAll(int markAsDeliveryDate, string deliveryDate)
+        {
+            IList<OrderStatusCount> orderStatusCounts = _orderApiService.DashboardOrdersLoadAll(markAsDeliveryDate, deliveryDate);
+
+            IList<OrderStatusCountDto> orderStatusCountAsDtos = orderStatusCounts.Select(x => _dtoHelper.PrepareOrderStatusCountDTO(x)).ToList();
+
+            var orderStatusCountRootObject = new OrderStatusCountRootObject()
+            {
+                OrderStatusCount = orderStatusCountAsDtos
+            };
+
+            var json = _jsonFieldsSerializer.Serialize(orderStatusCountRootObject, null);
+
+            return new RawJsonActionResult(json);
+        }
+
+
+        /// <summary>
+        /// Receive a list of all OrderStatus
+        /// </summary>
+        /// <response code="200">OK</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        [HttpGet]
+        [ResponseType(typeof(OrderStatusCountRootObject))]
+        [GetRequestsErrorInterceptorActionFilter]
+        public IHttpActionResult GetDashboardOrdersLoadStatus()
+        {
+            IList<OrderStatusCount> orderStatusCounts = _orderApiService.DashboardOrdersLoadStatus();
+
+            IList<OrderStatusCountDto> orderStatusCountAsDtos = orderStatusCounts.Select(x => _dtoHelper.PrepareOrderStatusCountDTO(x)).ToList();
+
+            var orderStatusCountRootObject = new OrderStatusCountRootObject()
+            {
+                OrderStatusCount = orderStatusCountAsDtos
+            };
+
+            var json = _jsonFieldsSerializer.Serialize(orderStatusCountRootObject, null);
+
+            return new RawJsonActionResult(json);
         }
     }
 }

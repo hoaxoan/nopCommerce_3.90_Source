@@ -48,6 +48,8 @@ namespace Nop.Plugin.Api.MappingExtensions
                .IgnoreAllNonExisting()
                .ForMember(x => x.Id, y => y.MapFrom(src => src.Id))
                .ForMember(x => x.CountryName, y => y.MapFrom(src => src.Country.GetWithDefault(x => x, new Country()).Name))
+               .ForMember(x => x.WardName, y => y.MapFrom(src => src.Ward.GetWithDefault(x => x, new Ward()).Name))
+               .ForMember(x => x.DistrictName, y => y.MapFrom(src => src.District.GetWithDefault(x => x, new District()).Name))
                .ForMember(x => x.StateProvinceName, y => y.MapFrom(src => src.StateProvince.GetWithDefault(x => x, new StateProvince()).Name));
         }
 
@@ -157,6 +159,8 @@ namespace Nop.Plugin.Api.MappingExtensions
             CreateMap<ProductAttributeValue, ProductAttributeValueDto>();
 
             CreateMap<ProductAttribute, ProductAttributeDto>();
+
+            CreateMap<OrderStatusCount, OrderStatusCountDto>();
         }
     }
 }

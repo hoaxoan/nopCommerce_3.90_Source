@@ -2,6 +2,7 @@
 using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Stores;
+using Nop.Plugin.Api.Domain;
 using Nop.Plugin.Api.DTOs.Categories;
 using Nop.Plugin.Api.DTOs.Languages;
 using Nop.Plugin.Api.DTOs.Orders;
@@ -21,5 +22,6 @@ namespace Nop.Plugin.Api.Helpers
         StoreDto PrepareStoreDTO(Store store);
         LanguageDto PrepateLanguageDto(Language language);
         ProductAttributeDto PrepareProductAttributeDTO(ProductAttribute productAttribute);
+        OrderStatusCountDto PrepareOrderStatusCountDTO(OrderStatusCount orderStatusCount);
     }
 }

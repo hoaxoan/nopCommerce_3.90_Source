@@ -7,6 +7,8 @@ using Nop.Data;
 using Nop.Plugin.Api.DataMappings;
 using Nop.Plugin.Api.Domain;
 using System.Linq;
+using System.Data.Common;
+using System.Data;
 
 namespace Nop.Plugin.Api.Data
 {
@@ -87,7 +89,28 @@ namespace Nop.Plugin.Api.Data
 
         public IList<TEntity> ExecuteStoredProcedureList<TEntity>(string commandText, params object[] parameters) where TEntity : BaseEntity, new()
         {
-            throw new NotImplementedException();
+            //add parameters to command
+            if (parameters != null && parameters.Length > 0)
+            {
+                for (int i = 0; i <= parameters.Length - 1; i++)
+                {
+                    var p = parameters[i] as DbParameter;
+                    if (p == null)
+                        throw new Exception("Not support parameter type");
+
+                    commandText += i == 0 ? " " : ", ";
+
+                    commandText += "@" + p.ParameterName;
+                    if (p.Direction == ParameterDirection.InputOutput || p.Direction == ParameterDirection.Output)
+                    {
+                        //output parameter
+                        commandText += " output";
+                    }
+                }
+            }
+
+            var result = this.Database.SqlQuery<TEntity>(commandText, parameters).ToList();
+            return result;
         }
 
         public IEnumerable<TElement> SqlQuery<TElement>(string sql, params object[] parameters)

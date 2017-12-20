@@ -70,6 +70,7 @@ namespace Nop.Plugin.Api.Plugin
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Client.CallbackUrl", "Callback Url");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Client.CallbackUrl.Hint", "The url where the Authorization code will be send");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Client.IsActive", "Is Active");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Client.ServerUrl", "Server Url");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Client.IsActive.Hint", "You can use it to enable/disable the access to your store for the client");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Client.AddNew", "Add New Client");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Client.Edit", "Edit");
@@ -142,6 +143,7 @@ namespace Nop.Plugin.Api.Plugin
             this.DeletePluginLocaleResource("Plugins.Api.Admin.Client.ClientSecret");
             this.DeletePluginLocaleResource("Plugins.Api.Admin.Client.CallbackUrl");
             this.DeletePluginLocaleResource("Plugins.Api.Admin.Client.IsActive");
+            this.DeletePluginLocaleResource("Plugins.Api.Admin.Client.ServerUrl");
             this.DeletePluginLocaleResource("Plugins.Api.Admin.Client.AddNew");
             this.DeletePluginLocaleResource("Plugins.Api.Admin.Client.Edit");
             this.DeletePluginLocaleResource("Plugins.Api.Admin.Client.Created");

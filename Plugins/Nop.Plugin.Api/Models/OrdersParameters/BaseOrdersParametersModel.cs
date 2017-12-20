@@ -40,7 +40,7 @@ namespace Nop.Plugin.Api.Models.OrdersParameters
         /// </ul>
         /// </summary>
         [JsonProperty("status")]
-        public OrderStatus? Status { get; set; }
+        public int? Status { get; set; }
 
         /// <summary>
         /// <ul>

@@ -444,6 +444,24 @@ namespace Nop.Plugin.Api
                defaults: new { controller = "WebHookFilters", action = "GetWebHookFilters" },
                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
 
+            config.Routes.MapHttpRoute(
+             name: "orderstatus",
+             routeTemplate: "api/orderstatus",
+             defaults: new { controller = "Orders", action = "GetOrderStatus" },
+             constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
+
+            config.Routes.MapHttpRoute(
+             name: "dashboardordercount",
+             routeTemplate: "api/dashboardordercount",
+             defaults: new { controller = "Orders", action = "GetDashboardOrdersLoadAll" },
+             constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
+
+            config.Routes.MapHttpRoute(
+                name: "dashboardorderstatus",
+                routeTemplate: "api/dashboardorderstatus",
+                defaults: new { controller = "Orders", action = "GetDashboardOrdersLoadStatus" },
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
+
             // The default route templates for the Swagger docs and swagger-ui are "swagger/docs/{apiVersion}" and "swagger/ui/index#/{assetPath}" respectively.
             config
                 .EnableSwagger(c =>
