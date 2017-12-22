@@ -108,3 +108,4 @@ E:\nopCommerce_3.90_Source\Libraries\Nop.Services\obj\Release\Nop.Services.cspro
 E:\nopCommerce_3.90_Source\Libraries\Nop.Services\obj\Release\Nop.Services.dll
 E:\nopCommerce_3.90_Source\Libraries\Nop.Services\obj\Release\Nop.Services.pdb
 E:\nopCommerce_3.90_Source\Libraries\Nop.Services\obj\Release\Nop.Services.XmlSerializers.dll
+E:\nopCommerce_3.90_Source\Libraries\Nop.Services\bin\Release\FCM.Net.PCL.dll

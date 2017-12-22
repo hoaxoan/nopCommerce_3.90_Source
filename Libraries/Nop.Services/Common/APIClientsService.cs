@@ -66,7 +66,7 @@ namespace Nop.Services.Common
 
         public APIClients GetClientByName(string name)
         {
-            return _clientRepository.Table.FirstOrDefault(client => client.Name == name);
+            return _clientRepository.Table.FirstOrDefault(client => client.IsActive && client.Name == name);
         }
 
         public void InsertClient(APIClients client)

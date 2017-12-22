@@ -66,6 +66,7 @@
     <Compile Include="Mapping\Catalog\StockQuantityHistoryMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />
+    <Compile Include="Mapping\Common\DeviceMap.cs" />
     <Compile Include="Mapping\Common\APIClientsMap.cs" />
     <Compile Include="Mapping\Customers\CustomerPasswordMap.cs" />
     <Compile Include="Mapping\Directory\WardMap.cs" />

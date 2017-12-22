@@ -106,3 +106,4 @@ E:\nopCommerce_3.90_Source\Libraries\Nop.Services\obj\Debug\Nop.Services.csproj.
 E:\nopCommerce_3.90_Source\Libraries\Nop.Services\obj\Debug\Nop.Services.csprojResolveAssemblyReference.cache
 E:\nopCommerce_3.90_Source\Libraries\Nop.Services\obj\Debug\Nop.Services.dll
 E:\nopCommerce_3.90_Source\Libraries\Nop.Services\obj\Debug\Nop.Services.pdb
+E:\nopCommerce_3.90_Source\Libraries\Nop.Services\bin\Debug\FCM.Net.PCL.dll

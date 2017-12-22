@@ -44,6 +44,10 @@
       <HintPath>..\..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FCM.Net.PCL, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FCM.Net.1.0.5\lib\portable46-net451+win81+wpa81\FCM.Net.PCL.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ImageResizer, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ImageResizer.4.0.5\lib\net45\ImageResizer.dll</HintPath>
       <Private>True</Private>
@@ -259,6 +263,8 @@
     <Compile Include="ExportImport\ExportProductAttribute.cs" />
     <Compile Include="ExportImport\Help\PropertyByName.cs" />
     <Compile Include="ExportImport\Help\PropertyManager.cs" />
+    <Compile Include="Firebase\PushNotificationService.cs" />
+    <Compile Include="Firebase\IPushNotificationService.cs" />
     <Compile Include="Helpers\BrowscapXmlParser.cs" />
     <Compile Include="Infrastructure\AzureWebAppsMachineNameProvider.cs" />
     <Compile Include="Infrastructure\DefaultMachineNameProvider.cs" />
