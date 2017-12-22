@@ -67,6 +67,7 @@ namespace Nop.Plugin.Api.Infrastructure
             builder.RegisterType<CustomerRolesController>().InstancePerLifetimeScope();
             builder.RegisterType<WebHookRegistrationsController>().InstancePerLifetimeScope();
             builder.RegisterType<WebHookFiltersController>().InstancePerLifetimeScope();
+            builder.RegisterType<DevicesController>().InstancePerLifetimeScope();
         }
 
         private void RegisterModelBinders(ContainerBuilder builder)
@@ -86,6 +87,7 @@ namespace Nop.Plugin.Api.Infrastructure
             builder.RegisterType<ShoppingCartItemApiService>().As<IShoppingCartItemApiService>().InstancePerLifetimeScope();
             builder.RegisterType<OrderItemApiService>().As<IOrderItemApiService>().InstancePerLifetimeScope();
             builder.RegisterType<ProductAttributesApiService>().As<IProductAttributesApiService>().InstancePerLifetimeScope();
+            builder.RegisterType<DeviceService>().As<IDeviceService>().InstancePerLifetimeScope();
 
             builder.RegisterType<ProductAttributeConverter>().As<IProductAttributeConverter>().InstancePerLifetimeScope();
 

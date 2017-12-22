@@ -253,10 +253,13 @@
     <Compile Include="Controllers\CustomerRolesController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\OrderItemsController.cs" />
+    <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\ProductAttributesController.cs" />
     <Compile Include="Domain\OrderStatusCount.cs" />
     <Compile Include="DTOs\CustomerRoles\CustomerRoleDto.cs" />
     <Compile Include="DTOs\CustomerRoles\CustomerRolesRootObject.cs" />
+    <Compile Include="DTOs\Devices\DeviceDto.cs" />
+    <Compile Include="DTOs\Devices\DevicesRootObject.cs" />
     <Compile Include="DTOs\Images\ImageMappingDto.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\WebHookFiltersController.cs" />
@@ -409,7 +412,9 @@
     <Compile Include="Services\CategoryApiService.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Services\CustomerApiService.cs" />
+    <Compile Include="Services\DeviceService.cs" />
     <Compile Include="Services\ICategoryApiService.cs" />
+    <Compile Include="Services\IDeviceService.cs" />
     <Compile Include="Services\IOrderItemApiService.cs" />
     <Compile Include="Services\IProductAttributeConverter.cs" />
     <Compile Include="Services\IProductAttributesApiService.cs" />

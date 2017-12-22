@@ -8,4 +8,3 @@ E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Shipping.USPS\Nop.Plugin
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.csproj.App.config
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.dll
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.pdb
-E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.csprojResolveAssemblyReference.cache
