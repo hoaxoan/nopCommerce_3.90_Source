@@ -2162,6 +2162,36 @@
             This method is responsible for getting customer dto records with first and last names set from the attribute mappings.
             </summary>
         </member>
+        <member name="T:Nop.Plugin.Api.Services.DeviceService">
+            <summary>
+            Device service
+            </summary>
+        </member>
+        <member name="M:Nop.Plugin.Api.Services.DeviceService.#ctor(Nop.Core.Caching.ICacheManager,Nop.Core.Data.IRepository{Nop.Core.Domain.Common.Device},Nop.Services.Events.IEventPublisher)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="cacheManager">Cache manager</param>
+            <param name="deviceRepository">Device repository</param>
+            <param name="eventPublisher">Event publisher</param>
+        </member>
+        <member name="M:Nop.Plugin.Api.Services.DeviceService.InsertUpdateDevice(Nop.Core.Domain.Common.Device)">
+            <summary>
+            Inserts/Update an device
+            </summary>
+            <param name="device">Device</param>
+        </member>
+        <member name="T:Nop.Plugin.Api.Services.IDeviceService">
+            <summary>
+            Device service interface
+            </summary>
+        </member>
+        <member name="M:Nop.Plugin.Api.Services.IDeviceService.InsertUpdateDevice(Nop.Core.Domain.Common.Device)">
+            <summary>
+            Inserts/Update an device
+            </summary>
+            <param name="device">Device</param>
+        </member>
         <member name="M:Nop.Plugin.Api.WebHooks.ApiWebHookSender.CreateWebHookRequestBody(Microsoft.AspNet.WebHooks.WebHookWorkItem)">
             <inheritdoc />
         </member>

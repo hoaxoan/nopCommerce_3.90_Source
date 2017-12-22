@@ -133,3 +133,4 @@ E:\nopCommerce_3.90_Source\Presentation\Nop.Web.Framework\obj\Debug\Nop.Web.Fram
 E:\nopCommerce_3.90_Source\Presentation\Nop.Web.Framework\obj\Debug\Nop.Web.Framework.csprojResolveAssemblyReference.cache
 E:\nopCommerce_3.90_Source\Presentation\Nop.Web.Framework\obj\Debug\Nop.Web.Framework.dll
 E:\nopCommerce_3.90_Source\Presentation\Nop.Web.Framework\obj\Debug\Nop.Web.Framework.pdb
+E:\nopCommerce_3.90_Source\Presentation\Nop.Web.Framework\bin\Debug\FCM.Net.PCL.dll

@@ -53,6 +53,7 @@ using Nop.Services.Vendors;
 using Nop.Web.Framework.Mvc.Routes;
 using Nop.Web.Framework.Themes;
 using Nop.Web.Framework.UI;
+using Nop.Services.Firebase;
 
 namespace Nop.Web.Framework
 {
@@ -194,6 +195,7 @@ namespace Nop.Web.Framework
             builder.RegisterType<CustomerRegistrationService>().As<ICustomerRegistrationService>().InstancePerLifetimeScope();
             builder.RegisterType<CustomerReportService>().As<ICustomerReportService>().InstancePerLifetimeScope();
             builder.RegisterType<APIClientsService>().As<IAPIClientsService>().InstancePerLifetimeScope();
+            builder.RegisterType<PushNotificationService>().As<IPushNotificationService>().InstancePerLifetimeScope();
 
             //use static cache (between HTTP requests)
             builder.RegisterType<PermissionService>().As<IPermissionService>()

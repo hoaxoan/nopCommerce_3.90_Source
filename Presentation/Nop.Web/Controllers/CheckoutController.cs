@@ -23,6 +23,8 @@ using Nop.Web.Factories;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Security;
 using Nop.Web.Models.Checkout;
+using Nop.Services.Firebase;
+using System.Threading.Tasks;
 
 namespace Nop.Web.Controllers
 {
@@ -51,6 +53,7 @@ namespace Nop.Web.Controllers
         private readonly HttpContextBase _httpContext; 
         private readonly IAddressAttributeParser _addressAttributeParser;
         private readonly IAddressAttributeService _addressAttributeService;
+        private readonly IPushNotificationService _pushNotificationService;
 
         private readonly OrderSettings _orderSettings;
         private readonly RewardPointsSettings _rewardPointsSettings;
@@ -83,6 +86,7 @@ namespace Nop.Web.Controllers
             HttpContextBase httpContext,
             IAddressAttributeParser addressAttributeParser,
             IAddressAttributeService addressAttributeService,
+            IPushNotificationService pushNotificationService,
             OrderSettings orderSettings, 
             RewardPointsSettings rewardPointsSettings,
             PaymentSettings paymentSettings,
@@ -110,6 +114,7 @@ namespace Nop.Web.Controllers
             this._httpContext = httpContext;
             this._addressAttributeParser = addressAttributeParser;
             this._addressAttributeService = addressAttributeService;
+            this._pushNotificationService = pushNotificationService;
 
             this._orderSettings = orderSettings;
             this._rewardPointsSettings = rewardPointsSettings;
@@ -144,7 +149,7 @@ namespace Nop.Web.Controllers
 
         #region Methods (common)
 
-        public virtual ActionResult Index()
+        public virtual async Task<ActionResult> Index()
         {
             var cart = _workContext.CurrentCustomer.ShoppingCartItems
                 .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
@@ -211,7 +216,7 @@ namespace Nop.Web.Controllers
             return RedirectToRoute("CheckoutBillingAddress");
         }
 
-        public virtual ActionResult Completed(int? orderId)
+        public async Task<ActionResult> Completed(int? orderId)
         {
             //validation
             if (_workContext.CurrentCustomer.IsGuest() && !_orderSettings.AnonymousCheckoutAllowed)
@@ -239,6 +244,9 @@ namespace Nop.Web.Controllers
             {
                 return RedirectToRoute("OrderDetails", new {orderId = order.Id});
             }
+
+            // Notification
+            await _pushNotificationService.SendPushNotification(order);
 
             //model
             var model = _checkoutModelFactory.PrepareCheckoutCompletedModel(order);
@@ -939,6 +947,8 @@ namespace Nop.Web.Controllers
                 
                 foreach (var error in placeOrderResult.Errors)
                     model.Warnings.Add(error);
+
+                // Push notification
             }
             catch (Exception exc)
             {
