@@ -11,13 +11,13 @@
             </div>
             <ul class="list">
                 <li class="address">
-                    <span><a>5th Avenue. London. 03SL40F</a></span>
+                    <span><a>@Model.CompanyAddress</a></span>
                 </li>
                 <li class="email">
-                    <span><a href="mailto:pavilion-store@gmail.com" target="_top">pavilion-store@gmail.com</a></span>
+                    <span><a href="mailto:@Model.Email" target="_top">@Model.Email</a></span>
                 </li>
                 <li class="phone">
-                    <span>(028) 33 333 333</span>
+                    <span><a href="tel:@Model.CompanyPhoneNumber">@Model.CompanyPhoneNumber</a></span>
                 </li>
                 @if (Model.SitemapEnabled)
                 {

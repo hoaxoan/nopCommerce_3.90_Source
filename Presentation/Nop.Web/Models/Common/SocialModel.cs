@@ -8,6 +8,7 @@ namespace Nop.Web.Models.Common
         public string TwitterLink { get; set; }
         public string YoutubeLink { get; set; }
         public string GooglePlusLink { get; set; }
+        public string ZaloLink { get; set; }
         public int WorkingLanguageId { get; set; }
         public bool NewsEnabled { get; set; }
     }

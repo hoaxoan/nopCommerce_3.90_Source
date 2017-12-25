@@ -174,6 +174,7 @@ namespace Nop.Web.Models.Catalog
             public bool CustomerEntersPrice { get; set; }
 
             public bool CallForPrice { get; set; }
+            public string CallForPhone { get; set; }
 
             public int ProductId { get; set; }
 

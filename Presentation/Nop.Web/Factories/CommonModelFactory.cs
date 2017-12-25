@@ -340,6 +340,29 @@ namespace Nop.Web.Factories
         }
 
         /// <summary>
+        /// Prepare the header link model
+        /// </summary>
+        /// <returns>Header link model</returns>
+        public virtual HeaderLinkModel PrepareHeaderLinkModel()
+        {
+            var model = new HeaderLinkModel
+            {
+                CompanyAddress = _storeContext.CurrentStore.CompanyAddress,
+                CompanyPhoneNumber = _storeContext.CurrentStore.CompanyPhoneNumber,
+                SocialModel = new SocialModel()
+                {
+                    FacebookLink = _storeInformationSettings.FacebookLink,
+                    TwitterLink = _storeInformationSettings.TwitterLink,
+                    YoutubeLink = _storeInformationSettings.YoutubeLink,
+                    GooglePlusLink = _storeInformationSettings.GooglePlusLink,
+                    ZaloLink = _storeInformationSettings.ZaloLink
+                }
+            };
+           
+            return model;
+        }
+
+        /// <summary>
         /// Prepare the admin header links model
         /// </summary>
         /// <returns>Admin header links model</returns>
@@ -420,7 +443,18 @@ namespace Nop.Web.Factories
                 DisplayTaxShippingInfoFooter = _catalogSettings.DisplayTaxShippingInfoFooter,
                 HidePoweredByNopCommerce = _storeInformationSettings.HidePoweredByNopCommerce,
                 AllowCustomersToApplyForVendorAccount = _vendorSettings.AllowCustomersToApplyForVendorAccount,
-                Topics = cachedTopicModel
+                Topics = cachedTopicModel,
+                CompanyAddress = _storeContext.CurrentStore.GetLocalized(x => x.CompanyAddress),
+                CompanyPhoneNumber = _storeContext.CurrentStore.GetLocalized(x => x.CompanyPhoneNumber),
+                Email = _storeContext.CurrentStore.GetLocalized(x => x.Email),
+                SocialModel = new SocialModel()
+                {
+                    FacebookLink = _storeInformationSettings.FacebookLink,
+                    TwitterLink = _storeInformationSettings.TwitterLink,
+                    YoutubeLink = _storeInformationSettings.YoutubeLink,
+                    GooglePlusLink = _storeInformationSettings.GooglePlusLink,
+                    ZaloLink = _storeInformationSettings.ZaloLink
+                }
             };
 
             return model;

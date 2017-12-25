@@ -27,7 +27,10 @@ namespace Nop.Web.Models.Common
         public int WorkingLanguageId { get; set; }
 
         public IList<FooterTopicModel> Topics { get; set; }
-
+        public string CompanyAddress { get; set; }
+        public string CompanyPhoneNumber { get; set; }
+        public string Email { get; set; }
+        public SocialModel SocialModel { get; set; }
         #region Nested classes
 
         public class FooterTopicModel : BaseNopEntityModel

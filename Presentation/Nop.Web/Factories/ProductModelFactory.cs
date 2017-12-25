@@ -268,7 +268,8 @@ namespace Nop.Web.Factories
                                     if (minPriceProduct.CallForPrice)
                                     {
                                         priceModel.OldPrice = null;
-                                        priceModel.Price = _localizationService.GetResource("Products.CallForPrice");
+                                        priceModel.Price = _storeContext.CurrentStore.CompanyPhoneNumber; //_localizationService.GetResource("Products.CallForPrice");
+                                        priceModel.CallForPrice = true;
                                     }
                                     else if (minPossiblePrice.HasValue)
                                     {
@@ -345,7 +346,8 @@ namespace Nop.Web.Factories
                             {
                                 //call for price
                                 priceModel.OldPrice = null;
-                                priceModel.Price = _localizationService.GetResource("Products.CallForPrice");
+                                priceModel.Price = _storeContext.CurrentStore.CompanyPhoneNumber; //_localizationService.GetResource("Products.CallForPrice");
+                                priceModel.CallForPrice = true;
                             }
                             else
                             {
@@ -585,6 +587,7 @@ namespace Nop.Web.Factories
                     if (product.CallForPrice)
                     {
                         model.CallForPrice = true;
+                        model.CallForPhone = _storeContext.CurrentStore.CompanyPhoneNumber;
                     }
                     else
                     {
@@ -698,6 +701,12 @@ namespace Nop.Web.Factories
             }
             //rental
             model.IsRental = product.IsRental;
+
+            if (product.CallForPrice)
+            {
+                model.DisableBuyButton = true;
+
+            }
 
             //customer entered price
             model.CustomerEntersPrice = product.CustomerEntersPrice;

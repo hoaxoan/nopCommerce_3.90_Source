@@ -69,7 +69,16 @@
                     <input type="button" id="add-to-cart-button-@Model.ProductId" class="button-1 add-to-cart-button" value="@addToCartText" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;" />
                 }
             </div>
-        }
+                    }
         @Html.Widget("productdetails_add_info", Model.ProductId)
+    </div>
+}
+else
+{
+    <div class="add-to-cart">
+    @{
+        var callForPriceText = T("Products.CallForPrice").Text;
+        <input type="button" id="add-to-cart-button-@Model.ProductId" class="button-1 add-to-cart-button" value="@callForPriceText" data-productid="@Model.ProductId" onclick="return false;" />
+    }
     </div>
 }

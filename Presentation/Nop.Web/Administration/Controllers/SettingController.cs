@@ -1728,6 +1728,7 @@ namespace Nop.Admin.Controllers
             model.StoreInformationSettings.TwitterLink = storeInformationSettings.TwitterLink;
             model.StoreInformationSettings.YoutubeLink = storeInformationSettings.YoutubeLink;
             model.StoreInformationSettings.GooglePlusLink = storeInformationSettings.GooglePlusLink;
+            model.StoreInformationSettings.ZaloLink = storeInformationSettings.GooglePlusLink;
             //contact us
             model.StoreInformationSettings.SubjectFieldOnContactUsForm = commonSettings.SubjectFieldOnContactUsForm;
             model.StoreInformationSettings.UseSystemEmailForContactUsForm = commonSettings.UseSystemEmailForContactUsForm;
@@ -1749,6 +1750,7 @@ namespace Nop.Admin.Controllers
                 model.StoreInformationSettings.TwitterLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.TwitterLink, storeScope);
                 model.StoreInformationSettings.YoutubeLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.YoutubeLink, storeScope);
                 model.StoreInformationSettings.GooglePlusLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.GooglePlusLink, storeScope);
+                model.StoreInformationSettings.ZaloLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.ZaloLink, storeScope);
                 model.StoreInformationSettings.SubjectFieldOnContactUsForm_OverrideForStore = _settingService.SettingExists(commonSettings, x => x.SubjectFieldOnContactUsForm, storeScope);
                 model.StoreInformationSettings.UseSystemEmailForContactUsForm_OverrideForStore = _settingService.SettingExists(commonSettings, x => x.UseSystemEmailForContactUsForm, storeScope);
                 model.StoreInformationSettings.SitemapEnabled_OverrideForStore = _settingService.SettingExists(commonSettings, x => x.SitemapEnabled, storeScope);

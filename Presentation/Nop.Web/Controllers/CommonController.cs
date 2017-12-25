@@ -245,6 +245,13 @@ namespace Nop.Web.Controllers
             var model = _commonModelFactory.PrepareAdminHeaderLinksModel();
             return PartialView(model);
         }
+        //header link
+        [ChildActionOnly]
+        public virtual ActionResult HeaderLink()
+        {
+            var model = _commonModelFactory.PrepareHeaderLinkModel();
+            return PartialView(model);
+        }
 
 
         //social
@@ -253,9 +260,8 @@ namespace Nop.Web.Controllers
         {
             var model = _commonModelFactory.PrepareSocialModel();
             return PartialView(model);
-        }
-
-
+        }  
+        
         //footer
         [ChildActionOnly]
         public virtual ActionResult Footer()
