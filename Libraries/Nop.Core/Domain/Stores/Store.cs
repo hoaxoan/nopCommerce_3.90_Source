@@ -61,5 +61,10 @@ namespace Nop.Core.Domain.Stores
         /// Gets or sets the company VAT (used in Europe Union countries)
         /// </summary>
         public string CompanyVat { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Email
+        /// </summary>
+        public string Email { get; set; }
     }
 }
