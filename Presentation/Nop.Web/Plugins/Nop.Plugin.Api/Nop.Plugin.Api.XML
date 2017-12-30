@@ -699,6 +699,11 @@
             Gets or sets the shipping rate computation method identifier
             </summary>
         </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.ShippedDateUtc">
+            <summary>
+            Gets or sets the shipped date and time
+            </summary>
+        </member>
         <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderDto.CustomValuesXml">
             <summary>
             Gets or sets the serialized CustomValues (values from ProcessPaymentRequest)

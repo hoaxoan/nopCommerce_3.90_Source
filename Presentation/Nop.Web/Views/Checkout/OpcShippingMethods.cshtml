@@ -1,5 +1,7 @@
 ﻿@model CheckoutShippingMethodModel
 @using Nop.Web.Models.Checkout;
+@using Nop.Core.Domain.Shipping;
+
 <div class="checkout-data">
     <div class="section shipping-method">
         @Html.Widget("op_checkout_shipping_method_top")
@@ -18,6 +20,13 @@
                         {
                             <div class="method-description">
                                 @Html.Raw(shippingMethod.Description)
+                            </div>
+                        }
+
+                        @if (shippingMethod.Id == (int)ShippingMethodStatus.ShippingByDate)
+                        {
+                            <div class="method-description">
+                                @Html.NopEditorFor(model => shippingMethod.ShippedDateUtc)
                             </div>
                         }
                     </li>

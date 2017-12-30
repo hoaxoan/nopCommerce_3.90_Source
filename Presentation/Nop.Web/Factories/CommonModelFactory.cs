@@ -393,6 +393,7 @@ namespace Nop.Web.Factories
                 TwitterLink = _storeInformationSettings.TwitterLink,
                 YoutubeLink = _storeInformationSettings.YoutubeLink,
                 GooglePlusLink = _storeInformationSettings.GooglePlusLink,
+                ZaloLink = _storeInformationSettings.ZaloLink,
                 WorkingLanguageId = _workContext.WorkingLanguage.Id,
                 NewsEnabled = _newsSettings.Enabled,
             };

@@ -504,7 +504,7 @@
         }
 
         .top-category .category-link:hover label {
-            color: #4ab2f1;
+            color: #533d8a;
         }
 
         .top-category .category-link:hover {
@@ -691,7 +691,7 @@
 }
 
 .hasMegaMenu .category-items .category-list > li > a:hover {
-    color: #9D0A0E;
+    color: #533d8a;
 }
 
 
@@ -815,5 +815,5 @@
     left: 15px;
     width: 100%;
     height: 2px;
-    background-color: #4ab2f1;
+    background-color: #533d8a;
 }

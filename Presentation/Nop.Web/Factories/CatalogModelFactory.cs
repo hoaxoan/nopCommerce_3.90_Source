@@ -348,7 +348,7 @@ namespace Nop.Web.Factories
         public virtual CategoryModel PrepareHomepageCategoryModel(Category category)
         {
             CatalogPagingFilteringModel command = new CatalogPagingFilteringModel();
-            command.PageSize = 10;
+            command.PageSize = 12;
 
             if (category == null)
                 throw new ArgumentNullException("category");

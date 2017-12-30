@@ -25,6 +25,8 @@ using Nop.Web.Framework.Security;
 using Nop.Web.Models.Checkout;
 using Nop.Services.Firebase;
 using System.Threading.Tasks;
+using Nop.Services.Helpers;
+using System.Globalization;
 
 namespace Nop.Web.Controllers
 {
@@ -54,6 +56,8 @@ namespace Nop.Web.Controllers
         private readonly IAddressAttributeParser _addressAttributeParser;
         private readonly IAddressAttributeService _addressAttributeService;
         private readonly IPushNotificationService _pushNotificationService;
+
+        private readonly IDateTimeHelper _dateTimeHelper;
 
         private readonly OrderSettings _orderSettings;
         private readonly RewardPointsSettings _rewardPointsSettings;
@@ -87,6 +91,7 @@ namespace Nop.Web.Controllers
             IAddressAttributeParser addressAttributeParser,
             IAddressAttributeService addressAttributeService,
             IPushNotificationService pushNotificationService,
+            IDateTimeHelper dateTimeHelper,
             OrderSettings orderSettings, 
             RewardPointsSettings rewardPointsSettings,
             PaymentSettings paymentSettings,
@@ -115,6 +120,7 @@ namespace Nop.Web.Controllers
             this._addressAttributeParser = addressAttributeParser;
             this._addressAttributeService = addressAttributeService;
             this._pushNotificationService = pushNotificationService;
+            this._dateTimeHelper = dateTimeHelper;
 
             this._orderSettings = orderSettings;
             this._rewardPointsSettings = rewardPointsSettings;
@@ -149,7 +155,7 @@ namespace Nop.Web.Controllers
 
         #region Methods (common)
 
-        public virtual async Task<ActionResult> Index()
+        public virtual ActionResult Index()
         {
             var cart = _workContext.CurrentCustomer.ShoppingCartItems
                 .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
@@ -212,7 +218,7 @@ namespace Nop.Web.Controllers
 
             if (_orderSettings.OnePageCheckoutEnabled)
                 return RedirectToRoute("CheckoutOnePage");
-            
+
             return RedirectToRoute("CheckoutBillingAddress");
         }
 
@@ -926,6 +932,7 @@ namespace Nop.Web.Controllers
                 processPaymentRequest.PaymentMethodSystemName = _workContext.CurrentCustomer.GetAttribute<string>(
                     SystemCustomerAttributeNames.SelectedPaymentMethod,
                     _genericAttributeService, _storeContext.CurrentStore.Id);
+
                 var placeOrderResult = _orderProcessingService.PlaceOrder(processPaymentRequest);
                 if (placeOrderResult.Success)
                 {
@@ -1484,6 +1491,20 @@ namespace Nop.Web.Controllers
                     .Find(so => !String.IsNullOrEmpty(so.Name) && so.Name.Equals(selectedName, StringComparison.InvariantCultureIgnoreCase));
                 if (shippingOption == null)
                     throw new Exception("Selected shipping method can't be loaded");
+
+                // shipped date
+                DateTime shippedDateUtc = DateTime.UtcNow;
+                if (shippingOption.Id == (int)ShippingMethodStatus.ShippingByDate)
+                {
+                    string shippedDateStr = form["shippingMethod.ShippedDateUtc"];
+                    CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+                    DateTime.TryParse(shippedDateStr, culture, DateTimeStyles.None, out shippedDateUtc);
+                    if(shippedDateUtc < DateTime.UtcNow)
+                    {
+                        shippedDateUtc = DateTime.UtcNow;
+                    }
+                }
+                shippingOption.ShippedDateUtc = _dateTimeHelper.ConvertToUserTime(shippedDateUtc);
 
                 //save
                 _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.SelectedShippingOption, shippingOption, _storeContext.CurrentStore.Id);

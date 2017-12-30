@@ -287,10 +287,12 @@ namespace Nop.Web.Factories
                 {
                     var soModel = new CheckoutShippingMethodModel.ShippingMethodModel
                                       {
+                                          Id = shippingOption.Id,
                                           Name = shippingOption.Name,
                                           Description = shippingOption.Description,
                                           ShippingRateComputationMethodSystemName = shippingOption.ShippingRateComputationMethodSystemName,
                                           ShippingOption = shippingOption,
+                                          ShippedDateUtc = shippingOption.ShippedDateUtc != null ? shippingOption.ShippedDateUtc : DateTime.UtcNow
                                       };
 
                     //adjust rate

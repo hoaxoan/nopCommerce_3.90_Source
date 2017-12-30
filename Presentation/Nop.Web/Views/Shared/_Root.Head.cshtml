@@ -5,10 +5,18 @@
 @using Nop.Services.Security;
 
 @{
+    var kendoVersion = "2014.1.318";
+
     var storeSettings = EngineContext.Current.Resolve<StoreInformationSettings>();
     var permissionService = EngineContext.Current.Resolve<IPermissionService>();
     var displayMiniProfiler = storeSettings.DisplayMiniProfilerInPublicStore
         && (!storeSettings.DisplayMiniProfilerForAdminOnly || permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel));
+
+    Html.AppendCssFileParts(string.Format("~/Content/kendo/{0}/kendo.rtl.min.css", kendoVersion));
+    Html.AppendCssFileParts(string.Format("~/Content/kendo/{0}/kendo.default.min.css", kendoVersion));
+    Html.AppendCssFileParts(string.Format("~/Content/kendo/{0}/kendo.common.min.css", kendoVersion));
+
+    Html.AppendScriptParts(string.Format("~/Scripts/kendo/{0}/kendo.web.min.js", kendoVersion));
 
     Html.AppendScriptParts("~/Scripts/public.ajaxcart.js");
     Html.AppendScriptParts("~/Scripts/public.common.js");

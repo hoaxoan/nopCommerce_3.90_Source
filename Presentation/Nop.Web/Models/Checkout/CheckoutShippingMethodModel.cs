@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nop.Core.Domain.Shipping;
 using Nop.Web.Framework.Mvc;
+using System;
 
 namespace Nop.Web.Models.Checkout
 {
@@ -23,10 +24,12 @@ namespace Nop.Web.Models.Checkout
         public partial class ShippingMethodModel : BaseNopModel
         {
             public string ShippingRateComputationMethodSystemName { get; set; }
+            public int Id { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
             public string Fee { get; set; }
             public bool Selected { get; set; }
+            public DateTime ShippedDateUtc { get; set; }
 
             public ShippingOption ShippingOption { get; set; } 
         }
