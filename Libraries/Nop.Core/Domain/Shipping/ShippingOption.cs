@@ -32,6 +32,16 @@ namespace Nop.Core.Domain.Shipping
         /// Gets or sets a shipping option description
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets a shipping option id
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets a shipping option shipped date utc
+        /// </summary>
+        public DateTime ShippedDateUtc { get; set; }
     }
 
 

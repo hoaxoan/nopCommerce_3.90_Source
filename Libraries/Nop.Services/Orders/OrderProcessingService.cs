@@ -270,6 +270,8 @@ namespace Nop.Services.Orders
             public int RedeemedRewardPoints { get; set; }
             public decimal RedeemedRewardPointsAmount { get; set; }
             public decimal OrderTotal { get; set; }
+
+            public DateTime? ShippedDateUtc { get; set; }
         }
 
         #endregion
@@ -429,6 +431,7 @@ namespace Nop.Services.Orders
                 var shippingOption = details.Customer.GetAttribute<ShippingOption>(SystemCustomerAttributeNames.SelectedShippingOption, processPaymentRequest.StoreId);
                 if (shippingOption != null)
                 {
+                    details.ShippedDateUtc = shippingOption.ShippedDateUtc;
                     details.ShippingMethodName = shippingOption.Name;
                     details.ShippingRateComputationMethodSystemName = shippingOption.ShippingRateComputationMethodSystemName;
                 }
@@ -678,6 +681,7 @@ namespace Nop.Services.Orders
                 ShippingAddress = details.ShippingAddress,
                 ShippingStatus = details.ShippingStatus,
                 ShippingMethod = details.ShippingMethodName,
+                ShippedDateUtc = details.ShippedDateUtc,
                 PickUpInStore = details.PickUpInStore,
                 PickupAddress = details.PickupAddress,
                 ShippingRateComputationMethodSystemName = details.ShippingRateComputationMethodSystemName,

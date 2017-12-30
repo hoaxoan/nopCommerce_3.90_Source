@@ -220,7 +220,13 @@ namespace Nop.Plugin.Api.DTOs.Orders
         /// </summary>
         [JsonProperty("shipping_rate_computation_method_system_name")]
         public string ShippingRateComputationMethodSystemName { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the shipped date and time
+        /// </summary>
+        [JsonProperty("shipped_date_utc")]
+        public DateTime? ShippedDateUtc { get; set; }
+
         /// <summary>
         /// Gets or sets the serialized CustomValues (values from ProcessPaymentRequest)
         /// </summary>

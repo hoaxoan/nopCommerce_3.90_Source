@@ -176,6 +176,7 @@ namespace Nop.Plugin.Shipping.FixedOrByWeight
 
                     var shippingOption = new ShippingOption
                     {
+                        Id = shippingMethod.Id,
                         Name = shippingMethod.GetLocalized(x => x.Name),
                         Description = shippingMethod.GetLocalized(x => x.Description),
                         Rate = rate.Value
@@ -195,9 +196,11 @@ namespace Nop.Plugin.Shipping.FixedOrByWeight
                 {
                     var shippingOption = new ShippingOption
                     {
+                        Id = shippingMethod.Id,
                         Name = shippingMethod.GetLocalized(x => x.Name),
                         Description = shippingMethod.GetLocalized(x => x.Description),
-                        Rate = GetRate(shippingMethod.Id)
+                        Rate = GetRate(shippingMethod.Id),
+                        ShippedDateUtc = DateTime.UtcNow
                     };
                     response.ShippingOptions.Add(shippingOption);
                 }

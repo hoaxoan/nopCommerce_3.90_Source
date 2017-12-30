@@ -326,6 +326,11 @@ namespace Nop.Core.Domain.Orders
         public string CustomValuesXml { get; set; }
 
         /// <summary>
+        /// Gets or sets the shipped date and time
+        /// </summary>
+        public DateTime? ShippedDateUtc { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the entity has been deleted
         /// </summary>
         public bool Deleted { get; set; }
