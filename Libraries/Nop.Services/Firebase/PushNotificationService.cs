@@ -9,6 +9,8 @@ using Nop.Services.Events;
 using FCM.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Nop.Services.Catalog;
+using Nop.Services.Localization;
 
 namespace Nop.Services.Firebase
 {
@@ -26,6 +28,8 @@ namespace Nop.Services.Firebase
         private readonly IRepository<Device> _deviceRepository;
         private readonly IEventPublisher _eventPublisher;
         private readonly ICacheManager _cacheManager;
+        private readonly IPriceFormatter _priceFormatter;
+        private readonly ILocalizationService _localizationService;
 
         #endregion
 
@@ -38,11 +42,15 @@ namespace Nop.Services.Firebase
         /// <param name="eventPublisher">Event publisher</param>
         public PushNotificationService(ICacheManager cacheManager,
             IRepository<Device> deviceRepository,
+            IPriceFormatter priceFormatter,
+            ILocalizationService localizationService,
             IEventPublisher eventPublisher)
         {
             this._cacheManager = cacheManager;
             this._eventPublisher = eventPublisher;
             this._deviceRepository = deviceRepository;
+            this._priceFormatter = priceFormatter;
+            this._localizationService = localizationService;
         }
 
         #endregion
@@ -62,8 +70,8 @@ namespace Nop.Services.Firebase
                         RegistrationIds = registrationIds,
                         Notification = new Notification
                         {
-                            Title = string.Format("Order No#{0} - {1:dd/MM/yyyy: HH:mm}", order.Id, order.CreatedOnUtc),
-                            Body = string.Format("Order No#{0} with Total {1} VND", order.Id, order.OrderTotal),
+                            Title = string.Format(_localizationService.GetResource("Notification.TitleFormat"), order.Id, order.ShippedDateUtc),
+                            Body = string.Format(_localizationService.GetResource("Notification.BodyFormat"), order.Id, _priceFormatter.FormatPrice(order.OrderTotal)),
                         }
                     };
                     await sender.SendAsync(message);
