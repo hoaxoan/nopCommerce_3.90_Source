@@ -22,12 +22,11 @@ BEGIN
 	SELECT 
 		SO.[OrderStatusId],			
 		COUNT(*) AS [OrderCount],
-		SUM(CASE WHEN ISNULL(SO.[CreatedOnUtc], '1/1/1900') >= getdate() THEN 1 ELSE 0 END) AS [OverOrderCount]
+		SUM(CASE WHEN  (CAST(ISNULL(SO.[ShippedDateUtc], '1/1/1900') AS DATE) = CAST(getdate() AS DATE)) THEN 1 ELSE 0 END) AS [OverOrderCount]
 	INTO #TmpOrderStatusData
 	FROM [Order] SO 
-	--INNER JOIN [Shipment] SH ON SO.[ID] = SH.[OrderId]
 	WHERE SO.[Deleted] = 0 
-		--AND (ISNULL(SO.[CreatedOnUtc], '1/1/1900') >= getdate())
+		AND (CAST(ISNULL(SO.[ShippedDateUtc], '1/1/1900') AS DATE) >= CAST(getdate() AS DATE))
 	GROUP BY SO.[OrderStatusId]
 	ORDER BY SO.[OrderStatusId]
 
@@ -38,7 +37,7 @@ BEGIN
 		[OrderCount]
 	)
 	SELECT 1 AS [OrderStatusId],
-		ISNULL(SUM(SO.[OrderCount]), 0) AS [OrderCount]
+		ISNULL(SUM(SO.[OverOrderCount]), 0) AS [OrderCount]
 	FROM #TmpOrderStatusData SO
 	WHERE SO.[OrderStatusId] = 10
 
@@ -49,7 +48,7 @@ BEGIN
 		[OrderCount]
 	)
 	SELECT 2 AS [OrderStatusId],
-		ISNULL(SUM(SO.[OrderCount]), 0) AS [OrderCount]
+		ISNULL(SUM(SO.[OverOrderCount]), 0) AS [OrderCount]
 	FROM #TmpOrderStatusData SO
 
 	-- Order in Days
@@ -59,7 +58,7 @@ BEGIN
 		[OrderCount]
 	)
 	SELECT 3 AS [OrderStatusId],
-		ISNULL(SUM(ISNULL(SO.[OrderCount], 0) + ISNULL(SO.[OverOrderCount], 0)), 0) AS [OrderCount]
+		ISNULL(SUM(SO.[OrderCount]), 0) AS [OrderCount]
 	FROM #TmpOrderStatusData SO
 	WHERE SO.[OrderStatusId] IN (10, 20)
 

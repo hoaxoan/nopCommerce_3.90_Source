@@ -37,15 +37,12 @@ BEGIN
 	FROM [Order] SO '
 
 	SET @sql += '
-	INNER JOIN [Shipment] SH ON SO.[ID] = SH.[OrderId] '
-
-	SET @sql += '
 	WHERE SO.[Deleted] = 0 '
 
 	IF(@MarkAsDeliveryDate = 1)
 	BEGIN
 		SET @sql += ' 
-		AND (ISNULL(SO.[CreatedOnUtc], ''1/1/1900'') >= @DeliveryDate)'
+		AND (CAST(ISNULL(SO.[ShippedDateUtc], ''1/1/1900'') AS DATE) >= CAST(@DeliveryDate AS DATE))'
 	END
 
 	SET @sql += '

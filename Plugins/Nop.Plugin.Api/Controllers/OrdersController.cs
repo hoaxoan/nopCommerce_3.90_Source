@@ -130,9 +130,10 @@ namespace Nop.Plugin.Api.Controllers
             }
 
             var storeId = _storeContext.CurrentStore.Id;
-            
+
             IList<int> status = new List<int>();
             IList<int> paymentStatus = new List<int>();
+            DateTime? shippedDateUtc = DateTime.UtcNow;
             if (parameters.Status == 1)
             {
                 status.Add((int)OrderStatus.Pending);
@@ -158,10 +159,8 @@ namespace Nop.Plugin.Api.Controllers
             }
 
             IList<Order> orders = _orderApiService.GetOrders(parameters.Ids, parameters.CreatedAtMin,
-            parameters.CreatedAtMax,
-            parameters.Limit, parameters.Page, parameters.SinceId,
-            status, paymentStatus, parameters.ShippingStatus,
-            parameters.CustomerId, storeId);
+            parameters.CreatedAtMax, parameters.Limit, parameters.Page, parameters.SinceId,
+            status, paymentStatus, parameters.ShippingStatus, parameters.Status, shippedDateUtc, parameters.CustomerId, storeId);
 
             IList<OrderDto> ordersAsDtos = orders.Select(x => _dtoHelper.PrepareOrderDTO(x)).ToList();
 

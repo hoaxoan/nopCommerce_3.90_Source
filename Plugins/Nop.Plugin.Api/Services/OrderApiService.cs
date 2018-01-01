@@ -45,10 +45,10 @@ namespace Nop.Plugin.Api.Services
 
         public IList<Order> GetOrders(IList<int> ids = null, DateTime? createdAtMin = null, DateTime? createdAtMax = null,
            int limit = Configurations.DefaultLimit, int page = Configurations.DefaultPageValue, int sinceId = Configurations.DefaultSinceId,
-           IList<int> status = null, IList<int> paymentStatus = null, ShippingStatus? shippingStatus = null, int? customerId = null, 
+           IList<int> orderStatus = null, IList<int> paymentStatus = null, ShippingStatus? shippingStatus = null, int? status = null, DateTime? shippedDateUtc = null, int? customerId = null,
            int? storeId = null)
         {
-            var query = GetOrdersQuery2(createdAtMin, createdAtMax, status, paymentStatus, shippingStatus, ids, customerId, storeId);
+            var query = GetOrdersQuery2(createdAtMin, createdAtMax, orderStatus, paymentStatus, shippingStatus, status, shippedDateUtc, ids, customerId, storeId);
 
             if (sinceId > 0)
             {
@@ -76,7 +76,7 @@ namespace Nop.Plugin.Api.Services
         }
 
         private IQueryable<Order> GetOrdersQuery(DateTime? createdAtMin = null, DateTime? createdAtMax = null, int? status = null,
-            PaymentStatus? paymentStatus = null, ShippingStatus? shippingStatus = null, IList<int> ids = null, 
+            PaymentStatus? paymentStatus = null, ShippingStatus? shippingStatus = null, IList<int> ids = null,
             int? customerId = null, int? storeId = null)
         {
             var query = _orderRepository.TableNoTracking;
@@ -90,17 +90,17 @@ namespace Nop.Plugin.Api.Services
             {
                 query = query.Where(c => ids.Contains(c.Id));
             }
-            
+
             if (status != null)
             {
                 query = query.Where(order => order.OrderStatusId == (int)status);
             }
-            
+
             if (paymentStatus != null)
             {
                 query = query.Where(order => order.PaymentStatusId == (int)paymentStatus);
             }
-            
+
             if (shippingStatus != null)
             {
                 query = query.Where(order => order.ShippingStatusId == (int)shippingStatus);
@@ -128,8 +128,8 @@ namespace Nop.Plugin.Api.Services
             return query;
         }
 
-        private IQueryable<Order> GetOrdersQuery2(DateTime? createdAtMin = null, DateTime? createdAtMax = null, IList<int> status = null,
-            IList<int> paymentStatus = null, ShippingStatus? shippingStatus = null, IList<int> ids = null,
+        private IQueryable<Order> GetOrdersQuery2(DateTime? createdAtMin = null, DateTime? createdAtMax = null, IList<int> orderStatus = null,
+            IList<int> paymentStatus = null, ShippingStatus? shippingStatus = null, int? status = null, DateTime? shippedDateUtc = null, IList<int> ids = null,
             int? customerId = null, int? storeId = null)
         {
             var query = _orderRepository.TableNoTracking;
@@ -144,9 +144,9 @@ namespace Nop.Plugin.Api.Services
                 query = query.Where(c => ids.Contains(c.Id));
             }
 
-            if (status != null && status.Count > 0)
+            if (status != null && orderStatus.Count > 0)
             {
-                query = query.Where(order => status.Contains(order.OrderStatusId));
+                query = query.Where(order => orderStatus.Contains(order.OrderStatusId));
             }
 
             if (paymentStatus != null && paymentStatus.Count > 0)
@@ -157,6 +157,30 @@ namespace Nop.Plugin.Api.Services
             if (shippingStatus != null)
             {
                 query = query.Where(order => order.ShippingStatusId == (int)shippingStatus);
+            }
+
+            if (shippedDateUtc != null)
+            {
+                if (status == 1 || status == 2)
+                {
+                    query = query.Where(order => order.ShippedDateUtc != null 
+                        && order.ShippedDateUtc.Value.Year == shippedDateUtc.Value.Year
+                        && order.ShippedDateUtc.Value.Month == shippedDateUtc.Value.Month
+                        && order.ShippedDateUtc.Value.Day == shippedDateUtc.Value.Day
+                    );
+                }
+                else
+                {
+                    query = query.Where(order => order.ShippedDateUtc != null
+                    
+                    && ((order.ShippedDateUtc.Value.Year > shippedDateUtc.Value.Year)
+                    || (order.ShippedDateUtc.Value.Year == shippedDateUtc.Value.Year
+                    && order.ShippedDateUtc.Value.Month > shippedDateUtc.Value.Month)
+                    || (order.ShippedDateUtc.Value.Year == shippedDateUtc.Value.Year
+                    && order.ShippedDateUtc.Value.Month == shippedDateUtc.Value.Month
+                    && order.ShippedDateUtc.Value.Day >= shippedDateUtc.Value.Day))
+                    );
+                }
             }
 
             query = query.Where(order => !order.Deleted);
