@@ -1246,6 +1246,10 @@ namespace Nop.Web.Controllers
                     address.CountryId = null;
                 if (address.StateProvinceId == 0)
                     address.StateProvinceId = null;
+                if (address.DistrictId == 0)
+                    address.DistrictId = null;
+                if (address.WardId == 0)
+                    address.WardId = null;
                 customer.Addresses.Add(address);
                 _customerService.UpdateCustomer(customer);
 
@@ -1313,6 +1317,16 @@ namespace Nop.Web.Controllers
             {
                 address = model.Address.ToEntity(address);
                 address.CustomAttributes = customAttributes;
+                //some validation
+                if (address.CountryId == 0)
+                    address.CountryId = null;
+                if (address.StateProvinceId == 0)
+                    address.StateProvinceId = null;
+                if (address.DistrictId == 0)
+                    address.DistrictId = null;
+                if (address.WardId == 0)
+                    address.WardId = null;
+
                 _addressService.UpdateAddress(address);
 
                 return RedirectToRoute("CustomerAddresses");
