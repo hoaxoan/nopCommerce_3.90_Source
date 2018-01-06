@@ -9,4 +9,3 @@ E:\nopCommerce_3.90_Source\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.csproj.App.config
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.dll
 E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.pdb
-E:\nopCommerce_3.90_Source\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.csprojResolveAssemblyReference.cache

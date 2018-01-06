@@ -1,23 +1,27 @@
 ﻿@model HeaderLinkModel
 @using Nop.Web.Models.Common;
-<div class="header-welcome-message">
-    @T("Products.CallForPrice"):
-    <a href="tel:@Model.CompanyPhoneNumber">@Model.CompanyPhoneNumber</a>
-</div>
 <div class="header-selectors-wrapper">
     @*@Html.Action("TaxTypeSelector", "Common")
         @Html.Action("CurrencySelector", "Common")
         @Html.Action("LanguageSelector", "Common")*@
     @Html.Widget("header_selectors")
-    <ul class="header-social-icons">
-        <li>
-            <a target="_blank" class="zalo" href="@Model.SocialModel.ZaloLink"></a>
-        </li>
-        <li>
-            <a target="_blank" class="facebook" href="@Model.SocialModel.FacebookLink"></a>
-        </li>
-        <li>
-            <a target="_blank" class="youtube" href="@Model.SocialModel.YoutubeLink"></a>
-        </li>
-    </ul>
+    <div class="header-welcome-message">
+        @T("Products.CallForPrice"):
+        <a href="tel:@Model.CompanyPhoneNumber">@Model.CompanyPhoneNumber</a>
+    </div>
+
+    <div class="social-selector" style="float: left;">
+        <ul class="header-social-icons">
+
+            <li>
+                <a target="_blank" class="zalo" href="@Model.SocialModel.ZaloLink"></a>
+            </li>
+            <li>
+                <a target="_blank" class="facebook" href="@Model.SocialModel.FacebookLink"></a>
+            </li>
+            <li>
+                <a target="_blank" class="youtube" href="@Model.SocialModel.YoutubeLink"></a>
+            </li>
+        </ul>
+    </div>
 </div>

@@ -721,12 +721,12 @@ label, label + * {
 
 .header-selectors-wrapper {
 	border-bottom: 1px solid #ddd;
-	padding: 10px 0;
+	/*padding: 10px 0;*/
 }
 .header-selectors-wrapper > div {
 	display: block;
 	width: 50%;
-	margin: 10px auto;
+	margin: 0px auto;
 	vertical-align: middle;
 }
 .header-selectors-wrapper select {
@@ -759,7 +759,7 @@ label, label + * {
 
 .header-links-wrapper {
 	position: relative;
-	padding: 20px 0;
+	padding: 10px 0;
 }
 .header-links {
 }
@@ -5421,7 +5421,7 @@ pre {
 .header-selectors-wrapper > div {
     display: inline-block;
 	width: 30%;
-    margin: 10px auto;
+    margin: 0px auto;
 }
 .search-box input.search-box-text {
 	width: 280px;
@@ -6259,8 +6259,8 @@ pre {
 .header-selectors-wrapper > div {
 	width: auto;
 	min-width: 100px;
-	margin: 0 12px 0 0;
-	line-height: 43px;
+	margin: 0 0px 0 0;
+	/*line-height: 43px;*/
 }
 .header-selectors-wrapper select {
 	height: 25px;
