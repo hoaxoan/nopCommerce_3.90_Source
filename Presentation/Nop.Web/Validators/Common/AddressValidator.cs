@@ -76,25 +76,25 @@ namespace Nop.Web.Validators.Common
                     return null;
                 });
             }
-            if (addressSettings.StateProvinceEnabled && addressSettings.StateProvinceEnabled)
-            {
-                Custom(x =>
-                {
-                    //does selected district has wards?
-                    var districtId = x.DistrictId.HasValue ? x.DistrictId.Value : 0;
-                    var hasWards = wardService.GetWardsByDistrictId(districtId).Any();
+            //if (addressSettings.StateProvinceEnabled && addressSettings.StateProvinceEnabled)
+            //{
+            //    Custom(x =>
+            //    {
+            //        //does selected district has wards?
+            //        var districtId = x.DistrictId.HasValue ? x.DistrictId.Value : 0;
+            //        var hasWards = wardService.GetWardsByDistrictId(districtId).Any();
 
-                    if (hasWards)
-                    {
-                        //if yes, then ensure that ward is selected
-                        if (!x.WardId.HasValue || x.WardId.Value == 0)
-                        {
-                            return new ValidationFailure("WardId", localizationService.GetResource("Address.Fields.Ward.Required"));
-                        }
-                    }
-                    return null;
-                });
-            }
+            //        if (hasWards)
+            //        {
+            //            //if yes, then ensure that ward is selected
+            //            if (!x.WardId.HasValue || x.WardId.Value == 0)
+            //            {
+            //                return new ValidationFailure("WardId", localizationService.GetResource("Address.Fields.Ward.Required"));
+            //            }
+            //        }
+            //        return null;
+            //    });
+            //}
             if (addressSettings.CompanyRequired && addressSettings.CompanyEnabled)
             {
                 RuleFor(x => x.Company).NotEmpty().WithMessage(localizationService.GetResource("Account.Fields.Company.Required"));

@@ -152,8 +152,8 @@
             @Html.LabelFor(model => model.WardId, new { }, ":")
             @Html.DropDownListFor(model => model.WardId, Model.AvailableWards)
             <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
-            @Html.RequiredHint()
-            @Html.ValidationMessageFor(model => model.WardId)
+            @*@Html.RequiredHint()*@
+            @*@Html.ValidationMessageFor(model => model.WardId)*@
         </div>
     }
 
