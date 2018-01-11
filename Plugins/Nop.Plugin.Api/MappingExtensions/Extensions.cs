@@ -15,7 +15,7 @@ namespace Nop.Plugin.Api.MappingExtensions
     /// </summary>
     public static class Extensions
     {
-        public static IList<OrderStatusDto> ToSelectList<TEnum>(this TEnum enumObj,
+        public static IList<OrderStatusDto> ToOrderStatusSelectList<TEnum>(this TEnum enumObj,
            bool markCurrentAsSelected = true, int[] valuesToExclude = null, bool useLocalization = true) where TEnum : struct
         {
             if (!typeof(TEnum).IsEnum) throw new ArgumentException("An Enumeration type is required.", "enumObj");
@@ -36,6 +36,29 @@ namespace Nop.Plugin.Api.MappingExtensions
                 orderStatusDtos.Add(new OrderStatusDto(Convert.ToString(value.ID), value.Name));
             }
             return orderStatusDtos;
+        }
+
+        public static IList<PaymentStatusDto> ToPaymentStatusSelectList<TEnum>(this TEnum enumObj,
+           bool markCurrentAsSelected = true, int[] valuesToExclude = null, bool useLocalization = true) where TEnum : struct
+        {
+            if (!typeof(TEnum).IsEnum) throw new ArgumentException("An Enumeration type is required.", "enumObj");
+
+            var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+
+            var values = from TEnum enumValue in Enum.GetValues(typeof(TEnum))
+                         where valuesToExclude == null
+                         select new { ID = Convert.ToInt32(enumValue), Name = useLocalization ? enumValue.GetLocalizedEnum(localizationService, workContext) : CommonHelper.ConvertEnum(enumValue.ToString()) };
+            object selectedValue = null;
+            if (markCurrentAsSelected)
+                selectedValue = Convert.ToInt32(enumObj);
+
+            IList<PaymentStatusDto> paymentStatusDtos = new List<PaymentStatusDto>();
+            foreach (var value in values)
+            {
+                paymentStatusDtos.Add(new PaymentStatusDto(Convert.ToString(value.ID), value.Name));
+            }
+            return paymentStatusDtos;
         }
     }
 }

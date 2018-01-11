@@ -40,6 +40,7 @@ using Nop.Services.Security;
 using Nop.Services.Shipping;
 using Nop.Services.Stores;
 using Nop.Plugin.Api.Domain;
+using Nop.Core.Domain.Payments;
 
 namespace Nop.Plugin.Api.Controllers
 {
@@ -160,7 +161,8 @@ namespace Nop.Plugin.Api.Controllers
 
             IList<Order> orders = _orderApiService.GetOrders(parameters.Ids, parameters.CreatedAtMin,
             parameters.CreatedAtMax, parameters.Limit, parameters.Page, parameters.SinceId,
-            status, paymentStatus, parameters.ShippingStatus, parameters.Status, shippedDateUtc, parameters.CustomerId, storeId);
+            status, paymentStatus, parameters.ShippingStatus, parameters.Status, shippedDateUtc, parameters.CustomerId, storeId,
+            parameters.StatusId, parameters.PaymentId, parameters.FromDate, parameters.ToDate);
 
             IList<OrderDto> ordersAsDtos = orders.Select(x => _dtoHelper.PrepareOrderDTO(x)).ToList();
 
@@ -685,7 +687,7 @@ namespace Nop.Plugin.Api.Controllers
         [GetRequestsErrorInterceptorActionFilter]
         public IHttpActionResult GetOrderStatus()
         {
-            IList<OrderStatusDto> orderStatusAsDtos = OrderStatus.Pending.ToSelectList(false).ToList();
+            IList<OrderStatusDto> orderStatusAsDtos = OrderStatus.Pending.ToOrderStatusSelectList(false).ToList();
 
             var orderStatusRootObject = new OrderStatusRootObject()
             {
@@ -747,5 +749,29 @@ namespace Nop.Plugin.Api.Controllers
 
             return new RawJsonActionResult(json);
         }
+
+        /// <summary>
+        /// Receive a list of all OrderStatus
+        /// </summary>
+        /// <response code="200">OK</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        [HttpGet]
+        [ResponseType(typeof(PaymentStatusRootObject))]
+        [GetRequestsErrorInterceptorActionFilter]
+        public IHttpActionResult GetPaymentStatus()
+        {
+            IList<PaymentStatusDto> paymentStatusAsDtos = PaymentStatus.Pending.ToPaymentStatusSelectList(false).ToList();
+
+            var paymentStatusRootObject = new PaymentStatusRootObject()
+            {
+                PaymentStatus = paymentStatusAsDtos
+            };
+
+            var json = _jsonFieldsSerializer.Serialize(paymentStatusRootObject, null);
+
+            return new RawJsonActionResult(json);
+        }
+
     }
 }

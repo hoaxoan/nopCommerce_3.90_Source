@@ -46,9 +46,10 @@ namespace Nop.Plugin.Api.Services
         public IList<Order> GetOrders(IList<int> ids = null, DateTime? createdAtMin = null, DateTime? createdAtMax = null,
            int limit = Configurations.DefaultLimit, int page = Configurations.DefaultPageValue, int sinceId = Configurations.DefaultSinceId,
            IList<int> orderStatus = null, IList<int> paymentStatus = null, ShippingStatus? shippingStatus = null, int? status = null, DateTime? shippedDateUtc = null, int? customerId = null,
-           int? storeId = null)
+           int? storeId = null, int? statusId = null, int? paymentId = null, DateTime? fromDate = null, DateTime? toDate = null)
         {
-            var query = GetOrdersQuery2(createdAtMin, createdAtMax, orderStatus, paymentStatus, shippingStatus, status, shippedDateUtc, ids, customerId, storeId);
+            var query = GetOrdersQuery2(createdAtMin, createdAtMax, orderStatus, paymentStatus, shippingStatus, status, shippedDateUtc, ids, customerId, storeId,
+                statusId, paymentId, fromDate, toDate);
 
             if (sinceId > 0)
             {
@@ -130,7 +131,7 @@ namespace Nop.Plugin.Api.Services
 
         private IQueryable<Order> GetOrdersQuery2(DateTime? createdAtMin = null, DateTime? createdAtMax = null, IList<int> orderStatus = null,
             IList<int> paymentStatus = null, ShippingStatus? shippingStatus = null, int? status = null, DateTime? shippedDateUtc = null, IList<int> ids = null,
-            int? customerId = null, int? storeId = null)
+            int? customerId = null, int? storeId = null, int? statusId = null, int? paymentId = null, DateTime? fromDate = null, DateTime? toDate = null)
         {
             var query = _orderRepository.TableNoTracking;
 
@@ -181,6 +182,26 @@ namespace Nop.Plugin.Api.Services
                     && order.ShippedDateUtc.Value.Day >= shippedDateUtc.Value.Day))
                     );
                 }
+            }
+
+            if(statusId != null)
+            {
+                query = query.Where(order => order.OrderStatusId == statusId);
+            }
+
+            if (paymentId != null)
+            {
+                query = query.Where(order => order.PaymentStatusId == paymentId);
+            }
+
+            if (fromDate != null)
+            {
+                query = query.Where(order => order.ShippedDateUtc != null && order.ShippedDateUtc >= fromDate);
+            }
+
+            if (toDate != null)
+            {
+                query = query.Where(order => order.ShippedDateUtc != null && order.ShippedDateUtc <= toDate);
             }
 
             query = query.Where(order => !order.Deleted);

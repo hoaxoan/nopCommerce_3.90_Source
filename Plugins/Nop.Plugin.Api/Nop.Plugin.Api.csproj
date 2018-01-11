@@ -273,6 +273,8 @@
     <Compile Include="DTOs\OrderItems\OrderItemsRootObject.cs" />
     <Compile Include="DTOs\Orders\OrderStatusCountDto.cs" />
     <Compile Include="DTOs\Orders\OrderStatusCountRootObject.cs" />
+    <Compile Include="DTOs\Orders\PaymentStatusDto.cs" />
+    <Compile Include="DTOs\Orders\PaymentStatusRootObject.cs" />
     <Compile Include="DTOs\Orders\OrderStatusRootObject.cs" />
     <Compile Include="DTOs\Orders\OrderStatusDto.cs" />
     <Compile Include="DTOs\ProductItemAttributeDto.cs" />

@@ -17,6 +17,10 @@ namespace Nop.Plugin.Api.Models.OrdersParameters
             PaymentStatus = null;
             ShippingStatus = null;
             CustomerId = null;
+            FromDate = null;
+            ToDate = null;
+            PaymentId = null;
+            StatusId = null;
         }
 
         /// <summary>
@@ -72,5 +76,39 @@ namespace Nop.Plugin.Api.Models.OrdersParameters
         /// </summary>
         [JsonProperty("customer_id")]
         public int? CustomerId { get; set; }
+
+        /// <summary>
+        /// Show orders created before date(format: 2008-12-31 03:00)
+        /// </summary>
+        [JsonProperty("from_date")]
+        public DateTime? FromDate { get; set; }
+
+        /// <summary>
+        /// Show orders created before date(format: 2008-12-31 03:00)
+        /// </summary>
+        [JsonProperty("to_date")]
+        public DateTime? ToDate { get; set; }
+
+        /// <summary>
+        /// <ul>
+        /// <li>pending - All open orders (default)</li>
+        /// <li>processing - Show only payed or shipped orders</li>
+        /// <li>complete - Show only the complete orders</li>
+        /// <li>cancelled - Show only cancelled orders</li>
+        /// </ul>
+        /// </summary>
+        [JsonProperty("payment_id")]
+        public int? PaymentId { get; set; }
+
+        /// <summary>
+        /// <ul>
+        /// <li>pending - All open orders (default)</li>
+        /// <li>processing - Show only payed or shipped orders</li>
+        /// <li>complete - Show only the complete orders</li>
+        /// <li>cancelled - Show only cancelled orders</li>
+        /// </ul>
+        /// </summary>
+        [JsonProperty("status_id")]
+        public int? StatusId { get; set; }
     }
 }

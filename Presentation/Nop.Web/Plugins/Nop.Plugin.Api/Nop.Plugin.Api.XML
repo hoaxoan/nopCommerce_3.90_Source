@@ -269,6 +269,14 @@
             <response code="400">Bad Request</response>
             <response code="401">Unauthorized</response>
         </member>
+        <member name="M:Nop.Plugin.Api.Controllers.OrdersController.GetPaymentStatus">
+            <summary>
+            Receive a list of all OrderStatus
+            </summary>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+        </member>
         <member name="M:Nop.Plugin.Api.Controllers.ProductsController.GetProducts(Nop.Plugin.Api.Models.ProductsParameters.ProductsParametersModel)">
             <summary>
             Receive a list of all products
@@ -515,6 +523,16 @@
             </summary>
         </member>
         <member name="P:Nop.Plugin.Api.DTOs.Orders.OrderStatusCountDto.OrderCount">
+            <summary>
+            Gets or sets a value indicating the name
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.PaymentStatusDto.Id">
+            <summary>
+            Gets or sets a value indicating the id
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Orders.PaymentStatusDto.Name">
             <summary>
             Gets or sets a value indicating the name
             </summary>
@@ -1994,6 +2012,36 @@
         <member name="P:Nop.Plugin.Api.Models.OrdersParameters.BaseOrdersParametersModel.CustomerId">
             <summary>
             Show all the orders for this customer
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.OrdersParameters.BaseOrdersParametersModel.FromDate">
+            <summary>
+            Show orders created before date(format: 2008-12-31 03:00)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.OrdersParameters.BaseOrdersParametersModel.ToDate">
+            <summary>
+            Show orders created before date(format: 2008-12-31 03:00)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.OrdersParameters.BaseOrdersParametersModel.PaymentId">
+            <summary>
+            <ul>
+            <li>pending - All open orders (default)</li>
+            <li>processing - Show only payed or shipped orders</li>
+            <li>complete - Show only the complete orders</li>
+            <li>cancelled - Show only cancelled orders</li>
+            </ul>
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.OrdersParameters.BaseOrdersParametersModel.StatusId">
+            <summary>
+            <ul>
+            <li>pending - All open orders (default)</li>
+            <li>processing - Show only payed or shipped orders</li>
+            <li>complete - Show only the complete orders</li>
+            <li>cancelled - Show only cancelled orders</li>
+            </ul>
             </summary>
         </member>
         <member name="P:Nop.Plugin.Api.Models.OrdersParameters.OrdersParametersModel.Ids">

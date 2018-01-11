@@ -468,6 +468,12 @@ namespace Nop.Plugin.Api
                 defaults: new { controller = "Devices", action = "CreateDevice" },
                 constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) });
 
+            config.Routes.MapHttpRoute(
+             name: "paymentstatus",
+             routeTemplate: "api/paymentstatus",
+             defaults: new { controller = "Orders", action = "GetPaymentStatus" },
+             constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
+
             // The default route templates for the Swagger docs and swagger-ui are "swagger/docs/{apiVersion}" and "swagger/ui/index#/{assetPath}" respectively.
             config
                 .EnableSwagger(c =>
