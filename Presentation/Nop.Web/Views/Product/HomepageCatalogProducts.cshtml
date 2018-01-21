@@ -7,9 +7,20 @@
     foreach (var item in Model)
     {
     <div class="product-grid home-page-product-grid">
-        <div class="title">
+        @*<div class="title">
             <strong><a href="@Url.RouteUrl("Category", new { SeName = item.SeName })">@item.Name</a></strong>
+            <strong style="float: right;"><a href="@Url.RouteUrl("Category", new { SeName = item.SeName })">@T("Common.ViewAll")</a></strong>
+        </div>*@
+
+        <div class="title">
+            @*<h3 class="card-title">@item.Name</h3>*@
+            <strong><a href="@Url.RouteUrl("Category", new { SeName = item.SeName })">@item.Name</a></strong>
+            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" class="card-more">
+                <span class="text">@T("Common.ViewAll")</span>
+                <i class="icon-next"></i>
+            </a>
         </div>
+
         <div class="item-grid">
             @foreach (var product in item.Products)
                     {

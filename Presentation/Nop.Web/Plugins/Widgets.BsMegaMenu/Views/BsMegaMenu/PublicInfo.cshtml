@@ -45,6 +45,9 @@ foreach (var item in colCategoryList)
     </ul>
 }
 <ul class="mega-menu">
+
+	<li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+	
     @foreach (var category in Model.CategoryList)
     {
         if (!(category.SubCategories.Count > 0))

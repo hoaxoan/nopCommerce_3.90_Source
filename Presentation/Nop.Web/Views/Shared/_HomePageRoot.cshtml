@@ -15,13 +15,13 @@
     <div class="header-menu home-page-menu">
         @Html.Action("TopMenu", "Catalog")
     </div>
+    @Html.Widget("home_page_top")
+    @if (IsSectionDefined("Breadcrumb"))
+    {
+        @RenderSection("Breadcrumb")
+    }
     <div class="master-wrapper-content">
         @Html.Widget("content_before")
-
-        @if (IsSectionDefined("Breadcrumb"))
-        {
-            @RenderSection("Breadcrumb") 
-        }
         <div class="master-column-wrapper">
             @RenderBody()
         </div>

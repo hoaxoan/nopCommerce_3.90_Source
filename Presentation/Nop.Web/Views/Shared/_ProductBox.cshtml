@@ -119,7 +119,7 @@
             }
             else
             {
-                <div class="prices" style="text-align: center;">
+                <div class="prices">
                     @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
                     {
                         <span class="price old-price">@Model.ProductPrice.OldPrice</span>
@@ -147,7 +147,7 @@
                     @if (!Model.ProductPrice.DisableBuyButton)
                     {
                         var callForPriceText = T("Products.CallForPrice").Text;
-                        <input type="button" value="@(callForPriceText)" class="button-2 product-box-add-to-cart-button" onclick="return false;" style="width: 100%;" />
+                        <input type="button" value="@(callForPriceText)" class="button-2 product-box-add-to-cart-button" onclick="return false;" />
                     }
                 </div>
                 @Html.Widget("productbox_addinfo_after", Model.Id)
