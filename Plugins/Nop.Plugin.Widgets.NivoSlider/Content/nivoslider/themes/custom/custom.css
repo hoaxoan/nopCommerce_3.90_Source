@@ -7,8 +7,12 @@
 }
 .theme-custom .nivoSlider {
 	position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
 	z-index: 0;
 	background: #fff url('loading.gif') 50% 50% no-repeat;
+    max-height: 422px;
 }
 .theme-custom .nivoSlider img {
 	display: none;
@@ -109,7 +113,7 @@
 @media all and (max-width: 1000px) {
 .theme-custom {
 	/*max-width: 600px;*/
-	margin: 0px auto 5px;
+	/*margin: 0px auto 5px;*/
 }
 .theme-custom .nivo-directionNav {
 	display: none;
@@ -118,25 +122,25 @@
 
 @media all and (max-width: 481px) {
     .theme-custom {
-        margin: 52px auto 5px;
+        /*margin: 52px auto 5px;*/
     }
 }
 
 @media all and (min-width: 481px) {
     .theme-custom {
-        margin: 52px auto 5px;
+        /*margin: 52px auto 5px;*/
     }
 }
 
 @media all and (min-width: 769px) {
     .theme-custom {
-        margin: 52px auto 5px;
+        /*margin: 52px auto 5px;*/
     }
 }
 
 @media all and (min-width: 1001px) {
 .theme-custom {
-	margin: 0px auto 5px;
+	/*margin: 0px auto 5px;*/
 }
 .theme-custom .nivo-directionNav {
 	display: none; /* remove to use directional navigation */
@@ -146,6 +150,6 @@
 
 @media all and (min-width: 1367px) {
     .theme-custom {
-        margin: 0px auto 5px;
+        /*margin: 0px auto 5px;*/
     }
 }
