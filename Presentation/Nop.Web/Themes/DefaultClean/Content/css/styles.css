@@ -245,7 +245,7 @@ label, label + * {
 }
 .form-fields {
 	position: relative;
-	border-top: 1px solid #e6e6e6;
+	/*border-top: 1px solid #e6e6e6;*/
 	background-color: #f9f9f9;
 	padding: 30px 15px;
 }
@@ -1067,16 +1067,16 @@ label, label + * {
     background-position: center -17px;
 }
 
-.footer-block.information {
-    width: 300px;
-}
-
-.footer-block.customer-service {
-    width: 200px;
-}
-
+.footer-block.information,
+.footer-block.customer-service,
 .footer-block.my-account {
-    width: 200px;
+    width: 100%;
+}
+
+.footer-block.information .title,
+.footer-block.customer-service .title,
+.footer-block.my-account .title{
+    color: #fff;
 }
 
 
@@ -1155,20 +1155,20 @@ label, label + * {
 
 
 .block {
-	max-width: 600px; /*width limit in mobile*/
+	/*max-width: 600px;*/ /*width limit in mobile*/
 	min-height: 50px;
 	margin: auto;
 	text-align: left;
 }
 .block .title {
 	position: relative;
-	margin: 0 0 10px;
-	border-bottom: 1px solid #ddd;
-	background: #f6f6f6 url('../images/toggle-gray.png') right 14px no-repeat;
-	padding: 8px 30px 8px 10px;
-	font-size: 20px;
-	color: #444;
-	cursor: pointer;
+	/*margin: 0 0 10px;*/
+	/*border-bottom: 1px solid #ddd;*/
+	background: #533d8a url('../images/toggle-gray.png') right 14px no-repeat;
+	font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    padding: 12px;
 }
 .block .title strong {
 	font-weight: normal;
@@ -5395,7 +5395,7 @@ pre {
 .header-menu {
 	position: relative;
 	z-index: 1;
-	width: 90%;
+	width: 100%;
 	/*max-width: 600px;*/
 	margin: 0 auto 10px;
 }
@@ -5487,7 +5487,7 @@ pre {
 
 .master-wrapper-content,
 .header-menu {
-	width: 92.5%;
+	width: 100%;
 }
 
 .header-lower{
@@ -5542,7 +5542,6 @@ pre {
 	width: 240px;
 }
 
-
 /*** CATEGORY ***/
 
 
@@ -5572,6 +5571,7 @@ pre {
 .item-box {
 	width: 49%;
 	margin: 0 0.5% 25px;
+    padding: 8px 4px;
 }
 .item-box:nth-child(2n+1) {
 	clear: both;
@@ -5674,8 +5674,38 @@ pre {
 
 
 @media all and (max-width: 481px) {
-    .header-lower{
+    .header-lower {
         display: none;
+    }
+
+    .item-box {
+        width: 49%;
+        margin: 0 0.5% 25px;
+        box-shadow: 0 0 12px 0 rgba(0,0,0,.09);
+        padding: 8px 4px;
+    }
+
+    .item-box:nth-child(2n+1) {
+        clear: both;
+    }
+
+    .home-page-category-grid,
+    .sub-category-grid {
+        display: none;
+    }
+    .center-2, .side-2 {
+       margin: 0px;
+    }
+    .footer-block.information,
+    .footer-block.customer-service,
+    .footer-block.my-account {
+        width: 100%;
+    }
+
+    .footer-block.information .title,
+    .footer-block.customer-service .title,
+    .footer-block.my-account .title{
+        color: #fff;
     }
 }
 
@@ -5759,6 +5789,18 @@ pre {
 	margin: 25px auto 0;
 }
 
+
+.footer-block.information,
+.footer-block.customer-service,
+.footer-block.my-account {
+    width: 25.33333%;
+}
+
+.footer-block.information .title,
+.footer-block.customer-service .title,
+.footer-block.my-account .title{
+    color: #4f2077;
+}
 
 /*** CATEGORY ***/
 
@@ -6687,6 +6729,17 @@ pre {
 	margin: 0 0 0 15px;
 }
 
+.footer-block.information,
+.footer-block.customer-service,
+.footer-block.my-account {
+    width: 250px;
+}
+
+.footer-block.information .title,
+.footer-block.customer-service .title,
+.footer-block.my-account .title{
+    color: #4f2077;
+}
 
 /*** COLUMN ***/
 
