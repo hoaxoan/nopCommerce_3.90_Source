@@ -87,7 +87,11 @@
     var rootCategoriesResponsive = Model.Categories.ToList();
     //name it "Categories" if we have only categories. Otherwise, "Menu"
     var responsiveMenuTitle = Model.HasOnlyCategories ? T("Categories") : T("Menu");
-    <div class="menu-toggle">@responsiveMenuTitle</div>
+    <div class="menu-toggle-main">
+        <a href="@Url.RouteUrl("HomePage")"><div class="menu-toggle-left"></div></a>
+        <span class="menu-toggle-title">@responsiveMenuTitle</span>
+        <div id="menu-toggle" class="menu-toggle"></div>
+    </div>
     <ul class="top-menu mobile">
         @Html.Widget("mob_header_menu_before")
         @if (Model.DisplayHomePageMenuItem)
@@ -131,7 +135,7 @@
     
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.menu-toggle').click(function () {
+            $('.menu-toggle-main').click(function () {
                 $(this).siblings('.top-menu.mobile').slideToggle('slow');
             });
             $('.top-menu.mobile .sublist-toggle').click(function () {

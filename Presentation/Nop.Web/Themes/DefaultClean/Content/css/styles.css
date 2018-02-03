@@ -5399,7 +5399,20 @@ pre {
 	/*max-width: 600px;*/
 	margin: 0 auto 10px;
 }
-.menu-toggle {
+
+.menu-toggle-main {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    min-height: 48px;
+    background-color: #533d8a;
+    padding: 14px 0px 10px 15px;
+    box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+}
+
+/*.menu-toggle {
 	background: #533d8a url('../images/menu-icon.png') right center no-repeat;
 	padding: 15px;
 	font-size: 15px;
@@ -5407,6 +5420,24 @@ pre {
 	color: #fff;
 	text-transform: uppercase;
 	cursor: pointer;
+}*/
+
+.menu-toggle-left {
+	background: url(../images/logo-icon.png) left center no-repeat;
+    padding: 10px 20px 10px 20px;
+    float: left;
+}
+
+.menu-toggle-title  {
+    display: inline-block;
+    padding-top: 4px;
+    padding-left: 10px;
+}
+
+.menu-toggle {
+	background: url(../images/menu-icon.png) right center no-repeat;
+    padding: 10px 20px 10px 20px;
+    float: right;
 }
 
 .top-menu {
@@ -6576,6 +6607,7 @@ pre {
     background-color: #5e3987;
 }
 .menu-toggle,
+.menu-toggle-main,
 .sublist-toggle {
 	display: none;
 }
