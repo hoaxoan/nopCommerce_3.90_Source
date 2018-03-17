@@ -8844,6 +8844,7 @@ section {
     overflow: visible;
     position: relative;
     width: 600px;
+    height: 32px;
 }
 
 .picsuccess img {
