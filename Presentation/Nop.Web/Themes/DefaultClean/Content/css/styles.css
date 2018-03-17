@@ -115,6 +115,7 @@ input[type="radio"],
 input[type="checkbox"] + *,
 input[type="radio"] + * {
 	vertical-align: middle;
+    margin-top: -10px;
 }
 input[type="button"], input[type="submit"],
 button, .button-1, .button-2 {
@@ -4261,6 +4262,7 @@ label, label + * {
 
 .search-input{
     background: #fff;
+    padding-bottom: 10px;
 }
 
 .search-page .page-title {
