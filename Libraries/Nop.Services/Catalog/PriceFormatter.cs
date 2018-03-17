@@ -420,6 +420,57 @@ namespace Nop.Services.Catalog
             return taxRate.ToString("G29");
         }
 
+        /// <summary>
+        /// Formats the price
+        /// </summary>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="showTax">A value indicating whether to show tax suffix</param>
+        /// <returns>Price</returns>
+        public virtual string FormatPrice2(decimal price, bool showCurrency, bool showTax)
+        {
+            bool priceIncludesTax = _workContext.TaxDisplayType == TaxDisplayType.IncludingTax;
+            return FormatPrice2(price, showCurrency, _workContext.WorkingCurrency, _workContext.WorkingLanguage, priceIncludesTax, showTax);
+        }
+
+        /// <summary>
+        /// Formats the price
+        /// </summary>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
+        /// <param name="language">Language</param>
+        /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
+        /// <param name="showTax">A value indicating whether to show tax suffix</param>
+        /// <returns>Price</returns>
+        public virtual string FormatPrice2(decimal price, bool showCurrency,
+            Currency targetCurrency, Language language, bool priceIncludesTax, bool showTax)
+        {
+            //we should round it no matter of "ShoppingCartSettings.RoundPricesDuringCalculation" setting
+            price = RoundingHelper.RoundPrice(price);
+            
+            string currencyString = string.Format("{0} {1}", price, _localizationService.GetResource("Common.PriceUnit"));
+            if (showTax)
+            {
+                //show tax suffix
+                string formatStr;
+                if (priceIncludesTax)
+                {
+                    formatStr = _localizationService.GetResource("Products.InclTaxSuffix", language.Id, false);
+                    if (String.IsNullOrEmpty(formatStr))
+                        formatStr = "{0} incl tax";
+                }
+                else
+                {
+                    formatStr = _localizationService.GetResource("Products.ExclTaxSuffix", language.Id, false);
+                    if (String.IsNullOrEmpty(formatStr))
+                        formatStr = "{0} excl tax";
+                }
+                return string.Format(formatStr, currencyString);
+            }
+
+            return currencyString;
+        }
         #endregion
     }
 }

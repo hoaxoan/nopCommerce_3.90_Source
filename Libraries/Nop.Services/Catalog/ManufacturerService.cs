@@ -37,6 +37,7 @@ namespace Nop.Services.Catalog
         /// {5} : store ID
         /// </remarks>
         private const string PRODUCTMANUFACTURERS_ALLBYMANUFACTURERID_KEY = "Nop.productmanufacturer.allbymanufacturerid-{0}-{1}-{2}-{3}-{4}-{5}";
+        private const string CATEGORYMANUFACTURERS_ALLBYMANUFACTURERID_KEY = "Nop.categorymanufacturer.allbymanufacturerid-{0}-{1}-{2}-{3}-{4}-{5}";
         /// <summary>
         /// Key for caching
         /// </summary>
@@ -47,6 +48,7 @@ namespace Nop.Services.Catalog
         /// {3} : store ID
         /// </remarks>
         private const string PRODUCTMANUFACTURERS_ALLBYPRODUCTID_KEY = "Nop.productmanufacturer.allbyproductid-{0}-{1}-{2}-{3}";
+        private const string CATEGORYMANUFACTURERS_ALLBYPRODUCTID_KEY = "Nop.categorymanufacturer.allbyproductid-{0}-{1}-{2}-{3}";
         /// <summary>
         /// Key pattern to clear cache
         /// </summary>
@@ -55,6 +57,10 @@ namespace Nop.Services.Catalog
         /// Key pattern to clear cache
         /// </summary>
         private const string PRODUCTMANUFACTURERS_PATTERN_KEY = "Nop.productmanufacturer.";
+        /// <summary>
+        /// Key pattern to clear cache
+        /// </summary>
+        private const string CATEGORYMANUFACTURERS_PATTERN_KEY = "Nop.categorymanufacturer.";
 
         #endregion
 
@@ -62,6 +68,8 @@ namespace Nop.Services.Catalog
 
         private readonly IRepository<Manufacturer> _manufacturerRepository;
         private readonly IRepository<ProductManufacturer> _productManufacturerRepository;
+        private readonly IRepository<CategoryManufacturer> _categoryManufacturerRepository;
+        private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<AclRecord> _aclRepository;
         private readonly IRepository<StoreMapping> _storeMappingRepository;
@@ -91,6 +99,8 @@ namespace Nop.Services.Catalog
         public ManufacturerService(ICacheManager cacheManager,
             IRepository<Manufacturer> manufacturerRepository,
             IRepository<ProductManufacturer> productManufacturerRepository,
+            IRepository<CategoryManufacturer> categoryManufacturerRepository,
+            IRepository<Category> categoryRepository,
             IRepository<Product> productRepository,
             IRepository<AclRecord> aclRepository,
             IRepository<StoreMapping> storeMappingRepository,
@@ -102,6 +112,8 @@ namespace Nop.Services.Catalog
             this._cacheManager = cacheManager;
             this._manufacturerRepository = manufacturerRepository;
             this._productManufacturerRepository = productManufacturerRepository;
+            this._categoryManufacturerRepository = categoryManufacturerRepository;
+            this._categoryRepository = categoryRepository;
             this._productRepository = productRepository;
             this._aclRepository = aclRepository;
             this._storeMappingRepository = storeMappingRepository;
@@ -444,6 +456,208 @@ namespace Nop.Services.Catalog
 
 
         /// <summary>
+        /// Deletes a category manufacturer mapping
+        /// </summary>
+        /// <param name="categoryManufacturer">Category manufacturer mapping</param>
+
+        public void DeleteCategoryManufacturer(CategoryManufacturer categoryManufacturer)
+        {
+            if (categoryManufacturer == null)
+                throw new ArgumentNullException("categoryManufacturer");
+
+            _categoryManufacturerRepository.Delete(categoryManufacturer);
+
+            //cache
+            _cacheManager.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(CATEGORYMANUFACTURERS_PATTERN_KEY);
+
+            //event notification
+            _eventPublisher.EntityDeleted(categoryManufacturer);
+        }
+
+        /// <summary>
+        /// Gets category manufacturer collection
+        /// </summary>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Category manufacturer collection</returns>
+        public IPagedList<CategoryManufacturer> GetCategoryManufacturersByManufacturerId(int manufacturerId, int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false)
+        {
+            if (manufacturerId == 0)
+                return new PagedList<CategoryManufacturer>(new List<CategoryManufacturer>(), pageIndex, pageSize);
+
+            string key = string.Format(CATEGORYMANUFACTURERS_ALLBYMANUFACTURERID_KEY, showHidden, manufacturerId, pageIndex, pageSize, _workContext.CurrentCustomer.Id, _storeContext.CurrentStore.Id);
+            return _cacheManager.Get(key, () =>
+            {
+                var query = from pm in _categoryManufacturerRepository.Table
+                            join p in _categoryRepository.Table on pm.CategoryId equals p.Id
+                            where pm.ManufacturerId == manufacturerId &&
+                                  !p.Deleted &&
+                                  (showHidden || p.Published)
+                            orderby pm.DisplayOrder, pm.Id
+                            select pm;
+
+                if (!showHidden && (!_catalogSettings.IgnoreAcl || !_catalogSettings.IgnoreStoreLimitations))
+                {
+                    if (!_catalogSettings.IgnoreAcl)
+                    {
+                        //ACL (access control list)
+                        var allowedCustomerRolesIds = _workContext.CurrentCustomer.GetCustomerRoleIds();
+                        query = from pm in query
+                                join m in _manufacturerRepository.Table on pm.ManufacturerId equals m.Id
+                                join acl in _aclRepository.Table
+                                on new { c1 = m.Id, c2 = "Manufacturer" } equals new { c1 = acl.EntityId, c2 = acl.EntityName } into m_acl
+                                from acl in m_acl.DefaultIfEmpty()
+                                where !m.SubjectToAcl || allowedCustomerRolesIds.Contains(acl.CustomerRoleId)
+                                select pm;
+                    }
+                    if (!_catalogSettings.IgnoreStoreLimitations)
+                    {
+                        //Store mapping
+                        var currentStoreId = _storeContext.CurrentStore.Id;
+                        query = from pm in query
+                                join m in _manufacturerRepository.Table on pm.ManufacturerId equals m.Id
+                                join sm in _storeMappingRepository.Table
+                                on new { c1 = m.Id, c2 = "Manufacturer" } equals new { c1 = sm.EntityId, c2 = sm.EntityName } into m_sm
+                                from sm in m_sm.DefaultIfEmpty()
+                                where !m.LimitedToStores || currentStoreId == sm.StoreId
+                                select pm;
+                    }
+
+                    //only distinct manufacturers (group by ID)
+                    query = from pm in query
+                            group pm by pm.Id
+                            into pmGroup
+                            orderby pmGroup.Key
+                            select pmGroup.FirstOrDefault();
+                    query = query.OrderBy(pm => pm.DisplayOrder).ThenBy(pm => pm.Id);
+                }
+
+                var catgoryManufacturers = new PagedList<CategoryManufacturer>(query, pageIndex, pageSize);
+                return catgoryManufacturers;
+            });
+        }
+
+        /// <summary>
+        /// Gets a category manufacturer mapping collection
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Category manufacturer mapping collection</returns>
+        public IList<CategoryManufacturer> GetCategoryManufacturersByCategoryId(int categoryId, bool showHidden = false)
+        {
+            if (categoryId == 0)
+                return new List<CategoryManufacturer>();
+
+            string key = string.Format(CATEGORYMANUFACTURERS_ALLBYPRODUCTID_KEY, showHidden, categoryId, _workContext.CurrentCustomer.Id, _storeContext.CurrentStore.Id);
+            return _cacheManager.Get(key, () =>
+            {
+                var query = from pm in _categoryManufacturerRepository.Table
+                            join m in _manufacturerRepository.Table on pm.ManufacturerId equals m.Id
+                            where pm.CategoryId == categoryId &&
+                                !m.Deleted &&
+                                (showHidden || m.Published)
+                            orderby pm.DisplayOrder, pm.Id
+                            select pm;
+
+
+                if (!showHidden && (!_catalogSettings.IgnoreAcl || !_catalogSettings.IgnoreStoreLimitations))
+                {
+                    if (!_catalogSettings.IgnoreAcl)
+                    {
+                        //ACL (access control list)
+                        var allowedCustomerRolesIds = _workContext.CurrentCustomer.GetCustomerRoleIds();
+                        query = from pm in query
+                                join m in _manufacturerRepository.Table on pm.ManufacturerId equals m.Id
+                                join acl in _aclRepository.Table
+                                on new { c1 = m.Id, c2 = "Manufacturer" } equals new { c1 = acl.EntityId, c2 = acl.EntityName } into m_acl
+                                from acl in m_acl.DefaultIfEmpty()
+                                where !m.SubjectToAcl || allowedCustomerRolesIds.Contains(acl.CustomerRoleId)
+                                select pm;
+                    }
+
+                    if (!_catalogSettings.IgnoreStoreLimitations)
+                    {
+                        //Store mapping
+                        var currentStoreId = _storeContext.CurrentStore.Id;
+                        query = from pm in query
+                                join m in _manufacturerRepository.Table on pm.ManufacturerId equals m.Id
+                                join sm in _storeMappingRepository.Table
+                                on new { c1 = m.Id, c2 = "Manufacturer" } equals new { c1 = sm.EntityId, c2 = sm.EntityName } into m_sm
+                                from sm in m_sm.DefaultIfEmpty()
+                                where !m.LimitedToStores || currentStoreId == sm.StoreId
+                                select pm;
+                    }
+
+                    //only distinct manufacturers (group by ID)
+                    query = from pm in query
+                            group pm by pm.Id
+                            into mGroup
+                            orderby mGroup.Key
+                            select mGroup.FirstOrDefault();
+                    query = query.OrderBy(pm => pm.DisplayOrder).ThenBy(pm => pm.Id);
+                }
+
+                var categoryManufacturers = query.ToList();
+                return categoryManufacturers;
+            });
+        }
+
+        /// <summary>
+        /// Gets a category manufacturer mapping 
+        /// </summary>
+        /// <param name="categoryManufacturerId">Category manufacturer mapping identifier</param>
+        /// <returns>Category manufacturer mapping</returns>
+        public CategoryManufacturer GetCategorytManufacturerById(int categoryManufacturerId)
+        {
+            if (categoryManufacturerId == 0)
+                return null;
+
+            return _categoryManufacturerRepository.GetById(categoryManufacturerId);
+        }
+
+        /// <summary>
+        /// Inserts a category manufacturer mapping
+        /// </summary>
+        /// <param name="categoryManufacturer">Category manufacturer mapping</param>
+        public void InsertCategoryManufacturer(CategoryManufacturer categoryManufacturer)
+        {
+            if (categoryManufacturer == null)
+                throw new ArgumentNullException("productManufacturer");
+
+            _categoryManufacturerRepository.Insert(categoryManufacturer);
+
+            //cache
+            _cacheManager.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(CATEGORYMANUFACTURERS_PATTERN_KEY);
+
+            //event notification
+            _eventPublisher.EntityInserted(categoryManufacturer);
+        }
+
+        /// <summary>
+        /// Updates the category manufacturer mapping
+        /// </summary>
+        /// <param name="categoryManufacturer">Category manufacturer mapping</param>
+        public void UpdateCategoryManufacturer(CategoryManufacturer categoryManufacturer)
+        {
+            if (categoryManufacturer == null)
+                throw new ArgumentNullException("categoryManufacturer");
+
+            _categoryManufacturerRepository.Update(categoryManufacturer);
+
+            //cache
+            _cacheManager.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(CATEGORYMANUFACTURERS_PATTERN_KEY);
+
+            //event notification
+            _eventPublisher.EntityUpdated(categoryManufacturer);
+        }
+
+
+        /// <summary>
         /// Get manufacturer IDs for products
         /// </summary>
         /// <param name="productIds">Products IDs</param>
@@ -474,6 +688,7 @@ namespace Nop.Services.Catalog
             var filter = query.Select(m => m.Name).Where(m => queryFilter.Contains(m)).ToList();
             return queryFilter.Except(filter).ToArray();
         }
+
 
         #endregion
     }

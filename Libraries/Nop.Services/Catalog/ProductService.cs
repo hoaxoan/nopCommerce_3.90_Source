@@ -43,6 +43,7 @@ namespace Nop.Services.Catalog
 
         #region Fields
 
+        private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<RelatedProduct> _relatedProductRepository;
         private readonly IRepository<CrossSellProduct> _crossSellProductRepository;
@@ -106,6 +107,7 @@ namespace Nop.Services.Catalog
         /// <param name="aclService">ACL service</param>
         /// <param name="storeMappingService">Store mapping service</param>
         public ProductService(ICacheManager cacheManager,
+            IRepository<Category> categoryRepository,
             IRepository<Product> productRepository,
             IRepository<RelatedProduct> relatedProductRepository,
             IRepository<CrossSellProduct> crossSellProductRepository,
@@ -115,7 +117,7 @@ namespace Nop.Services.Catalog
             IRepository<AclRecord> aclRepository,
             IRepository<StoreMapping> storeMappingRepository,
             IRepository<ProductSpecificationAttribute> productSpecificationAttributeRepository,
-            IRepository<ProductReview>  productReviewRepository,
+            IRepository<ProductReview> productReviewRepository,
             IRepository<ProductWarehouseInventory> productWarehouseInventoryRepository,
             IRepository<SpecificationAttributeOption> specificationAttributeOptionRepository,
             IRepository<StockQuantityHistory> stockQuantityHistoryRepository,
@@ -123,10 +125,10 @@ namespace Nop.Services.Catalog
             IProductAttributeParser productAttributeParser,
             ILanguageService languageService,
             IWorkflowMessageService workflowMessageService,
-            IDataProvider dataProvider, 
+            IDataProvider dataProvider,
             IDbContext dbContext,
             IWorkContext workContext,
-            LocalizationSettings localizationSettings, 
+            LocalizationSettings localizationSettings,
             CommonSettings commonSettings,
             CatalogSettings catalogSettings,
             IEventPublisher eventPublisher,
@@ -134,6 +136,7 @@ namespace Nop.Services.Catalog
             IStoreMappingService storeMappingService)
         {
             this._cacheManager = cacheManager;
+            this._categoryRepository = categoryRepository;
             this._productRepository = productRepository;
             this._relatedProductRepository = relatedProductRepository;
             this._crossSellProductRepository = crossSellProductRepository;
@@ -163,7 +166,7 @@ namespace Nop.Services.Catalog
         }
 
         #endregion
-        
+
         #region Methods
 
         #region Products
@@ -224,7 +227,41 @@ namespace Nop.Services.Catalog
             var products = query.ToList();
             return products;
         }
-        
+
+        public virtual IList<Product> GetProductsDisplayedOnHomePageByCategoryID(int categoryId)
+        {
+            var query = from p in _productRepository.Table
+                        orderby p.DisplayOrder, p.Id
+                        where p.Published &&
+                        !p.Deleted &&
+                        p.ShowOnHomePage
+                        from pc in p.ProductCategories.Where(pc => pc.CategoryId == categoryId)
+                        select p;
+            var products = query.ToList();
+            return products;
+        }
+
+        public virtual IList<Product> GetAllProductsDisplayedOnHomePageByCategoryID(int categoryId)
+        {
+            var cQuery = from p in _categoryRepository.Table
+                         where p.Published &&
+                         !p.Deleted &&
+                         (p.ParentCategoryId == categoryId
+                          || p.Id == categoryId)
+                         select p.Id;
+            List<int> categoryIds = cQuery.ToList();
+
+            var query = from p in _productRepository.Table
+                        orderby p.DisplayOrder, p.Id
+                        where p.Published &&
+                        !p.Deleted &&
+                        p.ShowOnHomePage
+                        from pc in p.ProductCategories.Where(pc => categoryIds.Contains(pc.CategoryId))
+                        select p;
+            var products = query.ToList();
+            return products;
+        }
+
         /// <summary>
         /// Gets product
         /// </summary>

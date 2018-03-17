@@ -94,6 +94,52 @@ namespace Nop.Services.Catalog
         /// <param name="productManufacturer">Product manufacturer mapping</param>
         void UpdateProductManufacturer(ProductManufacturer productManufacturer);
 
+
+        /// <summary>
+        /// Deletes a category manufacturer mapping
+        /// </summary>
+        /// <param name="categoryManufacturer">Category manufacturer mapping</param>
+        void DeleteCategoryManufacturer(CategoryManufacturer categoryManufacturer);
+
+        /// <summary>
+        /// Gets category manufacturer collection
+        /// </summary>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Category manufacturer collection</returns>
+        IPagedList<CategoryManufacturer> GetCategoryManufacturersByManufacturerId(int manufacturerId,
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false);
+
+        /// <summary>
+        /// Gets a category manufacturer mapping collection
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Category manufacturer mapping collection</returns>
+        IList<CategoryManufacturer> GetCategoryManufacturersByCategoryId(int categoryId, bool showHidden = false);
+
+        /// <summary>
+        /// Gets a category manufacturer mapping 
+        /// </summary>
+        /// <param name="categoryManufacturerId">Category manufacturer mapping identifier</param>
+        /// <returns>Category manufacturer mapping</returns>
+        CategoryManufacturer GetCategorytManufacturerById(int categoryManufacturerId);
+
+        /// <summary>
+        /// Inserts a category manufacturer mapping
+        /// </summary>
+        /// <param name="categoryManufacturer">Category manufacturer mapping</param>
+        void InsertCategoryManufacturer(CategoryManufacturer categoryManufacturer);
+
+        /// <summary>
+        /// Updates the category manufacturer mapping
+        /// </summary>
+        /// <param name="categoryManufacturer">Category manufacturer mapping</param>
+        void UpdateCategoryManufacturer(CategoryManufacturer categoryManufacturer);
+
+
         /// <summary>
         /// Get manufacturer IDs for products
         /// </summary>

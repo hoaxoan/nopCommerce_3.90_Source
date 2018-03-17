@@ -106,6 +106,7 @@
     <Compile Include="ComponentModel\GenericDictionaryTypeConverter.cs" />
     <Compile Include="ComponentModel\WriteLockDisposable.cs" />
     <Compile Include="Domain\Blogs\Events.cs" />
+    <Compile Include="Domain\Catalog\CategoryManufacturer.cs" />
     <Compile Include="Domain\Common\Device.cs" />
     <Compile Include="Domain\Common\APIClients.cs" />
     <Compile Include="Domain\Common\DisplayDefaultMenuItemSettings.cs" />

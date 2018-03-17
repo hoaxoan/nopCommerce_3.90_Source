@@ -192,5 +192,14 @@ namespace Nop.Services.Catalog
         /// <param name="taxRate">Tax rate</param>
         /// <returns>Formatted tax rate</returns>
         string FormatTaxRate(decimal taxRate);
+
+        /// <summary>
+        /// Formats the price
+        /// </summary>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="showTax">A value indicating whether to show tax suffix</param>
+        /// <returns>Price</returns>
+        string FormatPrice2(decimal price, bool showCurrency, bool showTax);
     }
 }
