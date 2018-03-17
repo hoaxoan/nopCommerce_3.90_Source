@@ -9,6 +9,12 @@ using Nop.Services.Localization;
 using Nop.Services.Media;
 using Nop.Services.Stores;
 using Nop.Web.Framework.Controllers;
+using Nop.Services.News;
+using Nop.Core.Domain.News;
+using System;
+using Nop.Services.Seo;
+using Nop.Services.Helpers;
+using System.Collections.Generic;
 
 namespace Nop.Plugin.Widgets.NivoSlider.Controllers
 {
@@ -21,6 +27,8 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
         private readonly ISettingService _settingService;
         private readonly ICacheManager _cacheManager;
         private readonly ILocalizationService _localizationService;
+        private readonly INewsService _newsService;
+        private readonly IDateTimeHelper _dateTimeHelper;
 
         public WidgetsNivoSliderController(IWorkContext workContext,
             IStoreContext storeContext,
@@ -28,7 +36,9 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
             IPictureService pictureService,
             ISettingService settingService,
             ICacheManager cacheManager,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            INewsService newsService,
+            IDateTimeHelper dateTimeHelper)
         {
             this._workContext = workContext;
             this._storeContext = storeContext;
@@ -37,6 +47,8 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
             this._settingService = settingService;
             this._cacheManager = cacheManager;
             this._localizationService = localizationService;
+            this._newsService = newsService;
+            this._dateTimeHelper = dateTimeHelper;
         }
 
         protected string GetPictureUrl(int pictureId)
@@ -210,8 +222,40 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
                 //no pictures uploaded
                 return Content("");
 
+            // News
+            model.NewsItems = HomePageNewsItems();
 
             return View("~/Plugins/Widgets.NivoSlider/Views/PublicInfo.cshtml", model);
+        }
+
+        public virtual IList<NewsItemModel> HomePageNewsItems()
+        {
+            var newsItems = _newsService.GetAllNews(_workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id, 0);
+            var models = newsItems
+                        .Select(x =>
+                        {
+                            var newsModel = new NewsItemModel();
+                            PrepareNewsItemModel(newsModel, x, false);
+                            return newsModel;
+                        })
+                        .ToList();
+            return models;
+        }
+
+        public virtual NewsItemModel PrepareNewsItemModel(NewsItemModel model, NewsItem newsItem, bool prepareComments)
+        {
+            model.Id = newsItem.Id;
+            model.MetaTitle = newsItem.MetaTitle;
+            model.MetaDescription = newsItem.MetaDescription;
+            model.MetaKeywords = newsItem.MetaKeywords;
+            model.SeName = newsItem.GetSeName(newsItem.LanguageId, ensureTwoPublishedLanguages: false);
+            model.Title = newsItem.Title;
+            model.Short = newsItem.Short;
+            model.Full = newsItem.Full;
+            model.AllowComments = newsItem.AllowComments;
+            model.CreatedOn = _dateTimeHelper.ConvertToUserTime(newsItem.StartDateUtc ?? newsItem.CreatedOnUtc, DateTimeKind.Utc);
+
+            return model;
         }
     }
 }

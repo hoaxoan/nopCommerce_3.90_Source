@@ -1,9 +1,15 @@
 ﻿using Nop.Web.Framework.Mvc;
+using System.Collections.Generic;
 
 namespace Nop.Plugin.Widgets.NivoSlider.Models
 {
     public class PublicInfoModel : BaseNopModel
     {
+        public PublicInfoModel()
+        {
+            NewsItems = new List<NewsItemModel>();
+        }
+
         public string Picture1Url { get; set; }
         public string Text1 { get; set; }
         public string Link1 { get; set; }
@@ -23,5 +29,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public string Picture5Url { get; set; }
         public string Text5 { get; set; }
         public string Link5 { get; set; }
+
+        public IList<NewsItemModel> NewsItems { get; set; }
     }
 }
