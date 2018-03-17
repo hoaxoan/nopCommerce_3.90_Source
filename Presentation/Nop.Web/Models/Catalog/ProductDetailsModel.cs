@@ -27,6 +27,7 @@ namespace Nop.Web.Models.Catalog
             ProductManufacturers = new List<ManufacturerBriefInfoModel>();
             ProductReviewOverview = new ProductReviewOverviewModel();
             TierPrices = new List<TierPriceModel>();
+            CurrentStore = new CurrentStoreModel();
         }
 
         //picture(s)
@@ -105,6 +106,8 @@ namespace Nop.Web.Models.Catalog
         public bool DisplayDiscontinuedMessage { get; set; }
 
         public string CurrentStoreName { get; set; }
+
+        public CurrentStoreModel CurrentStore { get; set; }
 
         #region Nested Classes
 

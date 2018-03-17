@@ -163,6 +163,45 @@ namespace Nop.Admin.Models.Catalog
             public int[] SelectedProductIds { get; set; }
         }
 
+        public partial class ManufacturerCategoryModel : BaseNopEntityModel
+        {
+            public int ManufacturerId { get; set; }
+
+            public int CategoryId { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Manufacturers.Categories.Fields.Category")]
+            public string CategoryName { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Manufacturers.Categories.Fields.IsFeaturedCategory")]
+            public bool IsFeaturedCategory { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Manufacturers.Categories.Fields.DisplayOrder")]
+            public int DisplayOrder { get; set; }
+        }
+
+        public partial class AddManufacturerCategoryModel : BaseNopModel
+        {
+            public AddManufacturerCategoryModel()
+            {
+                AvailableCategories = new List<SelectListItem>();
+                AvailableManufacturers = new List<SelectListItem>();
+            }
+
+            [NopResourceDisplayName("Admin.Catalog.Categories.List.SearchCategoryName")]
+            [AllowHtml]
+            public string SearchCategoryName { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Categories.List.SearchStore")]
+            public int SearchStoreId { get; set; }
+            public IList<SelectListItem> AvailableStores { get; set; }
+
+            public IList<SelectListItem> AvailableCategories { get; set; }
+            public IList<SelectListItem> AvailableManufacturers { get; set; }
+
+            public int ManufacturerId { get; set; }
+
+            public int[] SelectedCategoryIds { get; set; }
+        }
         #endregion
     }
 

@@ -1,19 +1,68 @@
 ﻿@model IList<ManufacturerModel>
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Manufacturers").Text);
     //page class
     Html.AppendPageCssClassParts("html-manufacturer-list-page");
 }
+
+@{
+    //current category ID
+    int currentCategoryId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCategoryId = Convert.ToInt32(Url.RequestContext.RouteData.Values["categoryId"].ToString());
+    }
+
+
+    //current manufacturer ID
+    int currentManufacturerId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("manufacturer", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentManufacturerId = Convert.ToInt32(Url.RequestContext.RouteData.Values["manufacturerId"].ToString());
+    }
+
+
+    //current product ID
+    int currentProductId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentProductId = Convert.ToInt32(Url.RequestContext.RouteData.Values["productId"].ToString());
+    }
+}
+
 @using Nop.Web.Models.Catalog;
 <div class="page manufacturer-list-page">
-    <div class="page-title">
+    @*<div class="page-title">
         <h1>@T("Manufacturers.List")</h1>
-    </div>
+    </div>*@
     <div class="page-body">
-        <div class="manufacturer-grid">
+        <ul class="filter">
+            <li class="fmanu">
+                @Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
+            </li>
+            <li class="frange">
+                @*@if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
+                {
+                    @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
+                }*@
+            </li>
+        </ul>
+        @if (Model.Count > 0)
+        {
+            @*<ul class="homeproduct ">
+                @foreach (var product in Model)
+                {
+                    @Html.Partial("_ProductBox2", product)
+                }
+            </ul>*@
+        }
+        @*<div class="manufacturer-grid">
             <div class="item-grid">
                 @foreach (var item in Model)
                 {
@@ -33,6 +82,6 @@
                     </div>
                 }
             </div>
-        </div>
+        </div>*@
     </div>
 </div>

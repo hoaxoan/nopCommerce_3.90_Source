@@ -1233,6 +1233,18 @@ namespace Nop.Web.Factories
             model.CompareProductsEnabled = _catalogSettings.CompareProductsEnabled;
             //store name
             model.CurrentStoreName = _storeContext.CurrentStore.GetLocalized(x => x.Name);
+            //store
+            model.CurrentStore = new CurrentStoreModel()
+            {
+                Name = _storeContext.CurrentStore.Name,
+                CompanyName = _storeContext.CurrentStore.CompanyName,
+                CompanyAddress = _storeContext.CurrentStore.CompanyAddress,
+                CompanyPhoneNumber = _storeContext.CurrentStore.CompanyPhoneNumber,
+                Email = _storeContext.CurrentStore.Email,
+                CompanyVat = _storeContext.CurrentStore.CompanyVat,
+                DefaultLanguageId = _storeContext.CurrentStore.DefaultLanguageId,
+                Url = _storeContext.CurrentStore.Url
+            };
 
             //vendor details
             if (_vendorSettings.ShowVendorOnProductDetailsPage)

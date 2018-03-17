@@ -1,4 +1,4 @@
-@model ShoppingCartModel
+﻿@model ShoppingCartModel
 @using Nop.Core
 @using Nop.Core.Domain.Tax
 @using Nop.Core.Infrastructure
@@ -33,10 +33,10 @@
                    {
                        <col width="1" />
                    }
-                   @if (Model.ShowSku)
+                   @*@if (Model.ShowSku)
                    {
                        <col width="1" />
-                   }
+                   }*@
                    @if (Model.ShowProductImages)
                    {
                        <col width="1" />
@@ -54,12 +54,12 @@
                                @T("ShoppingCart.Remove")
                            </th>
                        }
-                       @if (Model.ShowSku)
+                       @*@if (Model.ShowSku)
                        {
                            <th class="sku">
                                @T("ShoppingCart.SKU")
                            </th>
-                       }
+                       }*@
                        @if (Model.ShowProductImages)
                        {
                            <th class="product-picture">
@@ -98,13 +98,13 @@
                                    }
                                </td>
                            }
-                           @if (Model.ShowSku)
+                           @*@if (Model.ShowSku)
                            {
                                <td class="sku">
                                    <label class="td-title">@T("ShoppingCart.SKU"):</label>
                                     <span class="sku-number">@item.Sku</span>
                                </td>
-                           }
+                           }*@
                            @if (Model.ShowProductImages)
                            {
                                <td class="product-picture">
@@ -309,14 +309,22 @@
        if (Model.IsEditable)
        {
             @Html.Action("CrossSellProducts", "Product")
-       }
+           }
        }
    }
    else
    {
-       <div class="no-data">
+        <div style="background: #fff;padding-top: 30px;padding-bottom: 20px;">
+            <div>
+               <div style="text-align: center;">@T("ShoppingCart.CartIsEmpty")</div> 
+                <a href="/" class="buyother">@T("Account.BuyMore")</a>
+            </div>
+            <div class="clr"></div>
+        </div>
+
+       @*<div class="no-data">
            @T("ShoppingCart.CartIsEmpty")
-       </div>
+       </div>*@
    }
    @Html.Widget("order_summary_content_after")
 </div>

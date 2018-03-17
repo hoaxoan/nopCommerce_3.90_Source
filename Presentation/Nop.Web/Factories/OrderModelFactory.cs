@@ -19,6 +19,10 @@ using Nop.Services.Shipping;
 using Nop.Services.Shipping.Tracking;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Order;
+using Nop.Web.Models.Media;
+using Nop.Web.Infrastructure.Cache;
+using Nop.Core.Domain.Media;
+using Nop.Core.Caching;
 
 namespace Nop.Web.Factories
 {
@@ -31,6 +35,7 @@ namespace Nop.Web.Factories
 
         private readonly IAddressModelFactory _addressModelFactory;
         private readonly IOrderService _orderService;
+        private readonly IPictureService _pictureService;
         private readonly IWorkContext _workContext;
         private readonly ICurrencyService _currencyService;
         private readonly IPriceFormatter _priceFormatter;
@@ -46,6 +51,10 @@ namespace Nop.Web.Factories
         private readonly IOrderTotalCalculationService _orderTotalCalculationService;
         private readonly IRewardPointService _rewardPointService;
 
+        private readonly ICacheManager _cacheManager;
+        private readonly IWebHelper _webHelper;
+
+        private readonly MediaSettings _mediaSettings;
         private readonly OrderSettings _orderSettings;
         private readonly TaxSettings _taxSettings;
         private readonly CatalogSettings _catalogSettings;
@@ -60,6 +69,7 @@ namespace Nop.Web.Factories
 
         public OrderModelFactory(IAddressModelFactory addressModelFactory, 
             IOrderService orderService,
+            IPictureService pictureService,
             IWorkContext workContext,
             ICurrencyService currencyService,
             IPriceFormatter priceFormatter,
@@ -74,6 +84,10 @@ namespace Nop.Web.Factories
             IStoreContext storeContext,
             IOrderTotalCalculationService orderTotalCalculationService,
             IRewardPointService rewardPointService,
+            ICacheManager cacheManager,
+            IWebHelper webHelper,
+
+            MediaSettings mediaSettings,
             CatalogSettings catalogSettings,
             OrderSettings orderSettings,
             TaxSettings taxSettings,
@@ -84,6 +98,7 @@ namespace Nop.Web.Factories
         {
             this._addressModelFactory = addressModelFactory;
             this._orderService = orderService;
+            this._pictureService = pictureService;
             this._workContext = workContext;
             this._currencyService = currencyService;
             this._priceFormatter = priceFormatter;
@@ -99,6 +114,9 @@ namespace Nop.Web.Factories
             this._orderTotalCalculationService = orderTotalCalculationService;
             this._rewardPointService = rewardPointService;
 
+            this._cacheManager = cacheManager;
+            this._webHelper = webHelper;
+            this._mediaSettings = mediaSettings;
             this._catalogSettings = catalogSettings;
             this._orderSettings = orderSettings;
             this._taxSettings = taxSettings;
@@ -431,6 +449,10 @@ namespace Nop.Web.Factories
                     orderItemModel.DownloadId = orderItem.Product.DownloadId;
                 if (_downloadService.IsLicenseDownloadAllowed(orderItem))
                     orderItemModel.LicenseId = orderItem.LicenseDownloadId.HasValue ? orderItem.LicenseDownloadId.Value : 0;
+
+                //picture
+                orderItemModel.Picture = PrepareCartItemPictureModel(orderItem,
+                    _mediaSettings.CartThumbPictureSize, true, orderItem.Product.Name);
             }
 
             return model;
@@ -572,6 +594,25 @@ namespace Nop.Web.Factories
             return model;
         }
 
+        public virtual PictureModel PrepareCartItemPictureModel(OrderItem sci, int pictureSize, bool showDefaultPicture, string productName)
+        {
+            var pictureCacheKey = string.Format(ModelCacheEventConsumer.ORDER_ITEM_PICTURE_MODEL_KEY, sci.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+            var model = _cacheManager.Get(pictureCacheKey,
+                //as we cache per user (shopping cart item identifier)
+                //let's cache just for 3 minutes
+                3, () =>
+                {
+                    //shopping cart item picture
+                    var sciPicture = sci.Product.GetProductPicture(sci.AttributesXml, _pictureService, _productAttributeParser);
+                    return new PictureModel
+                    {
+                        ImageUrl = _pictureService.GetPictureUrl(sciPicture, pictureSize, showDefaultPicture),
+                        Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), productName),
+                        AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), productName),
+                    };
+                });
+            return model;
+        }
         #endregion
     }
 }

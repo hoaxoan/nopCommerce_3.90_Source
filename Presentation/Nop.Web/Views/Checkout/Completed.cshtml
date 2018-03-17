@@ -9,32 +9,81 @@
     Html.AppendPageCssClassParts("html-checkout-page");
     Html.AppendPageCssClassParts("html-order-completed-page");
 }
-<div class="page checkout-page order-completed-page">
-    @if (!Model.OnePageCheckoutEnabled)
-    {
-        @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Complete })
-    }
-    <div class="page-title">
-        <h1>@T("Checkout.ThankYou")</h1>
-    </div>
-    <div class="page-body checkout-data">
-        @Html.Widget("checkout_completed_top", Model.OrderId)
-        <div class="section order-completed">
-            <div class="title">
-                <strong>@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")</strong>
-            </div>
-            <div class="details">
-                <div class="order-number">
-                    <strong>@T("Checkout.OrderNumber"): @Model.CustomOrderNumber</strong>
-                </div>
-                <div class="details-link">
-                    <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">@T("Checkout.PlacedOrderDetails")</a>
-                </div>
-            </div>
-            <div class="buttons">
-                <input type="button" value="@T("Checkout.ThankYou.Continue")" class="button-1 order-completed-continue-button" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
-            </div>
+
+<div class="container1">
+
+    <div class="picsuccess">
+        <img width="320" height="120" src="https://www.thegioididong.com/Content/mobile/images/V4/pic-success.png">
+        <div class="notistatus">
+            <i class="iconnoti iconsuccess"></i>@T("Order.Success")
         </div>
-        @Html.Widget("checkout_completed_bottom", Model.OrderId)
     </div>
+
+    <div class="thank">@T("Order.Thank")</div>
+
+    <div class="clr"></div>
+    <div class="titlebill">@T("Order.Info"):</div>
+    <div class="infoorder">
+        <div><b></b></div>
+        <div>@T("Order.OrderTotal"): <strong style="color: #c10017;">@Model.OrderDetails.OrderTotal</strong></div>
+    </div>
+
+    <div class="callship">
+        @T("Contact.Info") <a href="tel:@Model.CompanyPhoneNumber">@Model.CompanyPhoneNumber</a>
+    </div>
+    <div class="titlebill">@T("Order.BuyProdudcts"):</div>
+
+    <ul class="listorder">
+        @foreach (var item in Model.OrderDetails.Items)
+        {
+            <li>
+                <div class="colimg">
+                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">
+                        <img width="55" height="55"  alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title">
+                    </a>
+                </div>
+                <div class="colinfo">
+                    <a style="padding-top: 0px; width: 100%;" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>
+                    <strong style="padding-top: 5px;padding-bottom: 5px;width: 100%;">@item.UnitPrice</strong>
+                    <div class="quan">
+                        <span>@T("ShoppingCart.Quantity"):</span>@item.Quantity
+                    </div>
+
+                    <div class="clr"></div>
+
+                </div>
+            </li>
+        }
+    </ul>
+    <a href="/" class="buyother">@T("Account.BuyMore")</a>
+    <div class="clr"></div>
 </div>
+@*<div class="page checkout-page order-completed-page">
+        @if (!Model.OnePageCheckoutEnabled)
+        {
+            @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Complete })
+        }
+        <div class="page-title">
+            <h1>@T("Checkout.ThankYou")</h1>
+        </div>
+        <div class="page-body checkout-data">
+            @Html.Widget("checkout_completed_top", Model.OrderId)
+            <div class="section order-completed">
+                <div class="title">
+                    <strong>@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")</strong>
+                </div>
+                <div class="details">
+                    <div class="order-number">
+                        <strong>@T("Checkout.OrderNumber"): @Model.CustomOrderNumber</strong>
+                    </div>
+                    <div class="details-link">
+                        <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">@T("Checkout.PlacedOrderDetails")</a>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <input type="button" value="@T("Checkout.ThankYou.Continue")" class="button-1 order-completed-continue-button" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
+                </div>
+            </div>
+            @Html.Widget("checkout_completed_bottom", Model.OrderId)
+        </div>
+    </div>*@

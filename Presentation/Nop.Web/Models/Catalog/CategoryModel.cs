@@ -14,6 +14,7 @@ namespace Nop.Web.Models.Catalog
             PagingFilteringContext = new CatalogPagingFilteringModel();
             SubCategories = new List<SubCategoryModel>();
             CategoryBreadcrumb = new List<CategoryModel>();
+            ManufacturerNavigation = new ManufacturerNavigationModel();
         }
 
         public string Name { get; set; }
@@ -34,9 +35,9 @@ namespace Nop.Web.Models.Catalog
 
         public IList<ProductOverviewModel> FeaturedProducts { get; set; }
         public IList<ProductOverviewModel> Products { get; set; }
-        
+        public ManufacturerNavigationModel ManufacturerNavigation { get; set; }
 
-		#region Nested Classes
+        #region Nested Classes
 
         public partial class SubCategoryModel : BaseNopEntityModel
         {

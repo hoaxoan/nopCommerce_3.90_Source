@@ -720,7 +720,9 @@ namespace Nop.Web.Factories
                 _webHelper, 
                 _workContext,
                 _cacheManager);
-            
+
+            // manufacturer navigation
+            model.ManufacturerNavigation = PrepareManufacturerModels(category.CategoryManufacturers);
             return model;
         }
 
@@ -1169,6 +1171,38 @@ namespace Nop.Web.Factories
             
             
             return cachedModel;
+        }
+
+        public virtual ManufacturerNavigationModel PrepareManufacturerModels(ICollection<CategoryManufacturer> categoryManufacturers)
+        {
+            var model = new ManufacturerNavigationModel();
+            categoryManufacturers = categoryManufacturers.OrderBy(x => x.DisplayOrder).ToList();
+
+            var manufacturers = new List<ManufacturerBriefInfoModel>();
+
+            foreach (var categoryManufacturer in categoryManufacturers)
+            {
+                var manufacturer = categoryManufacturer.Manufacturer;
+
+                var modelMan = new ManufacturerBriefInfoModel
+                {
+                    Id = manufacturer.Id,
+                    Name = manufacturer.GetLocalized(x => x.Name),
+                    SeName = manufacturer.GetSeName(),
+                    IsActive = !manufacturer.Deleted
+                };
+                manufacturers.Add(modelMan);
+            }
+
+            model.TotalManufacturers = manufacturers.Count;
+
+            if (_catalogSettings.ManufacturersBlockItemsToDisplay > 0)
+            {
+                model.Manufacturers = manufacturers.Skip(0).Take(_catalogSettings.ManufacturersBlockItemsToDisplay).ToList();
+            }
+
+            return model;
+
         }
 
         #endregion

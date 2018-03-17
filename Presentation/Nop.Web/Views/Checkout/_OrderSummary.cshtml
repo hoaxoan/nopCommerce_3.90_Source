@@ -1,0 +1,41 @@
+﻿@model ShoppingCartModel
+@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.ShoppingCart;
+@{
+    var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+}
+
+@if (Model.Items.Count > 0)
+{
+    foreach (var item in Model.Items)
+    {
+        <ul class="listorder">
+            <li class="justadded" id="item_@(item.Id)">
+                <div class="colimg">
+                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">
+                        <img width="55" alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" />
+                    </a>
+                    @*<button type="button" class="delete"><span></span>Xóa</button>*@
+                </div>
+                <div class="colinfo">
+
+                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>
+                    <strong>@item.UnitPrice</strong>
+
+                    <div>
+                    </div>
+
+                    <div class="choosenumber">
+                        <div class="abate "></div>
+                        <div class="number-qty">@item.Quantity</div>
+                        <div class="augment "></div>
+                    </div>
+                    <div class="clr"></div>
+
+                </div>
+            </li>
+        </ul>
+    }
+}

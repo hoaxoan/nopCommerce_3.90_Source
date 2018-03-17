@@ -1,6 +1,6 @@
 ﻿@model SearchModel
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Search").Text);
@@ -95,10 +95,12 @@
                 </div>
             }
         </div>
-        @if (Model.Products.Count > 0)
+
+
+        @*@if (Model.Products.Count > 0)
         {
             @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
-        }
+        }*@
         @Html.Widget("productsearch_page_before_results")
         <div class="search-results">
             @if (!String.IsNullOrEmpty(Model.Warning))
@@ -116,7 +118,13 @@
             
             @if (Model.Products.Count > 0)
             {
-                <div class="@(Model.PagingFilteringContext.ViewMode == "list" ? "product-list" : "product-grid")">
+                <ul class="homeproduct ">
+                @foreach (var product in Model.Products)
+                {
+                   @Html.Partial("_ProductBox2", product)
+                }
+                </ul>
+                @*<div class="@(Model.PagingFilteringContext.ViewMode == "list" ? "product-list" : "product-grid")">
                     <div class="item-grid">
                         @foreach (var product in Model.Products)
                         {
@@ -125,7 +133,7 @@
                             </div>
                         }
                     </div>
-                </div>
+                </div>*@
             }
             @{
                 var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber").BooleanParameterName("adv").BooleanParameterName("isc").BooleanParameterName("sid").RenderEmptyParameters(true);

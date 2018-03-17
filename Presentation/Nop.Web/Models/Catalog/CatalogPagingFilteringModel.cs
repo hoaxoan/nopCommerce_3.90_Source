@@ -211,9 +211,9 @@ namespace Nop.Web.Models.Catalog
                         //from&to
                         var item = new PriceRangeFilterItem();
                         if (x.From.HasValue)
-                            item.From = priceFormatter.FormatPrice(x.From.Value, true, false);
+                            item.From = priceFormatter.FormatPrice2(x.From.Value, true, false);
                         if (x.To.HasValue)
-                            item.To = priceFormatter.FormatPrice(x.To.Value, true, false);
+                            item.To = priceFormatter.FormatPrice2(x.To.Value, true, false);
                         string fromQuery = string.Empty;
                         if (x.From.HasValue)
                             fromQuery = x.From.Value.ToString(new CultureInfo("en-US"));

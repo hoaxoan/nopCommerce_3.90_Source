@@ -42,6 +42,10 @@ namespace Nop.Web.Infrastructure.Cache
         IConsumer<EntityInserted<ProductManufacturer>>,
         IConsumer<EntityUpdated<ProductManufacturer>>,
         IConsumer<EntityDeleted<ProductManufacturer>>,
+        //category manufacturers
+        IConsumer<EntityInserted<CategoryManufacturer>>,
+        IConsumer<EntityUpdated<CategoryManufacturer>>,
+        IConsumer<EntityDeleted<CategoryManufacturer>>,
         //categories
         IConsumer<EntityInserted<Category>>,
         IConsumer<EntityUpdated<Category>>,
@@ -206,6 +210,19 @@ namespace Nop.Web.Infrastructure.Cache
         public const string MANUFACTURER_HAS_FEATURED_PRODUCTS_PATTERN_KEY_BY_ID = "Nop.pres.manufacturer.hasfeaturedproducts-{0}-";
 
         /// <summary>
+        /// Key for caching of a value indicating whether a manufacturer has featured categories
+        /// </summary>
+        /// <remarks>
+        /// {0} : manufacturer id
+        /// {1} : roles of the current user
+        /// {2} : current store ID
+        /// </remarks>
+        public const string MANUFACTURER_HAS_FEATURED_CATEGORIES_KEY = "Nop.pres.manufacturer.hasfeaturedcategories-{0}-{1}-{2}";
+        public const string MANUFACTURER_HAS_FEATURED_CATEGORIES_PATTERN_KEY = "Nop.pres.manufacturer.hasfeaturedcategories";
+        public const string MANUFACTURER_HAS_FEATURED_CATEGORIES_PATTERN_KEY_BY_ID = "Nop.pres.manufacturer.hasfeaturedcategories-{0}-";
+
+
+        /// <summary>
         /// Key for list of CategorySimpleModel caching
         /// </summary>
         /// <remarks>
@@ -343,6 +360,19 @@ namespace Nop.Web.Infrastructure.Cache
         public const string PRODUCT_MANUFACTURERS_MODEL_KEY = "Nop.pres.product.manufacturers-{0}-{1}-{2}-{3}";
         public const string PRODUCT_MANUFACTURERS_PATTERN_KEY = "Nop.pres.product.manufacturers";
         public const string PRODUCT_MANUFACTURERS_PATTERN_KEY_BY_ID = "Nop.pres.product.manufacturers-{0}-";
+
+        /// <summary>
+        /// Key for CategoryManufacturers model caching
+        /// </summary>
+        /// <remarks>
+        /// {0} : product id
+        /// {1} : language id
+        /// {2} : roles of the current user
+        /// {3} : current store ID
+        /// </remarks>
+        public const string CATEGORY_MANUFACTURERS_MODEL_KEY = "Nop.pres.category.manufacturers-{0}-{1}-{2}-{3}";
+        public const string CATEGORY_MANUFACTURERS_PATTERN_KEY = "Nop.pres.category.manufacturers";
+        public const string CATEGORY_MANUFACTURERS_PATTERN_KEY_BY_ID = "Nop.pres.category.manufacturers-{0}-";
 
         /// <summary>
         /// Key for ProductSpecificationModel caching
@@ -602,6 +632,9 @@ namespace Nop.Web.Infrastructure.Cache
         /// </remarks>
         public const string CART_PICTURE_MODEL_KEY = "Nop.pres.cart.picture-{0}-{1}-{2}-{3}-{4}-{5}";
         public const string CART_PICTURE_PATTERN_KEY = "Nop.pres.cart.picture";
+
+        public const string ORDER_ITEM_PICTURE_MODEL_KEY = "Nop.pres.order.item.picture-{0}-{1}-{2}-{3}-{4}-{5}";
+        public const string ORDER_ITEM_PATTERN_KEY = "Nop.pres.order.item.picture";
 
         /// <summary>
         /// Key for home page polls
@@ -927,7 +960,24 @@ namespace Nop.Web.Infrastructure.Cache
             _cacheManager.RemoveByPattern(string.Format(PRODUCT_MANUFACTURERS_PATTERN_KEY_BY_ID, eventMessage.Entity.ProductId));
             _cacheManager.RemoveByPattern(string.Format(MANUFACTURER_HAS_FEATURED_PRODUCTS_PATTERN_KEY_BY_ID, eventMessage.Entity.ManufacturerId));
         }
-        
+
+        //category manufacturers
+        public void HandleEvent(EntityInserted<CategoryManufacturer> eventMessage)
+        {
+            _cacheManager.RemoveByPattern(string.Format(CATEGORY_MANUFACTURERS_PATTERN_KEY_BY_ID, eventMessage.Entity.CategoryId));
+            _cacheManager.RemoveByPattern(string.Format(MANUFACTURER_HAS_FEATURED_CATEGORIES_PATTERN_KEY_BY_ID, eventMessage.Entity.ManufacturerId));
+        }
+        public void HandleEvent(EntityUpdated<CategoryManufacturer> eventMessage)
+        {
+            _cacheManager.RemoveByPattern(string.Format(CATEGORY_MANUFACTURERS_PATTERN_KEY_BY_ID, eventMessage.Entity.CategoryId));
+            _cacheManager.RemoveByPattern(string.Format(MANUFACTURER_HAS_FEATURED_CATEGORIES_PATTERN_KEY_BY_ID, eventMessage.Entity.ManufacturerId));
+        }
+        public void HandleEvent(EntityDeleted<CategoryManufacturer> eventMessage)
+        {
+            _cacheManager.RemoveByPattern(string.Format(CATEGORY_MANUFACTURERS_PATTERN_KEY_BY_ID, eventMessage.Entity.CategoryId));
+            _cacheManager.RemoveByPattern(string.Format(MANUFACTURER_HAS_FEATURED_CATEGORIES_PATTERN_KEY_BY_ID, eventMessage.Entity.ManufacturerId));
+        }
+
         //categories
         public void HandleEvent(EntityInserted<Category> eventMessage)
         {

@@ -22,7 +22,12 @@
 }
 @if (Model.Enabled)
 {
-    <div class="product-filter price-range-filter">
+    foreach (var item in Model.Items)
+    {
+        <li><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a></li>
+    }
+
+    @*<div class="product-filter price-range-filter">
         <div class="filter-title">
             <strong>@T("Filtering.PriceRangeFilter")</strong>
         </div>
@@ -49,5 +54,5 @@
             }
         </div>
 
-    </div>
+    </div>*@
 }

@@ -1,0 +1,66 @@
+﻿@model ProductOverviewModel
+@using Nop.Core
+@using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Orders
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Catalog;
+@{
+    //prepare "Add to cart" AJAX link
+    string addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+    }
+
+    var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+    var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+}
+
+<li>
+    <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+        <img width="180" height="180"
+             alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" style="display: block; opacity: 1;">
+        <h3>@Model.Name</h3>
+        @if (!Model.ProductPrice.CallForPrice)
+        {
+            <div class="price">
+                @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                {
+                    <strong>@Model.ProductPrice.OldPrice</strong>
+                }
+                <strong>@Model.ProductPrice.Price</strong>
+                @if (Model.ProductPrice.DisplayTaxShippingInfo)
+                {
+                    var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
+                    //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
+                    //of course, you can modify appropriate locales to include VAT info there
+                    <strong>
+                        @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+                    </strong>
+                }
+                @if (!String.IsNullOrEmpty(Model.ProductPrice.BasePricePAngV))
+                {
+                    <strong>@Model.ProductPrice.BasePricePAngV</strong>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="price">
+                @if (!Model.ProductPrice.DisableBuyButton)
+                {
+                    var callForPriceText = T("Products.CallForPrice").Text;
+                    <strong>@(callForPriceText)</strong>
+                }
+            </div>
+        }
+        @*<label class="per">Giảm 0%</label>*@
+    </a>
+</li>

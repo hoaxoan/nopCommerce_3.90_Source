@@ -693,6 +693,14 @@ namespace Nop.Web.Factories
                 });
             }
 
+            model.CustomerNavigationItems.Add(new CustomerNavigationItemModel
+            {
+                RouteName = "Logout",
+                Title = _localizationService.GetResource("Account.Logout"),
+                Tab = CustomerNavigationEnum.Avatar,
+                ItemClass = "customer-logout"
+            });
+
             model.SelectedTab = (CustomerNavigationEnum)selectedTabId;
 
             return model;

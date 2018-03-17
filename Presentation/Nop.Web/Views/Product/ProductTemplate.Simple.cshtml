@@ -68,57 +68,67 @@
                                 @Model.Name
                             </h1>
                         </div>
-                        @if (!String.IsNullOrEmpty(Model.ShortDescription))
+                        <div class="clr"></div>
+                        @*@if (!String.IsNullOrEmpty(Model.ShortDescription))
                         {
                             <div class="short-description">
                                 @Html.Raw(Model.ShortDescription)
                             </div>
-                        }
+                        }*@
                         @Html.Widget("productdetails_overview_top", Model.Id)
                         <!--product reviews-->
                         @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
                         <!--manufacturers-->
-                        @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
+                        @*@Html.Partial("_ProductManufacturers", Model.ProductManufacturers)*@
                         <!--availability-->
                         @Html.Partial("_Availability", Model)
                         <!--SKU, MAN, GTIN, vendor-->
-                        @Html.Partial("_SKU_Man_GTIN_Ven", Model)
+                        @*@Html.Partial("_SKU_Man_GTIN_Ven", Model)*@
                         <!--delivery-->
-                        @Html.Partial("_DeliveryInfo", Model)
+                        @*@Html.Partial("_DeliveryInfo", Model)*@
                         <!--sample download-->
-                        @Html.Partial("_DownloadSample", Model)
+                        @*@Html.Partial("_DownloadSample", Model)*@
                         <!--attributes-->
-                        @{
+                        @*@{
                             var dataDictAttributes = new ViewDataDictionary();
                             dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
                             @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
-                        }
+                        }*@
                         <!--gift card-->
-                        @{
+                        @*@{
                             var dataDictGiftCard = new ViewDataDictionary();
                             dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
                             @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
-                        }
+                        }*@
                         <!--rental info-->
-                        @{
+                        @*@{
                             var dataDictRental = new ViewDataDictionary();
                             dataDictRental.TemplateInfo.HtmlFieldPrefix = string.Format("rental_{0}", Model.Id);
                             @Html.Partial("_RentalInfo", Model, dataDictRental)
-                        }
+                        }*@
                         <!--price & add to cart-->
                         @{
                             var dataDictPrice = new ViewDataDictionary();
                             dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
                             @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
 
-                            @Html.Partial("_ProductTierPrices", Model.TierPrices)
+                            @*@Html.Partial("_ProductTierPrices", Model.TierPrices)*@
 
                             var dataDictAddToCart = new ViewDataDictionary();
                             dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
                             @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
                         }
+                        <div class="callorder">
+                            <div class="ct">
+                                <span>Gọi đặt mua: </span> <span><a href="tel:@Model.CurrentStore.CompanyPhoneNumber">@Model.CurrentStore.CompanyPhoneNumber</a></span>
+                            </div>
+                            <div class="ct">
+                                <span>Cửa hàng: </span> <span><a>@Model.CurrentStore.CompanyAddress</a></span>
+                            </div>
+                        </div>
+                        
                         <!--wishlist, compare, email a friend-->
-                        <div class="overview-buttons">
+                        @*<div class="overview-buttons">
                             @Html.Widget("productdetails_inside_overview_buttons_before", Model.Id)
                             @{
                                 var dataDictAddToWishlist = new ViewDataDictionary();
@@ -129,25 +139,81 @@
                             @Html.Partial("_ProductEmailAFriendButton", Model)
                             @Html.Widget("productdetails_inside_overview_buttons_after", Model.Id)
                         </div>
-                        @Html.Partial("_ShareButton", Model)
+                        @Html.Partial("_ShareButton", Model)*@
                         @Html.Widget("productdetails_overview_bottom", Model.Id)
-                    </div>
-                    @if (!String.IsNullOrEmpty(Model.FullDescription))
+                    </div>                   
+                    @*@if (!String.IsNullOrEmpty(Model.FullDescription))
                     {
                         <div class="full-description" itemprop="description">
                             @Html.Raw(Model.FullDescription)
                         </div>
-                    }
+                    }*@
                 </div>
-                @Html.Widget("productdetails_before_collateral", Model.Id)
-                <div class="product-collateral">
-                    @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
-                    @Html.Partial("_ProductTags", Model.ProductTags)
-                </div>
-                @Html.Action("ProductsAlsoPurchased", "Product", new { productId = Model.Id })
-                @Html.Action("RelatedProducts", "Product", new { productId = Model.Id })
+                @Html.Widget("productdetails_before_collateral", Model.Id)                
             </div>
         }
+
+
         @Html.Widget("productdetails_bottom", Model.Id)
     </div>
 </div>
+
+@Html.Action("ProductsAlsoPurchased", "Product", new { productId = Model.Id })
+
+@Html.Action("RelatedProducts", "Product", new { productId = Model.Id })
+
+
+<div class="fs-dtbox">
+    <div class="fs-dttabsmain">
+        <div class="fs-dttabsmbox">
+            <ul class="fs-dttabs fs-dttabtop">
+                <li class="active">
+                    <a toscroll="" href="#dac-diem-noi-bat" title="">@T("Products.Tabs.Description")</a>
+                </li>
+                @if (Model.ProductSpecifications.Count > 0)
+                {
+                    <li>
+                        <a toscroll="" href="#thong-so-ky-thuat" title="">@T("Products.Tabs.Specification")</a>
+                    </li>
+                }
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="fs-dtcontent dtshow" id="dac-diem-noi-bat">
+        @if (!String.IsNullOrEmpty(Model.FullDescription))
+        {
+            <div class="full-description" itemprop="description">
+                @Html.Raw(Model.FullDescription)
+            </div>
+        }
+    </div>
+</div>
+
+
+@Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+
+@if (Model.ProductTags.Count > 0)
+{
+    <div class="product-collateral">
+        @Html.Partial("_ProductTags", Model.ProductTags)
+    </div>
+}
+
+<script type="text/javascript">
+    $(window).load(function () {
+        $('.fs-dttabs li').click(function (evt) {
+            $('.fs-dttabs li.active').removeClass('active')
+            $(this).addClass('active');
+        });
+    });
+
+</script>
+
+
+
+
+
+
+

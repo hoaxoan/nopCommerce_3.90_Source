@@ -780,6 +780,145 @@ namespace Nop.Admin.Controllers
 
         #endregion
 
-        
+        #region Categories
+
+        [HttpPost]
+        public virtual ActionResult CategoryList(DataSourceRequest command, int manufacturerId)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedKendoGridJson();
+
+            var categoryManufacturers = _manufacturerService.GetCategoryManufacturersByManufacturerId(manufacturerId,
+                command.Page - 1, command.PageSize, true);
+
+            var gridModel = new DataSourceResult
+            {
+                Data = categoryManufacturers
+                .Select(x => new ManufacturerModel.ManufacturerCategoryModel
+                {
+                    Id = x.Id,
+                    ManufacturerId = x.ManufacturerId,
+                    CategoryId = x.CategoryId,
+                    CategoryName = _categoryService.GetCategoryById(x.CategoryId).Name,
+                    IsFeaturedCategory = x.IsFeaturedCategory,
+                    DisplayOrder = x.DisplayOrder
+                }),
+                Total = categoryManufacturers.TotalCount
+            };
+
+
+            return Json(gridModel);
+        }
+
+        [HttpPost]
+        public virtual ActionResult CategoryUpdate(ManufacturerModel.ManufacturerCategoryModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedView();
+
+            var categoryManufacturer = _manufacturerService.GetCategorytManufacturerById(model.Id);
+            if (categoryManufacturer == null)
+                throw new ArgumentException("No category manufacturer mapping found with the specified id");
+
+            categoryManufacturer.IsFeaturedCategory = model.IsFeaturedCategory;
+            categoryManufacturer.DisplayOrder = model.DisplayOrder;
+            _manufacturerService.UpdateCategoryManufacturer(categoryManufacturer);
+
+            return new NullJsonResult();
+        }
+
+        [HttpPost]
+        public virtual ActionResult CategoryDelete(int id)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedView();
+
+            var categoryManufacturer = _manufacturerService.GetCategorytManufacturerById(id);
+            if (categoryManufacturer == null)
+                throw new ArgumentException("No category manufacturer mapping found with the specified id");
+
+            //var manufacturerId = categoryManufacturer.ManufacturerId;
+            _manufacturerService.DeleteCategoryManufacturer(categoryManufacturer);
+
+            return new NullJsonResult();
+        }
+
+        public virtual ActionResult CategoryAddPopup(int manufacturerId)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedView();
+
+            var model = new ManufacturerModel.AddManufacturerCategoryModel();
+            //categories
+            model.AvailableCategories.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
+            var categories = SelectListHelper.GetCategoryList(_categoryService, _cacheManager, true);
+            foreach (var c in categories)
+                model.AvailableCategories.Add(c);
+
+            //manufacturers
+            model.AvailableManufacturers.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
+            var manufacturers = SelectListHelper.GetManufacturerList(_manufacturerService, _cacheManager, true);
+            foreach (var m in manufacturers)
+                model.AvailableManufacturers.Add(m);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public virtual ActionResult CategoryAddPopupList(DataSourceRequest command, ManufacturerModel.AddManufacturerCategoryModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedKendoGridJson();
+
+            var gridModel = new DataSourceResult();
+            var categories = _categoryService.GetAllCategories(
+                categoryName: model.SearchCategoryName,
+                pageIndex: command.Page - 1,
+                pageSize: command.PageSize,
+                showHidden: true
+                );
+            gridModel.Data = categories.Select(x => x.ToModel());
+            gridModel.Total = categories.TotalCount;
+
+            return Json(gridModel);
+        }
+
+        [HttpPost]
+        [FormValueRequired("save")]
+        public virtual ActionResult CategoryAddPopup(string btnId, string formId, ManufacturerModel.AddManufacturerCategoryModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageManufacturers))
+                return AccessDeniedView();
+
+            if (model.SelectedCategoryIds != null)
+            {
+                foreach (int id in model.SelectedCategoryIds)
+                {
+                    var category = _categoryService.GetCategoryById(id);
+                    if (category != null)
+                    {
+                        var existingCategorymanufacturers = _manufacturerService.GetCategoryManufacturersByManufacturerId(model.ManufacturerId, showHidden: true);
+                        if (existingCategorymanufacturers.FindCategoryManufacturer(id, model.ManufacturerId) == null)
+                        {
+                            _manufacturerService.InsertCategoryManufacturer(
+                                new CategoryManufacturer
+                                {
+                                    ManufacturerId = model.ManufacturerId,
+                                    CategoryId = id,
+                                    IsFeaturedCategory = false,
+                                    DisplayOrder = 1
+                                });
+                        }
+                    }
+                }
+            }
+
+            ViewBag.RefreshPage = true;
+            ViewBag.btnId = btnId;
+            ViewBag.formId = formId;
+            return View(model);
+        }
+
+        #endregion
     }
 }

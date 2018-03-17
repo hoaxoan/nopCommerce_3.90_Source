@@ -448,32 +448,36 @@ var ConfirmOrder = {
     },
 
     save: function () {
+        var fullName = $("input[name='BillingAddress.FullName']").val();
+        var phoneNumber = $("input[name='BillingAddress.PhoneNumber']").val();
+        var email = $("input[name='BillingAddress.Email']").val();
+
         if (Checkout.loadWaiting != false) return;
         
-        //terms of service
-        var termOfServiceOk = true;
-        if ($('#termsofservice').length > 0) {
-            //terms of service element exists
-            if (!$('#termsofservice').is(':checked')) {
-                $("#terms-of-service-warning-box").dialog();
-                termOfServiceOk = false;
-            } else {
-                termOfServiceOk = true;
-            }
-        }
-        if (termOfServiceOk) {
-            Checkout.setLoadWaiting('confirm-order');
-            $.ajax({
-                cache: false,
-                url: this.saveUrl,
-                type: 'post',
-                success: this.nextStep,
-                complete: this.resetLoadWaiting,
-                error: Checkout.ajaxFailure
-            });
-        } else {
-            return false;
-        }
+        ////terms of service
+        //var termOfServiceOk = true;
+        //if ($('#termsofservice').length > 0) {
+        //    //terms of service element exists
+        //    if (!$('#termsofservice').is(':checked')) {
+        //        $("#terms-of-service-warning-box").dialog();
+        //        termOfServiceOk = false;
+        //    } else {
+        //        termOfServiceOk = true;
+        //    }
+        //}
+        //if (termOfServiceOk) {
+        //    Checkout.setLoadWaiting('confirm-order');
+        //    $.ajax({
+        //        cache: false,
+        //        url: this.saveUrl,
+        //        type: 'post',
+        //        success: this.nextStep,
+        //        complete: this.resetLoadWaiting,
+        //        error: Checkout.ajaxFailure
+        //    });
+        //} else {
+        //    return false;
+        //}
     },
     
     resetLoadWaiting: function (transport) {

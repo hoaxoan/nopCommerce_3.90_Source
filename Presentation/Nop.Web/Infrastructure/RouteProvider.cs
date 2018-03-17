@@ -152,8 +152,9 @@ namespace Nop.Web.Infrastructure
 
             //manufacturers
             routes.MapLocalizedRoute("ManufacturerList",
-                            "manufacturer/all/",
+                            "manufacturer/all/{categoryId}",
                             new { controller = "Catalog", action = "ManufacturerAll" },
+                            new { categoryId = @"\d+" },
                             new[] { "Nop.Web.Controllers" });
             //vendors
             routes.MapLocalizedRoute("VendorList",

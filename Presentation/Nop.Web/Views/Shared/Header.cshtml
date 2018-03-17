@@ -1,18 +1,87 @@
 ﻿<div class="header">
     @Html.Widget("header")
-    <div class="header-upper">
+    @*<div class="header-upper">
         @Html.Action("HeaderLink", "Common")
         <div class="header-links-wrapper">
             @Html.Action("HeaderLinks", "Common")
             @Html.Action("FlyoutShoppingCart", "ShoppingCart")
         </div>
-    </div>
+    </div>*@
     <div class="header-lower">
         <div class="header-logo">
             @Html.Action("Logo", "Common")
         </div>
         <div class="search-box store-search-box">
             @Html.Action("SearchBox", "Catalog")
+
+            @*<div class="top-search">
+                <span>TÌM NHIỀU:</span>&nbsp;
+                    <a title="iphone x" href="#">iphone x</a>,
+                    <a title="iPhone 8" href="#">iphone 8</a>,
+                    <a title="note 8" href="#">note 8</a>,
+                    <a href="#">xiaomi</a>                
+            </div>*@
+
+        </div>
+        <div class="skip-account">
+            @Html.Action("HeaderLinks", "Common")
+            @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+            @*<div class="rect">
+                <div class="span2">
+                    <div class="tc wf hvr-buzz">
+                    <a href="#">
+                        <i class="iconblm-roivo"></i>
+                        <p>Rơi vỡ<br>Vào nước</p>
+                     </a>
+                    </div>
+                </div>
+
+                <div class="span2">
+                    <div class="tc wf comback">
+                        <a href="#">
+                            <i class="iconblm-roivo"></i>
+                            <p>Rơi vỡ<br>Vào nước</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="span2">
+                    <div class="tc wf recomback">
+                        <a href="#">
+                            <i class="iconblm-roivo"></i>
+                            <p>Rơi vỡ<br>Vào nước</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="span2">
+                    <div class="tc wf hvr-wobble-horizontal">
+                    <a href="#">
+                        <i class="iconblm-online"></i>
+                        <p>Mua hàng<br>ONLINE</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="span2">
+                    <div class="tc wf hvr-pulse-shrink">
+                        <a href="#">
+                            <i class="iconblm-payoo"></i>
+                            <p>Thu cước<br>Thu hộ</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="span2">
+                    <div class="tc wf spinaround">
+                        <a href="#">
+                        <i class="iconblm-suachua"></i>
+                        <p>Sửa chữa<br>lấy liền</p>
+                      </a>
+                    </div>
+                </div>
+
+            </div>*@
         </div>
     </div>
 </div>

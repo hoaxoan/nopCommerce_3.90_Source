@@ -2,7 +2,18 @@
 @using Nop.Web.Models.Catalog;
 @if (Model.Manufacturers.Count > 0)
 {
-    <div class="block block-manufacturer-navigation">
+    foreach (var manufacturer in Model.Manufacturers)
+    {
+        <a href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName })">@manufacturer.Name</a>
+    }
+
+    if (Model.TotalManufacturers > Model.Manufacturers.Count)
+    {
+        <a href="@Url.RouteUrl("ManufacturerList")">@T("Manufacturers.ViewAll")</a>
+    }
+
+
+    @*<div class="block block-manufacturer-navigation">
         <div class="title">
             <strong>@T("Manufacturers")</strong>
         </div>
@@ -21,5 +32,5 @@
                 </div>
             }
         </div>
-    </div>
+    </div>*@
 }

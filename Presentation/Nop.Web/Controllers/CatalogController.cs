@@ -201,10 +201,46 @@ namespace Nop.Web.Controllers
         }
 
         [NopHttpsRequirement(SslRequirement.No)]
-        public virtual ActionResult ManufacturerAll()
+        public virtual ActionResult ManufacturerAll(int categoryId, CatalogPagingFilteringModel command)
         {
-            var model = _catalogModelFactory.PrepareManufacturerAllModels();
-            return View(model);
+            //var model = _catalogModelFactory.PrepareManufacturerModels();
+            //return View(model);
+
+            var category = _categoryService.GetCategoryById(categoryId);
+            if (category == null || category.Deleted)
+                return InvokeHttp404();
+
+            var notAvailable =
+                //published?
+                !category.Published ||
+                //ACL (access control list) 
+                !_aclService.Authorize(category) ||
+                //Store mapping
+                !_storeMappingService.Authorize(category);
+            //Check whether the current user has a "Manage categories" permission (usually a store owner)
+            //We should allows him (her) to use "Preview" functionality
+            if (notAvailable && !_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
+                return InvokeHttp404();
+
+            //'Continue shopping' URL
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+                SystemCustomerAttributeNames.LastContinueShoppingPage,
+                _webHelper.GetThisPageUrl(false),
+                _storeContext.CurrentStore.Id);
+
+            //display "edit" (manage) link
+            if (_permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel) && _permissionService.Authorize(StandardPermissionProvider.ManageCategories))
+                DisplayEditLink(Url.Action("Edit", "Category", new { id = category.Id, area = "Admin" }));
+
+            //activity log
+            _customerActivityService.InsertActivity("PublicStore.ViewCategory", _localizationService.GetResource("ActivityLog.PublicStore.ViewCategory"), category.Name);
+
+            //model
+            var model = _catalogModelFactory.PrepareCategoryModel(category, command);
+
+            //template
+            var templateViewPath = _catalogModelFactory.PrepareCategoryTemplateViewPath(category.CategoryTemplateId);
+            return View(templateViewPath, model);
         }
 
         [ChildActionOnly]

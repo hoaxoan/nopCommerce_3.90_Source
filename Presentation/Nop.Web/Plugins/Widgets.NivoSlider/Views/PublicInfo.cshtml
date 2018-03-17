@@ -1,4 +1,7 @@
 ﻿@model Nop.Plugin.Widgets.NivoSlider.Models.PublicInfoModel
+
+@using Nop.Plugin.Widgets.NivoSlider.Models
+
 @{
     Layout = "";
 
@@ -10,29 +13,100 @@
 
 @helper RenderSliderLine(string pictureUrl, string text, string link, string dataTransition = "")
 {
-    if (!string.IsNullOrEmpty(pictureUrl))
+if (!string.IsNullOrEmpty(pictureUrl))
+{
+    if (!string.IsNullOrEmpty(link))
     {
-        if (!string.IsNullOrEmpty(link))
-        {
             <a href="@link">
                 <img src="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="" title="@text" />
             </a>
-        }
-        else
-        {
+    }
+    else
+    {
             <img src="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="" title="@text" />
-        }
     }
 }
-<div class="slider-wrapper theme-custom">
-    <div id="nivo-slider" class="nivoSlider">
-        @RenderSliderLine(Model.Picture1Url, Model.Text1, Model.Link1)
-        @RenderSliderLine(Model.Picture2Url, Model.Text2, Model.Link2)
-        @RenderSliderLine(Model.Picture3Url, Model.Text3, Model.Link3, "slideInLeft")
-        @RenderSliderLine(Model.Picture4Url, Model.Text4, Model.Link4)
-        @RenderSliderLine(Model.Picture5Url, Model.Text5, Model.Link5)
+}
+
+@helper RenderSliderTextLine(string pictureUrl, string text, string link, string dataTransition = "")
+{
+if (!string.IsNullOrEmpty(pictureUrl))
+{
+        <div class="owl-item" style="width: 158px;">
+            <div class="item">
+                <h3>@text</h3>
+                <i class="arrowbar"></i>
+            </div>
+        </div>
+}
+}
+
+@helper RenderNewsItem(NewsItemModel item)
+{
+if (item != null)
+{
+        <li>
+            <a href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })">
+                <img width="100" height="70" src="https://cdn3.tgdd.vn/Files/2018/02/25/1069628/fa2_960x540-100x100.jpg">
+                <h3>
+                    @item.Title
+                </h3>
+                <span>@item.CreatedOn.ToString("D")</span>
+            </a>
+        </li>
+}
+}
+
+<aside class="homebanner">
+    <div class="slider-wrapper theme-custom" style="max-height: 278px;">
+        <div id="nivo-slider" class="nivoSlider">
+            @RenderSliderLine(Model.Picture1Url, Model.Text1, Model.Link1)
+            @RenderSliderLine(Model.Picture2Url, Model.Text2, Model.Link2)
+            @RenderSliderLine(Model.Picture3Url, Model.Text3, Model.Link3, "slideInLeft")
+            @RenderSliderLine(Model.Picture4Url, Model.Text4, Model.Link4)
+            @RenderSliderLine(Model.Picture5Url, Model.Text5, Model.Link5)
+        </div>
     </div>
-</div>
+
+    <div id="sync2" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
+        <div class="owl-wrapper-outer">
+            <div class="owl-wrapper">
+                @RenderSliderTextLine(Model.Picture1Url, Model.Text1, Model.Link1)
+                @RenderSliderTextLine(Model.Picture2Url, Model.Text2, Model.Link2)
+                @RenderSliderTextLine(Model.Picture3Url, Model.Text3, Model.Link3, "slideInLeft")
+                @RenderSliderTextLine(Model.Picture4Url, Model.Text4, Model.Link4)
+                @RenderSliderTextLine(Model.Picture5Url, Model.Text5, Model.Link5)
+            </div>
+        </div>
+
+    </div>
+</aside>
+
+<aside class="homenews">
+    <figure>
+        <h2><a href="/tin-tuc">Tin công nghệ</a></h2>
+        <b></b>
+        @*<a href="" class="liveevent" target="_blank">
+               <span id="dot">
+                   <span class="ping"></span>
+               </span>
+               <span class="text"></span>
+            </a>*@
+    </figure>
+    <ul>
+        @foreach (var item in Model.NewsItems)
+            {
+            @RenderNewsItem(item)
+        }
+    </ul>
+    @*<div class="twobanner">
+            <a href="" onclick="jQuery.ajax({ url: '',   async: true, cache: false });">
+                <img src="" alt="">
+            </a>
+        </div>*@
+
+</aside>
+
 <script type="text/javascript">
     $(window).load(function () {
         $('#nivo-slider').nivoSlider();

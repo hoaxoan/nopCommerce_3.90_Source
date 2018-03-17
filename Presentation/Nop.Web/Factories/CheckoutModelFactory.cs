@@ -479,7 +479,9 @@ namespace Nop.Web.Factories
             {
                 OrderId = order.Id,
                 OnePageCheckoutEnabled = _orderSettings.OnePageCheckoutEnabled,
-                CustomOrderNumber = order.CustomOrderNumber
+                CustomOrderNumber = order.CustomOrderNumber,
+                CompanyAddress = _storeContext.CurrentStore.GetLocalized(x => x.CompanyAddress),
+                CompanyPhoneNumber = _storeContext.CurrentStore.GetLocalized(x => x.CompanyPhoneNumber)
             };
 
             return model;

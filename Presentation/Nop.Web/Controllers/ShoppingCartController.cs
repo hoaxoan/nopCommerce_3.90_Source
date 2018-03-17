@@ -893,7 +893,7 @@ namespace Nop.Web.Controllers
                             //redirect to the shopping cart page
                             return Json(new
                             {
-                                redirect = Url.RouteUrl("ShoppingCart"),
+                                redirect = Url.RouteUrl("Checkout"),
                             });
                         }
                         
@@ -1381,17 +1381,17 @@ namespace Nop.Web.Controllers
             }
 
             //everything is OK
-            if (_workContext.CurrentCustomer.IsGuest())
-            {
-                bool downloadableProductsRequireRegistration =
-                    _customerSettings.RequireRegistrationForDownloadableProducts && cart.Any(sci => sci.Product.IsDownload);
+            //if (_workContext.CurrentCustomer.IsGuest())
+            //{
+            //    bool downloadableProductsRequireRegistration =
+            //        _customerSettings.RequireRegistrationForDownloadableProducts && cart.Any(sci => sci.Product.IsDownload);
 
-                if (!_orderSettings.AnonymousCheckoutAllowed 
-                    || downloadableProductsRequireRegistration)
-                    return new HttpUnauthorizedResult();
+            //    if (!_orderSettings.AnonymousCheckoutAllowed 
+            //        || downloadableProductsRequireRegistration)
+            //        return new HttpUnauthorizedResult();
                 
-                return RedirectToRoute("LoginCheckoutAsGuest", new {returnUrl = Url.RouteUrl("ShoppingCart")});
-            }
+            //    return RedirectToRoute("LoginCheckoutAsGuest", new {returnUrl = Url.RouteUrl("ShoppingCart")});
+            //}
             
             return RedirectToRoute("Checkout");
         }

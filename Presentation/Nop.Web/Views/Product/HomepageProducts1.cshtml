@@ -1,0 +1,23 @@
+﻿@model CategoryModel
+
+@using Nop.Web.Models.Catalog;
+
+@if (Model != null)
+{
+    <div class="clr"></div>
+    <div class="navigat">
+        <h2>@Model.Name nổi bật nhất</h2>
+        <div class="viewallcat">
+            <a href="@Url.RouteUrl("Category", new { SeName = Model.SeName })" class="mobile">Xem tất cả</a>
+        </div>
+    </div>
+
+
+    <ul class="homeproduct ">
+        @foreach (var item in Model.Products)
+        {
+            @Html.Partial("_ProductBox2", item)
+        }
+    </ul>
+
+}

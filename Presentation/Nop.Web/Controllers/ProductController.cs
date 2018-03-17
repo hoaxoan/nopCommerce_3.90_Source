@@ -427,6 +427,74 @@ namespace Nop.Web.Controllers
         }
 
         [ChildActionOnly]
+        public virtual ActionResult HomepageProducts1(int categoryId, int? productThumbPictureSize)
+        {
+            var category = _categoryService.GetCategoryById(categoryId);
+            if (category == null)
+                return Content("");
+
+            var products = _productService.GetAllProductsDisplayedOnHomePageByCategoryID(category.Id);
+            //ACL and store mapping
+            products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
+            //availability dates
+            products = products.Where(p => p.IsAvailable()).ToList();
+
+            if (!products.Any())
+                return Content("");
+
+            var model = _catalogModelFactory.PrepareHomepageCategoryModel(category);
+
+            model.Products = _productModelFactory.PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+            return PartialView(model);
+        }
+
+        [ChildActionOnly]
+        public virtual ActionResult HomepageProducts2(int? productThumbPictureSize)
+        {
+            var categoryId = 13;
+            var category = _categoryService.GetCategoryById(categoryId);
+            if (category == null)
+                return Content("");
+
+            var products = _productService.GetProductsDisplayedOnHomePageByCategoryID(category.Id);
+            //ACL and store mapping
+            products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
+            //availability dates
+            products = products.Where(p => p.IsAvailable()).ToList();
+
+            if (!products.Any())
+                return Content("");
+
+            var model = _catalogModelFactory.PrepareHomepageCategoryModel(category);
+
+            model.Products = _productModelFactory.PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+            return PartialView(model);
+        }
+
+        [ChildActionOnly]
+        public virtual ActionResult HomepageProducts3(int? productThumbPictureSize)
+        {
+            var categoryId = 5;
+            var category = _categoryService.GetCategoryById(categoryId);
+            if (category == null)
+                return Content("");
+
+            var products = _productService.GetProductsDisplayedOnHomePageByCategoryID(category.Id);
+            //ACL and store mapping
+            products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
+            //availability dates
+            products = products.Where(p => p.IsAvailable()).Take(5).ToList();
+
+            if (!products.Any())
+                return Content("");
+            var model = _catalogModelFactory.PrepareHomepageCategoryModel(category);
+
+            model.Products = _productModelFactory.PrepareProductOverviewModels(products, true, true, productThumbPictureSize).ToList();
+
+            return PartialView(model);
+        }
+
+        [ChildActionOnly]
         public virtual ActionResult HomepageCatalogProducts(int? productThumbPictureSize)
         {
             var categories = _categoryService.GetAllCategoriesDisplayedOnHomePage();

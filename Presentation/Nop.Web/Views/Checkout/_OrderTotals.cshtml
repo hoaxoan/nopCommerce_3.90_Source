@@ -1,0 +1,21 @@
+﻿@model OrderTotalsModel
+@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.ShoppingCart;
+@{
+    var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+}
+
+@if (Model != null)
+{
+    <div class="area_total">
+        <div class="">
+            <div class="total">
+                <b>@T("Order.OrderTotal"):</b>
+                <strong>@Model.OrderTotal</strong>
+            </div>
+        </div>
+    </div>
+}
+
