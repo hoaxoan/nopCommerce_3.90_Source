@@ -101,6 +101,7 @@ namespace Nop.Plugin.Api.Controllers
 
             var allProducts = _productApiService.GetProducts(parameters.Ids, parameters.CreatedAtMin, parameters.CreatedAtMax, parameters.UpdatedAtMin,
                                                                         parameters.UpdatedAtMax, parameters.Limit, parameters.Page, parameters.SinceId, parameters.CategoryId,
+                                                                        parameters.ManufacturerId,
                                                                         parameters.VendorName, parameters.PublishedStatus)
                                                 .Where(p => _storeMappingService.Authorize(p));
             

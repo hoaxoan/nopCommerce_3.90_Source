@@ -28,6 +28,7 @@ using Nop.Services.Directory;
 using Nop.Services.Localization;
 using Nop.Plugin.Api.DTOs.ProductAttributes;
 using Nop.Plugin.Api.Domain;
+using Nop.Plugin.Api.DTOs.Manufacturers;
 
 namespace Nop.Plugin.Api.Helpers
 {
@@ -149,6 +150,41 @@ namespace Nop.Plugin.Api.Helpers
             }
 
             return categoryDto;
+        }
+
+        public ManufacturerDto PrepareManufacturerDTO(Manufacturer manufacturer)
+        {
+            ManufacturerDto manufacturerDto = manufacturer.ToDto();
+
+            Picture picture = _pictureService.GetPictureById(manufacturer.PictureId);
+            ImageDto imageDto = PrepareImageDto(picture);
+
+            if (imageDto != null)
+            {
+                manufacturerDto.Image = imageDto;
+            }
+
+            manufacturerDto.SeName = manufacturer.GetSeName();
+            manufacturerDto.DiscountIds = manufacturer.AppliedDiscounts.Select(discount => discount.Id).ToList();
+            manufacturerDto.RoleIds = _aclService.GetAclRecords(manufacturer).Select(acl => acl.CustomerRoleId).ToList();
+            manufacturerDto.StoreIds = _storeMappingService.GetStoreMappings(manufacturer).Select(mapping => mapping.StoreId).ToList();
+
+            IList<Language> allLanguages = _languageService.GetAllLanguages();
+
+            manufacturerDto.LocalizedNames = new List<LocalizedNameDto>();
+
+            foreach (var language in allLanguages)
+            {
+                var localizedNameDto = new LocalizedNameDto
+                {
+                    LanguageId = language.Id,
+                    LocalizedName = manufacturer.GetLocalized(x => x.Name, language.Id)
+                };
+
+                manufacturerDto.LocalizedNames.Add(localizedNameDto);
+            }
+
+            return manufacturerDto;
         }
 
         public OrderDto PrepareOrderDTO(Order order)

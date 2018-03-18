@@ -62,5 +62,11 @@ namespace Nop.Plugin.Api.Models.ProductsParameters
         /// </summary>
         [JsonProperty("category_id")]
         public int? CategoryId { get; set; }
+
+        /// <summary>
+        /// Show only the products mapped to the specified manufacturer
+        /// </summary>
+        [JsonProperty("manufacturer_id")]
+        public int? ManufacturerId { get; set; }
     }
 }

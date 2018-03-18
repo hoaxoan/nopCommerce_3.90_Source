@@ -250,12 +250,16 @@
     <Compile Include="AutoMapper\AutoMapperApiConfiguration.cs" />
     <Compile Include="Constants\WebHookNames.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\ManufacturersController.cs" />
     <Compile Include="Controllers\CustomerRolesController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\OrderItemsController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\ProductAttributesController.cs" />
     <Compile Include="Domain\OrderStatusCount.cs" />
+    <Compile Include="DTOs\Manufacturers\ManufacturersCountRootObject.cs" />
+    <Compile Include="DTOs\Manufacturers\ManufacturersRootObject.cs" />
+    <Compile Include="DTOs\Manufacturers\ManufacturerDto.cs" />
     <Compile Include="DTOs\CustomerRoles\CustomerRoleDto.cs" />
     <Compile Include="DTOs\CustomerRoles\CustomerRolesRootObject.cs" />
     <Compile Include="DTOs\Devices\DeviceDto.cs" />
@@ -302,6 +306,7 @@
     <Compile Include="Factories\CategoryFactory.cs" />
     <Compile Include="JSON\ActionResults\ErrorActionResult.cs" />
     <Compile Include="JSON\ActionResults\RawJsonActionResult.cs" />
+    <Compile Include="MappingExtensions\ManufacturerDtoMappings.cs" />
     <Compile Include="MappingExtensions\CustomerRoleDtoMappings.cs" />
     <Compile Include="MappingExtensions\Extensions.cs" />
     <Compile Include="MappingExtensions\LanguageDtoMappings.cs" />
@@ -310,6 +315,9 @@
     <Compile Include="Maps\IJsonPropertyMap.cs" />
     <Compile Include="Maps\JsonPropertyMap.cs" />
     <Compile Include="ModelBinders\JsonModelBinder.cs" />
+    <Compile Include="Models\ManufacturersParameters\BaseManufacturersParametersModel.cs" />
+    <Compile Include="Models\ManufacturersParameters\ManufacturersCountParametersModel.cs" />
+    <Compile Include="Models\ManufacturersParameters\ManufacturersParametersModel.cs" />
     <Compile Include="Models\ProductAttributesParameters\ProductAttributesParametersModel.cs" />
     <Compile Include="Models\DefaultWeApiErrorsModel.cs" />
     <Compile Include="Models\OrderItemsParameters\OrderItemsParametersModel.cs" />
@@ -411,10 +419,12 @@
     <Compile Include="JSON\Serializers\IJsonFieldsSerializer.cs" />
     <Compile Include="JSON\Serializers\JsonFieldsSerializer.cs" />
     <Compile Include="RouteProvider.cs" />
+    <Compile Include="Services\ManufacturerApiService.cs" />
     <Compile Include="Services\CategoryApiService.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Services\CustomerApiService.cs" />
     <Compile Include="Services\DeviceService.cs" />
+    <Compile Include="Services\IManufacturerApiService.cs" />
     <Compile Include="Services\ICategoryApiService.cs" />
     <Compile Include="Services\IDeviceService.cs" />
     <Compile Include="Services\IOrderItemApiService.cs" />
@@ -440,6 +450,7 @@
     <Compile Include="Swagger\ExcludeEnpointsDocumentFilter.cs" />
     <Compile Include="Swagger\RemovePrefixesOperationFilter.cs" />
     <Compile Include="Validators\AddressDtoValidator.cs" />
+    <Compile Include="Validators\ManufacturerDtoValidator.cs" />
     <Compile Include="Validators\OrderDtoValidator.cs" />
     <Compile Include="Validators\OrderItemDtoValidator.cs" />
     <Compile Include="Validators\ProductCategoryMappingDtoValidator.cs" />

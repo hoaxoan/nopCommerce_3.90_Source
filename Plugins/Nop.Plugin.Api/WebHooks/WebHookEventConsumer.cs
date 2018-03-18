@@ -51,8 +51,10 @@ namespace Nop.Plugin.Api.WebHooks
         private ICustomerApiService _customerApiService;
         private ICategoryApiService _categoryApiService;
         private IProductApiService _productApiService;
+        private IManufacturerApiService _manufacturerApiService;
         private IProductService _productService;
         private ICategoryService _categoryService;
+        private IManufacturerService _manufacturerService;
         private IStoreMappingService _storeMappingService;
         private IStoreService _storeService;
         private IStoreContext _storeContext;
@@ -65,6 +67,7 @@ namespace Nop.Plugin.Api.WebHooks
             _customerApiService = EngineContext.Current.ContainerManager.Resolve<ICustomerApiService>();
             _categoryApiService = EngineContext.Current.ContainerManager.Resolve<ICategoryApiService>();
             _productApiService = EngineContext.Current.ContainerManager.Resolve<IProductApiService>();
+            _manufacturerApiService = EngineContext.Current.ContainerManager.Resolve<IManufacturerApiService>();
             _dtoHelper = EngineContext.Current.ContainerManager.Resolve<IDTOHelper>();
             _storeService = EngineContext.Current.ContainerManager.Resolve<IStoreService>();
 

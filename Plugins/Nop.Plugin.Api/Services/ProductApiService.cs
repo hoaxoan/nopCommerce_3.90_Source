@@ -15,15 +15,18 @@ namespace Nop.Plugin.Api.Services
         private readonly IStoreMappingService _storeMappingService;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<ProductCategory> _productCategoryMappingRepository;
+        private readonly IRepository<ProductManufacturer> _productManufacturerMappingRepository;
         private readonly IRepository<Vendor> _vendorRepository;
 
         public ProductApiService(IRepository<Product> productRepository,
             IRepository<ProductCategory> productCategoryMappingRepository,
+            IRepository<ProductManufacturer> productManufacturerMappingRepository,
             IRepository<Vendor> vendorRepository,
             IStoreMappingService storeMappingService)
         {
             _productRepository = productRepository;
             _productCategoryMappingRepository = productCategoryMappingRepository;
+            _productManufacturerMappingRepository = productManufacturerMappingRepository;
             _vendorRepository = vendorRepository;
             _storeMappingService = storeMappingService;
         }
@@ -31,7 +34,7 @@ namespace Nop.Plugin.Api.Services
         public IList<Product> GetProducts(IList<int> ids = null,
             DateTime? createdAtMin = null, DateTime? createdAtMax = null, DateTime? updatedAtMin = null, DateTime? updatedAtMax = null,
            int limit = Configurations.DefaultLimit, int page = Configurations.DefaultPageValue, int sinceId = Configurations.DefaultSinceId,
-           int? categoryId = null, string vendorName = null, bool? publishedStatus = null)
+           int? categoryId = null, int? manufacturerId = null, string vendorName = null, bool? publishedStatus = null)
         {
             var query = GetProductsQuery(createdAtMin, createdAtMax, updatedAtMin, updatedAtMax, vendorName, publishedStatus, ids, categoryId);
 
@@ -45,7 +48,7 @@ namespace Nop.Plugin.Api.Services
         
         public int GetProductsCount(DateTime? createdAtMin = null, DateTime? createdAtMax = null, 
             DateTime? updatedAtMin = null, DateTime? updatedAtMax = null, bool? publishedStatus = null, string vendorName = null, 
-            int? categoryId = null)
+            int? categoryId = null, int? manufacturerId = null)
         {
             var query = GetProductsQuery(createdAtMin, createdAtMax, updatedAtMin, updatedAtMax, vendorName,
                                          publishedStatus, categoryId: categoryId);
@@ -71,7 +74,7 @@ namespace Nop.Plugin.Api.Services
 
         private IQueryable<Product> GetProductsQuery(DateTime? createdAtMin = null, DateTime? createdAtMax = null, 
             DateTime? updatedAtMin = null, DateTime? updatedAtMax = null, string vendorName = null, 
-            bool? publishedStatus = null, IList<int> ids = null, int? categoryId = null)
+            bool? publishedStatus = null, IList<int> ids = null, int? categoryId = null, int? manufacturerId = null)
             
         {
             var query = _productRepository.TableNoTracking;
@@ -132,6 +135,17 @@ namespace Nop.Plugin.Api.Services
 
                 query = from product in query
                         join productCategoryMapping in categoryMappingsForProduct on product.Id equals productCategoryMapping.ProductId
+                        select product;
+            }
+
+            if (manufacturerId != null)
+            {
+                var manufacturerMappingsForProduct = from productManufacturerMapping in _productManufacturerMappingRepository.TableNoTracking
+                                                 where productManufacturerMapping.ManufacturerId == manufacturerId
+                                                 select productManufacturerMapping;
+
+                query = from product in query
+                        join productManufacturerMapping in manufacturerMappingsForProduct on product.Id equals productManufacturerMapping.ProductId
                         select product;
             }
 
