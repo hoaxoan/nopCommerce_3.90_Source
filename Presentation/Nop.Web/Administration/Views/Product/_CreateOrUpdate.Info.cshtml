@@ -76,13 +76,13 @@
         var selectedProductTypeId = $("#@Html.FieldIdFor(model => model.ProductTypeId)").val();
         if (!selectedProductTypeId || selectedProductTypeId == simpleProductId) {
             $('#group-prices').show();
-            $('#tier-prices').show();
-            $('#group-required-other-products').show();
-            $('#group-giftcard').show();
-            $('#group-downloads').show();
-            $('#group-recurring').show();
-            $('#group-rental').show();
-            $('#group-shipping').show();
+            $('#tier-prices').hide();
+            $('#group-required-other-products').hide();
+            $('#group-giftcard').hide();
+            $('#group-downloads').hide();
+            $('#group-recurring').hide();
+            $('#group-rental').hide();
+            $('#group-shipping').hide();
             $('#group-inventory').show();
             $('#group-associated-products').hide();
         } else if (selectedProductTypeId == groupedProductId) {
@@ -556,7 +556,7 @@
                                 @Html.ValidationMessageFor(model => model.Name)
                             </div>
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <div class="col-md-3">
                                 @Html.NopLabelFor(model => model.ShortDescription)
                             </div>
@@ -564,7 +564,7 @@
                                 @Html.NopTextAreaFor(x => x.ShortDescription)
                                 @Html.ValidationMessageFor(model => model.ShortDescription)
                             </div>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <div class="col-md-3">
                                 @Html.NopLabelFor(model => model.FullDescription)
@@ -603,7 +603,7 @@
                             @Html.ValidationMessageFor(model => model.ProductTags)
                         </div>
                     </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.GTIN ? null : "advanced-setting")">
+                    @*<div class="form-group @(Model.ProductEditorSettingsModel.GTIN ? null : "advanced-setting")">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.Gtin)
                         </div>
@@ -620,7 +620,7 @@
                             @Html.NopEditorFor(model => model.ManufacturerPartNumber)
                             @Html.ValidationMessageFor(model => model.ManufacturerPartNumber)
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group @(Model.ProductEditorSettingsModel.ShowOnHomePage ? null : "advanced-setting")" @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.ShowOnHomePage)
@@ -648,7 +648,7 @@
                             @Html.ValidationMessageFor(model => model.AllowCustomerReviews)
                         </div>
                     </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.AvailableStartDate ? null : "advanced-setting")">
+                    @*<div class="form-group @(Model.ProductEditorSettingsModel.AvailableStartDate ? null : "advanced-setting")">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.AvailableStartDateTimeUtc)
                         </div>
@@ -665,7 +665,7 @@
                             @Html.NopEditorFor(model => model.AvailableEndDateTimeUtc)
                             @Html.ValidationMessageFor(model => model.AvailableEndDateTimeUtc)
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group @(Model.ProductEditorSettingsModel.MarkAsNew ? null : "advanced-setting")">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.MarkAsNew)
@@ -702,7 +702,7 @@
                             @Html.ValidationMessageFor(model => model.AdminComment)
                         </div>
                     </div>
-                    @if (Model.CreatedOn.HasValue)
+                    @*@if (Model.CreatedOn.HasValue)
                     {
                         <div class="form-group @(Model.ProductEditorSettingsModel.CreatedOn ? null : "advanced-setting")">
                             <div class="col-md-3">
@@ -723,7 +723,7 @@
                                 @Html.NopDisplay(Model.UpdatedOn.Value.ToString("F"))
                             </div>
                         </div>
-                    }
+                    }*@
                 </div>
             </div>
             <div class="panel panel-default @(Model.ProductEditorSettingsModel.IsGiftCard ? null : "advanced-setting")" id="group-giftcard">
@@ -966,7 +966,7 @@
                             @Html.ValidationMessageFor(model => model.ProductCost)
                         </div>
                     </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.DisableBuyButton ? null : "advanced-setting")">
+                    @*<div class="form-group @(Model.ProductEditorSettingsModel.DisableBuyButton ? null : "advanced-setting")">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.DisableBuyButton)
                         </div>
@@ -1001,7 +1001,7 @@
                             @Html.NopEditorFor(model => model.PreOrderAvailabilityStartDateTimeUtc)
                             @Html.ValidationMessageFor(model => model.PreOrderAvailabilityStartDateTimeUtc)
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group @(Model.ProductEditorSettingsModel.CallForPrice ? null : "advanced-setting")">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.CallForPrice)
@@ -1011,7 +1011,7 @@
                             @Html.ValidationMessageFor(model => model.CallForPrice)
                         </div>
                     </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.CustomerEntersPrice ? null : "advanced-setting")">
+                    @*<div class="form-group @(Model.ProductEditorSettingsModel.CustomerEntersPrice ? null : "advanced-setting")">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.CustomerEntersPrice)
                         </div>
@@ -1073,7 +1073,7 @@
                             @Html.NopEditorFor(model => model.BasepriceBaseAmount)
                             @Html.ValidationMessageFor(model => model.BasepriceBaseAmount)
                         </div>
-                    </div>
+                    </div
                     <div class="form-group @(Model.ProductEditorSettingsModel.PAngV ? null : "advanced-setting")" id="pnlBasepriceBaseUnit">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.BasepriceBaseUnitId)
@@ -1082,7 +1082,7 @@
                             @Html.NopDropDownListFor(model => model.BasepriceBaseUnitId, Model.AvailableBasepriceBaseUnits)
                             @Html.ValidationMessageFor(model => model.BasepriceBaseUnitId)
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group @(Model.ProductEditorSettingsModel.Discounts ? null : "advanced-setting")">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.SelectedDiscountIds)
@@ -1097,21 +1097,21 @@
                                     });
 
                                     @if (Model.AvailableDiscounts.Count == 0)
-                            {
-                                <text>
-                                    discountsIdsInput.setOptions({
-                                        enable: false,
-                                        placeholder: '@T("Admin.Catalog.Products.Fields.Discounts.NoDiscounts")'
-                                    });
-                                    discountsIdsInput._placeholder();
-                                    discountsIdsInput._enable();
-                                    </text>
-                            }
+                                    {
+                                        <text>
+                                            discountsIdsInput.setOptions({
+                                                enable: false,
+                                                placeholder: '@T("Admin.Catalog.Products.Fields.Discounts.NoDiscounts")'
+                                            });
+                                            discountsIdsInput._placeholder();
+                                            discountsIdsInput._enable();
+                                            </text>
+                                    }
                                 });
                             </script>
                         </div>
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <div class="col-md-3">
                             @Html.NopLabelFor(model => model.IsTaxExempt)
                         </div>
@@ -1137,7 +1137,7 @@
                             @Html.NopEditorFor(model => model.IsTelecommunicationsOrBroadcastingOrElectronicServices)
                             @Html.ValidationMessageFor(model => model.IsTelecommunicationsOrBroadcastingOrElectronicServices)
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="panel panel-default @(Model.ProductEditorSettingsModel.TierPrices ? null : "advanced-setting")" id="tier-prices">
@@ -1450,7 +1450,7 @@
                             @Html.ValidationMessageFor(model => model.StockQuantity)
                         </div>
                     </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.Warehouse ? null : "advanced-setting")" id="pnlWarehouse">
+                    @*<div class="form-group @(Model.ProductEditorSettingsModel.Warehouse ? null : "advanced-setting")" id="pnlWarehouse">
                         <div class="@leftColumnClass">
                             @Html.NopLabelFor(model => model.WarehouseId)
                         </div>
@@ -1665,7 +1665,7 @@
                             @Html.NopEditorFor(model => model.NotReturnable)
                             @Html.ValidationMessageFor(model => model.NotReturnable)
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="panel panel-default" id="group-shipping">
@@ -1817,7 +1817,7 @@
                             </script>
                         </div>
                     </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.Stores ? null : "advanced-setting")">
+                    @*<div class="form-group @(Model.ProductEditorSettingsModel.Stores ? null : "advanced-setting")">
                         <div class="@leftColumnClass">
                             @Html.NopLabelFor(model => model.SelectedStoreIds)
                         </div>
@@ -1853,10 +1853,10 @@
                             @Html.NopDropDownListFor(model => model.VendorId, Model.AvailableVendors)
                             @Html.ValidationMessageFor(model => model.VendorId)
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
-            <div class="panel panel-default @(Model.ProductEditorSettingsModel.ACL ? null : "advanced-setting")">
+            <div style="display: none;" class="panel panel-default @(Model.ProductEditorSettingsModel.ACL ? null : "advanced-setting")">
                 <div class="panel-heading">
                     @T("Admin.Catalog.Products.Security")
                 </div>
@@ -2089,7 +2089,7 @@
                     </div>
                 }
             </div>
-            <div class="panel panel-default @(Model.ProductEditorSettingsModel.CrossSellsProducts ? null : "advanced-setting")">
+            <div style="display: none;" class="panel panel-default @(Model.ProductEditorSettingsModel.CrossSellsProducts ? null : "advanced-setting")">
                 <div class="panel-heading">
                     @T("Admin.Catalog.Products.CrossSells")
                 </div>
