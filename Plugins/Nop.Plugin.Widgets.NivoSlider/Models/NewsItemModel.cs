@@ -24,5 +24,9 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public DateTime CreatedOn { get; set; }
 
         public IList<NewsCommentModel> Comments { get; set; }
+
+        public PictureModel PictureModel { get; set; }
+
+        public string ExternalUrl { get; set; }
     }
 }

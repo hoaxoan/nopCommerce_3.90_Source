@@ -111,6 +111,7 @@
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Models\NewsCommentModel.cs" />
     <Compile Include="Models\NewsItemModel.cs" />
+    <Compile Include="Models\PictureModel.cs" />
     <Compile Include="NivoSliderPlugin.cs" />
     <Compile Include="NivoSliderSettings.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />

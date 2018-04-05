@@ -22,6 +22,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Infrastructure.Cache
         /// </remarks>
         public const string PICTURE_URL_MODEL_KEY = "Nop.plugins.widgets.nivosrlider.pictureurl-{0}";
         public const string PICTURE_URL_PATTERN_KEY = "Nop.plugins.widgets.nivosrlider";
+        public const string NEWS_DEFAULTPICTURE_MODEL_KEY = "Nop.pres.news.detailspictures-{0}-{1}-{2}-{3}-{4}-{5}";
 
         private readonly ICacheManager _cacheManager;
 
@@ -34,14 +35,18 @@ namespace Nop.Plugin.Widgets.NivoSlider.Infrastructure.Cache
         public void HandleEvent(EntityInserted<Setting> eventMessage)
         {
             _cacheManager.RemoveByPattern(PICTURE_URL_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(NEWS_DEFAULTPICTURE_MODEL_KEY);
         }
         public void HandleEvent(EntityUpdated<Setting> eventMessage)
         {
             _cacheManager.RemoveByPattern(PICTURE_URL_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(NEWS_DEFAULTPICTURE_MODEL_KEY);
         }
         public void HandleEvent(EntityDeleted<Setting> eventMessage)
         {
             _cacheManager.RemoveByPattern(PICTURE_URL_PATTERN_KEY);
+            _cacheManager.RemoveByPattern(NEWS_DEFAULTPICTURE_MODEL_KEY);
+
         }
     }
 }

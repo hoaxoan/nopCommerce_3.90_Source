@@ -15,6 +15,7 @@ using System;
 using Nop.Services.Seo;
 using Nop.Services.Helpers;
 using System.Collections.Generic;
+using Nop.Core.Domain.Media;
 
 namespace Nop.Plugin.Widgets.NivoSlider.Controllers
 {
@@ -29,6 +30,8 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly INewsService _newsService;
         private readonly IDateTimeHelper _dateTimeHelper;
+        private readonly MediaSettings _mediaSettings;
+        private readonly IWebHelper _webHelper;
 
         public WidgetsNivoSliderController(IWorkContext workContext,
             IStoreContext storeContext,
@@ -38,7 +41,9 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
             ICacheManager cacheManager,
             ILocalizationService localizationService,
             INewsService newsService,
-            IDateTimeHelper dateTimeHelper)
+            IDateTimeHelper dateTimeHelper,
+            MediaSettings mediaSettings,
+            IWebHelper webHelper)
         {
             this._workContext = workContext;
             this._storeContext = storeContext;
@@ -49,6 +54,8 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
             this._localizationService = localizationService;
             this._newsService = newsService;
             this._dateTimeHelper = dateTimeHelper;
+            this._mediaSettings = mediaSettings;
+            this._webHelper = webHelper;
         }
 
         protected string GetPictureUrl(int pictureId)
@@ -254,6 +261,23 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
             model.Full = newsItem.Full;
             model.AllowComments = newsItem.AllowComments;
             model.CreatedOn = _dateTimeHelper.ConvertToUserTime(newsItem.StartDateUtc ?? newsItem.CreatedOnUtc, DateTimeKind.Utc);
+            model.ExternalUrl = newsItem.ExternalUrl;
+
+            //prepare picture model
+            var pictureSize = _mediaSettings.CategoryThumbPictureSize;
+            var newsPictureCacheKey = string.Format(ModelCacheEventConsumer.NEWS_DEFAULTPICTURE_MODEL_KEY, newsItem.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+            model.PictureModel = _cacheManager.Get(newsPictureCacheKey, () =>
+            {
+                var picture = _pictureService.GetPictureById(newsItem.PictureId);
+                var pictureModel = new PictureModel
+                {
+                    FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                    ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize),
+                    Title = string.Format(_localizationService.GetResource("Media.Category.ImageLinkTitleFormat"), model.Title),
+                    AlternateText = string.Format(_localizationService.GetResource("Media.Category.ImageAlternateTextFormat"), model.Title)
+                };
+                return pictureModel;
+            });
 
             return model;
         }
