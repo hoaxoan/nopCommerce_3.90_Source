@@ -18,6 +18,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using Nop.Services.Media;
 
 namespace Nop.Admin.Controllers
 {
@@ -35,6 +36,7 @@ namespace Nop.Admin.Controllers
         private readonly IStoreService _storeService;
         private readonly IStoreMappingService _storeMappingService;
         private readonly ICustomerActivityService _customerActivityService;
+        private readonly IPictureService _pictureService;
 
         #endregion
 
@@ -49,7 +51,8 @@ namespace Nop.Admin.Controllers
             IUrlRecordService urlRecordService,
             IStoreService storeService, 
             IStoreMappingService storeMappingService,
-            ICustomerActivityService customerActivityService)
+            ICustomerActivityService customerActivityService,
+            IPictureService pictureService)
         {
             this._newsService = newsService;
             this._languageService = languageService;
@@ -61,11 +64,20 @@ namespace Nop.Admin.Controllers
             this._storeService = storeService;
             this._storeMappingService = storeMappingService;
             this._customerActivityService = customerActivityService;
+            this._pictureService = pictureService;
         }
 
         #endregion
 
         #region Utilities
+
+        [NonAction]
+        protected virtual void UpdatePictureSeoNames(NewsItem newsItem)
+        {
+            var picture = _pictureService.GetPictureById(newsItem.PictureId);
+            if (picture != null)
+                _pictureService.SetSeoFilename(picture.Id, _pictureService.GetPictureSeName(newsItem.Title));
+        }
 
         [NonAction]
         protected virtual void PrepareLanguagesModel(NewsItemModel model)
@@ -221,6 +233,9 @@ namespace Nop.Admin.Controllers
                 var seName = newsItem.ValidateSeName(model.SeName, model.Title, true);
                 _urlRecordService.SaveSlug(newsItem, seName, newsItem.LanguageId);
 
+                //update picture seo file name
+                UpdatePictureSeoNames(newsItem);
+
                 //Stores
                 SaveStoreMappings(newsItem, model);
 
@@ -276,6 +291,7 @@ namespace Nop.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                int prevPictureId = newsItem.PictureId;
                 newsItem = model.ToEntity(newsItem);
                 newsItem.StartDateUtc = model.StartDate;
                 newsItem.EndDateUtc = model.EndDate;
@@ -287,6 +303,16 @@ namespace Nop.Admin.Controllers
                 //search engine name
                 var seName = newsItem.ValidateSeName(model.SeName, model.Title, true);
                 _urlRecordService.SaveSlug(newsItem, seName, newsItem.LanguageId);
+
+                //delete an old picture (if deleted or updated)
+                if (prevPictureId > 0 && prevPictureId != newsItem.PictureId)
+                {
+                    var prevPicture = _pictureService.GetPictureById(prevPictureId);
+                    if (prevPicture != null)
+                        _pictureService.DeletePicture(prevPicture);
+                }
+                //update picture seo file name
+                UpdatePictureSeoNames(newsItem);
 
                 //Stores
                 SaveStoreMappings(newsItem, model);

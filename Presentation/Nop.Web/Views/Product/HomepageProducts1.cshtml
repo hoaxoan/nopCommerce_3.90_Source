@@ -6,9 +6,13 @@
 {
     <div class="clr"></div>
     <div class="navigat">
-        <h2>@Model.Name nổi bật nhất</h2>
+        <h2>@Model.Name @T("Products.Categories.Bestsellers")</h2>
         <div class="viewallcat">
-            <a href="@Url.RouteUrl("Category", new { SeName = Model.SeName })" class="mobile">Xem tất cả</a>
+            @foreach (var item in Model.ManufacturerNavigation.Manufacturers)
+            {
+                <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.SeName })" class="mobile">@item.Name</a>
+            }
+            <a href="@Url.RouteUrl("Category", new { SeName = Model.SeName })" class="mobile">@T("Common.Viewall")</a>
         </div>
     </div>
 

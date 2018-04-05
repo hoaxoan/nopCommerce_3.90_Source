@@ -81,5 +81,13 @@ namespace Nop.Admin.Models.News
 
         [NopResourceDisplayName("Admin.ContentManagement.News.NewsItems.Fields.CreatedOn")]
         public DateTime CreatedOn { get; set; }
+
+        [UIHint("Picture")]
+        [NopResourceDisplayName("Admin.ContentManagement.News.NewsItems.Fields.Picture")]
+        public int PictureId { get; set; }
+
+        [NopResourceDisplayName("Admin.ContentManagement.News.NewsItems.Fields.ExternalUrl")]
+        [AllowHtml]
+        public string ExternalUrl { get; set; }
     }
 }

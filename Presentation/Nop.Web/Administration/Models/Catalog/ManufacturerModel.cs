@@ -79,6 +79,9 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Manufacturers.Fields.Published")]
         public bool Published { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Manufacturers.Fields.ShowOnHomePage")]
+        public bool ShowOnHomePage { get; set; }
+
         [NopResourceDisplayName("Admin.Catalog.Manufacturers.Fields.Deleted")]
         public bool Deleted { get; set; }
 
