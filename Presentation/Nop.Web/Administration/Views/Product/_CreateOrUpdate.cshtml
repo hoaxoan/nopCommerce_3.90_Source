@@ -28,10 +28,11 @@
         <div id="product-edit" class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 @Html.RenderBootstrapTabHeader("tab-info", @T("Admin.Catalog.Products.Info"), true)
-                @Html.RenderBootstrapTabHeader("tab-seo", @T("Admin.Common.SEO"), customCssClass:  Model.ProductEditorSettingsModel.Seo ? "" : "advanced-setting")
+                @Html.RenderBootstrapTabHeader("tab-description", @T("Admin.Catalog.Products.FullDescription"))
+                @Html.RenderBootstrapTabHeader("tab-seo", @T("Admin.Common.SEO"), customCssClass: Model.ProductEditorSettingsModel.Seo ? "" : "advanced-setting")
                 @Html.RenderBootstrapTabHeader("tab-pictures", @T("Admin.Catalog.Products.Pictures"))
-                @Html.RenderBootstrapTabHeader("tab-product-attributes", @T("Admin.Catalog.Products.ProductAttributes"), customCssClass: Model.ProductEditorSettingsModel.ProductAttributes ? "" : "advanced-setting")
                 @Html.RenderBootstrapTabHeader("tab-specification-attributes", @T("Admin.Catalog.Products.SpecificationAttributes"), customCssClass: Model.ProductEditorSettingsModel.SpecificationAttributes ? "" : "advanced-setting")
+                @Html.RenderBootstrapTabHeader("tab-product-attributes", @T("Admin.Catalog.Products.ProductAttributes"), customCssClass: Model.ProductEditorSettingsModel.ProductAttributes ? "" : "advanced-setting")
                 @if (Model.Id > 0)
                 {
                     @Html.RenderBootstrapTabHeader("tab-purchased-with-orders", @T("Admin.Catalog.Products.PurchasedWithOrders"), customCssClass: Model.ProductEditorSettingsModel.PurchasedWithOrders ? "" : "advanced-setting")
@@ -40,6 +41,7 @@
             </ul>
             <div class="tab-content">
                 @Html.RenderBootstrapTabContent("tab-info", @TabInfo(), true)
+                @Html.RenderBootstrapTabContent("tab-description", TabDescription())
                 @Html.RenderBootstrapTabContent("tab-seo", @TabSeo())
                 @Html.RenderBootstrapTabContent("tab-pictures", @TabPictures())
                 @Html.RenderBootstrapTabContent("tab-specification-attributes", @TabSpecificationAttributes())
@@ -72,6 +74,12 @@
     @Html.Partial("_CreateOrUpdate.Info", Model)
 }
 
+@helper TabDescription()
+{
+    @Html.Partial("_CreateOrUpdate.Description", Model)
+}
+
+
 @helper TabSeo()
 {
     @Html.Partial("_CreateOrUpdate.SEO", Model)
@@ -101,3 +109,9 @@
 {
     @Html.Partial("_CreateOrUpdate._StockQuantityHistory", Model)
 }
+
+<style type="text/css">
+    #tab-description{
+       height: 1100px;
+    }
+</style>
